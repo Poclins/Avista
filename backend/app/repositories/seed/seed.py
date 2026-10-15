@@ -66,7 +66,18 @@ from app.repositories.seed.dataset_loader import (
 
 DATA_DIR = Path(__file__).parent / "data"
 
-# Orden de carga: respeta las dependencias de claves foráneas.
+# Nombre del archivo JSON que transcribe la rúbrica oficial versionada
+# (tarea 7.2b). Es la fuente de verdad de ``rubrica_versiones.criterios``:
+# estructura tramo de sala × núcleo × 8 niveles de progresión × conductas
+# observables + descriptor + umbrales. Agregar núcleos o tramos es cuestión de
+# datos (nuevas versiones), nunca de cambios de código (Requirements 21.1, 21.5).
+RUBRICA_FILE = "rubrica_versiones.json"
+
+# Orden de carga de las tablas del dataset reducido: respeta las dependencias de
+# claves foráneas. ``rubrica_versiones`` NO va aquí: la versión inicial de la
+# rúbrica oficial se siembra aparte vía :func:`seed_rubrica_oficial`, porque su
+# fuente es el PDF oficial transcrito (``rubrica_versiones.json``), no un CSV/JSON
+# del dataset E-1, y debe sembrarse en ambos caminos de seed (reducido y oficial).
 SEED_ORDER: list[tuple[str, type[Base]]] = [
     ("jardines", Jardin),
     ("educadoras", Educadora),
@@ -75,7 +86,6 @@ SEED_ORDER: list[tuple[str, type[Base]]] = [
     ("manifestaciones", Manifestacion),
     ("observaciones", Observacion),
     ("observacion_manifestaciones", ObservacionManifestacion),
-    ("rubrica_versiones", RubricaVersion),
 ]
 
 # Campos que deben convertirse de ISO string a ``date`` al construir las ORM.
@@ -96,6 +106,53 @@ class SeedValidationError(SeedError):
     Se lanza cuando los conteos realmente cargados no cuadran con los valores
     de referencia de ``distribucion_y_validacion`` (Requirement 10.9 / 14.2).
     """
+
+
+# ===========================================================================
+# Rúbrica oficial: siembra de la versión inicial en ``rubrica_versiones``
+# ===========================================================================
+def _cargar_rubrica_versiones() -> list[dict]:
+    """Lee las versiones de la rúbrica oficial desde ``rubrica_versiones.json``.
+
+    El archivo es el artefacto de la tarea 7.2b: la transcripción de la rúbrica
+    oficial (PDF) a la estructura JSON versionada de ``rubrica_versiones.criterios``
+    (tramo × núcleo × 8 niveles de progresión × conductas observables + descriptor
+    + umbrales). Es la **fuente de verdad** de la rúbrica como datos versionados.
+    """
+    return _load_json("rubrica_versiones")
+
+
+def seed_rubrica_oficial(repo: RelationalRepo) -> int:
+    """Siembra la **versión inicial de la rúbrica oficial** en ``rubrica_versiones``.
+
+    Carga la rúbrica oficial transcrita (``rubrica_versiones.json``, tarea 7.2b)
+    —al menos el núcleo ``identidad_y_autonomia`` para los 3 tramos (Sala Cuna,
+    Nivel Medio, Transición) con sus 8 niveles de progresión y conductas
+    observables— y la persiste **vía la interfaz** ``RelationalRepo`` (nunca
+    tocando el SDK de la base directamente), cumpliendo los Requirements 6.6,
+    21.1 y 21.5.
+
+    Los criterios quedan versionados y modificables **sin cambios de código**:
+    agregar núcleos o tramos adicionales es cuestión de añadir **nuevas versiones**
+    (nuevas filas) a ``rubrica_versiones``, no de editar código.
+
+    Idempotencia: usa ``add_all`` (``merge`` por clave primaria
+    ``version_rubrica``), de modo que re-ejecutar el seed **no crea versiones
+    duplicadas**.
+
+    Args:
+        repo: repositorio relacional ya construido (SQLite demo o Postgres AWS).
+
+    Returns:
+        Número de versiones de rúbrica sembradas.
+    """
+    filas = _cargar_rubrica_versiones()
+    entidades: list[Base] = [
+        _to_entity(RubricaVersion, fila) for fila in filas
+    ]
+    if entidades:
+        repo.add_all(entidades)
+    return len(entidades)
 
 
 # ===========================================================================
@@ -206,7 +263,13 @@ def seed_oficial(
         cargados[tabla] = len(entidades)
 
     # Validación de conteos contra distribucion_y_validacion (consolidado.json).
+    # Se valida solo sobre las 7 tablas del dataset oficial; la rúbrica no viene
+    # en el zip (su fuente es el PDF oficial) y se siembra aparte a continuación.
     validar_conteos(cargados, conteos_esperados(dataset))
+
+    # Sembrar la versión inicial de la rúbrica oficial (fuente: PDF transcrito,
+    # no el zip): se siembra en ambos caminos de seed vía la interfaz del repo.
+    cargados["rubrica_versiones"] = seed_rubrica_oficial(repo)
     return cargados
 
 
@@ -275,6 +338,11 @@ def seed(repo: RelationalRepo) -> dict[str, int]:
         if entidades:
             repo.add_all(entidades)
         resumen[tabla] = len(entidades)
+
+    # Sembrar la versión inicial de la rúbrica oficial (misma fuente de verdad
+    # en ambos caminos de seed): núcleo Identidad y Autonomía × 3 tramos × 8
+    # niveles, versionada y extensible sin cambios de código (Req 6.6, 21.1, 21.5).
+    resumen["rubrica_versiones"] = seed_rubrica_oficial(repo)
     return resumen
 
 
@@ -330,6 +398,7 @@ if __name__ == "__main__":  # pragma: no cover
 __all__ = [
     "seed",
     "seed_oficial",
+    "seed_rubrica_oficial",
     "conteos_esperados",
     "validar_conteos",
     "cargar_dataset",
@@ -339,5 +408,6 @@ __all__ = [
     "SeedValidationError",
     "DatasetLoaderError",
     "DATA_DIR",
+    "RUBRICA_FILE",
     "SEED_ORDER",
 ]

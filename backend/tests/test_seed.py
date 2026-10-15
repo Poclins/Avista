@@ -43,6 +43,7 @@ from app.repositories.seed.seed import (
     conteos_esperados,
     seed,
     seed_oficial,
+    seed_rubrica_oficial,
     validar_conteos,
 )
 from app.repositories.seed.dataset_loader import DatasetE1
@@ -298,13 +299,20 @@ def zip_oficial(tmp_path: Path) -> Path:
 def test_seed_oficial_carga_desde_zip_y_valida_conteos(
     repo, session_factory, zip_oficial
 ) -> None:
-    """``seed_oficial`` carga las 7 tablas desde el zip y valida conteos OK."""
+    """``seed_oficial`` carga las 7 tablas desde el zip y valida conteos OK.
+
+    Además siembra la versión inicial de la rúbrica oficial (su fuente es el PDF
+    transcrito, no el zip): el resumen incluye ``rubrica_versiones`` junto a las
+    7 tablas del dataset oficial (tarea 7.3).
+    """
     cargados = seed_oficial(repo, zip_oficial)
-    assert cargados == _CONTEOS_OK
+    assert {t: cargados[t] for t in TABLAS} == _CONTEOS_OK
+    assert cargados["rubrica_versiones"] >= 1
     # Las filas quedaron realmente en la base relacional.
     assert _contar(session_factory, Jardin) == 1
     assert _contar(session_factory, Observacion) == 2
     assert _contar(session_factory, ObservacionManifestacion) == 1
+    assert _contar(session_factory, RubricaVersion) >= 1
 
 
 def test_seed_oficial_mapea_celdas_vacias_como_ausencia(
@@ -322,10 +330,12 @@ def test_seed_oficial_mapea_celdas_vacias_como_ausencia(
 
 def test_seed_oficial_es_idempotente(repo, session_factory, zip_oficial) -> None:
     """Cargar el dataset oficial dos veces no duplica filas (merge por PK)."""
-    seed_oficial(repo, zip_oficial)
+    primera = seed_oficial(repo, zip_oficial)
     seed_oficial(repo, zip_oficial)
     assert _contar(session_factory, Observacion) == 2
     assert _contar(session_factory, Nino) == 1
+    # La rúbrica tampoco se duplica entre ejecuciones (merge por version_rubrica).
+    assert _contar(session_factory, RubricaVersion) == primera["rubrica_versiones"]
 
 
 def test_seed_oficial_rechaza_si_un_conteo_no_coincide(
@@ -372,3 +382,124 @@ def test_conteos_esperados_falla_sin_seccion_de_conteos() -> None:
     dataset = DatasetE1(csvs={}, consolidado={})
     with pytest.raises(SeedValidationError, match="conteos de referencia"):
         conteos_esperados(dataset)
+
+
+# ===========================================================================
+# Tarea 7.3 — Siembra de la versión inicial de la rúbrica oficial en
+# ``rubrica_versiones`` vía la interfaz ``RelationalRepo`` (Req 6.6, 21.1, 21.5)
+# ===========================================================================
+
+# Los 3 tramos de sala y el orden fijo de los 8 niveles de progresión que la
+# rúbrica oficial debe traer para el núcleo "identidad_y_autonomia".
+_TRAMOS = ("sala_cuna", "nivel_medio", "transicion")
+_NIVELES_ESPERADOS = [
+    (1, "Comenzando"),
+    (2, "Explorando"),
+    (3, "Desarrollando"),
+    (4, "Afianzando"),
+    (5, "Integrando"),
+    (6, "Ampliando"),
+    (7, "Consolidando"),
+    (8, "Profundizando"),
+]
+# Rangos etarios (en meses) por tramo, según el diseño.
+_RANGOS_ETARIOS = {
+    "sala_cuna": [0, 24],
+    "nivel_medio": [24, 48],
+    "transicion": [48, 72],
+}
+
+
+def _rubrica_vigente_criterios(repo) -> dict:
+    """Devuelve los ``criterios`` de la rúbrica vigente sembrada vía el repo."""
+    vigente = repo.rubrica_vigente()
+    assert vigente is not None, "No se sembró ninguna versión de rúbrica."
+    assert isinstance(vigente.criterios, dict)
+    return vigente.criterios
+
+
+def test_seed_rubrica_oficial_persiste_version_via_repo(repo, session_factory) -> None:
+    """``seed_rubrica_oficial`` siembra ≥1 versión y queda consultable por el repo."""
+    n = seed_rubrica_oficial(repo)
+    assert n >= 1
+    assert _contar(session_factory, RubricaVersion) == n
+    # Se accede a la rúbrica solo vía la interfaz del repo (no vía SDK).
+    vigente = repo.rubrica_vigente()
+    assert vigente is not None
+    assert vigente.version_rubrica
+
+
+def test_rubrica_contiene_nucleo_identidad_en_los_3_tramos(repo) -> None:
+    """La versión sembrada trae el núcleo Identidad y Autonomía en los 3 tramos."""
+    seed_rubrica_oficial(repo)
+    criterios = _rubrica_vigente_criterios(repo)
+    tramos = criterios["tramos"]
+    for tramo in _TRAMOS:
+        assert tramo in tramos, f"Falta el tramo '{tramo}'."
+        assert tramos[tramo]["rango_etario_meses"] == _RANGOS_ETARIOS[tramo]
+        nucleos = tramos[tramo]["nucleos"]
+        assert "identidad_y_autonomia" in nucleos, (
+            f"Falta el núcleo identidad_y_autonomia en el tramo '{tramo}'."
+        )
+
+
+def test_cada_tramo_tiene_8_niveles_en_orden_correcto(repo) -> None:
+    """Cada tramo×núcleo trae exactamente los 8 niveles de progresión en orden."""
+    seed_rubrica_oficial(repo)
+    criterios = _rubrica_vigente_criterios(repo)
+    for tramo in _TRAMOS:
+        niveles = criterios["tramos"][tramo]["nucleos"]["identidad_y_autonomia"][
+            "niveles"
+        ]
+        assert len(niveles) == 8, f"El tramo '{tramo}' no tiene 8 niveles."
+        pares = [(int(nv["n"]), nv["nombre"]) for nv in niveles]
+        assert pares == _NIVELES_ESPERADOS, (
+            f"Los niveles del tramo '{tramo}' no están en el orden esperado."
+        )
+
+
+def test_cada_nivel_tiene_descriptor_y_conductas_observables(repo) -> None:
+    """Cada nivel trae un descriptor no vacío y ≥1 conducta observable."""
+    seed_rubrica_oficial(repo)
+    criterios = _rubrica_vigente_criterios(repo)
+    for tramo in _TRAMOS:
+        niveles = criterios["tramos"][tramo]["nucleos"]["identidad_y_autonomia"][
+            "niveles"
+        ]
+        for nivel in niveles:
+            assert isinstance(nivel.get("descriptor"), str)
+            assert nivel["descriptor"].strip(), (
+                f"Descriptor vacío en {tramo} nivel {nivel['n']}."
+            )
+            conductas = nivel.get("conductas_observables")
+            assert isinstance(conductas, list) and conductas, (
+                f"Sin conductas observables en {tramo} nivel {nivel['n']}."
+            )
+            assert all(isinstance(c, str) and c.strip() for c in conductas)
+
+
+def test_rubrica_define_umbrales_de_decision(repo) -> None:
+    """La rúbrica trae los umbrales de decisión versionados (Req 21.5)."""
+    seed_rubrica_oficial(repo)
+    criterios = _rubrica_vigente_criterios(repo)
+    umbrales = criterios["umbrales"]
+    assert "cobertura_avanzar" in umbrales
+    assert "nucleos_requeridos" in umbrales
+    assert "racha_retroceso" in umbrales
+    assert "identidad_y_autonomia" in umbrales["nucleos_requeridos"]
+
+
+def test_seed_rubrica_oficial_es_idempotente(repo, session_factory) -> None:
+    """Re-ejecutar la siembra no crea versiones duplicadas (merge por PK)."""
+    primera = seed_rubrica_oficial(repo)
+    segunda = seed_rubrica_oficial(repo)
+    assert primera == segunda
+    assert _contar(session_factory, RubricaVersion) == primera
+
+
+def test_seed_reducido_tambien_siembra_la_rubrica(repo, session_factory) -> None:
+    """El camino de seed reducido deja la rúbrica consultable vía el repo."""
+    resumen = seed(repo)
+    assert resumen["rubrica_versiones"] >= 1
+    assert _contar(session_factory, RubricaVersion) == resumen["rubrica_versiones"]
+    assert repo.rubrica_vigente() is not None
