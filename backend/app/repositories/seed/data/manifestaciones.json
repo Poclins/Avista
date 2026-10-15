@@ -1,0 +1,542 @@
+[
+  {
+    "id_manifestacion": "M-N1-COG-1",
+    "nivel": 1,
+    "dominio": "cognitivo",
+    "texto_observable": "[N1] Clasifica objetos por un atributo (color o forma)."
+  },
+  {
+    "id_manifestacion": "M-N1-COG-2",
+    "nivel": 1,
+    "dominio": "cognitivo",
+    "texto_observable": "[N1] Resuelve un encaje o rompecabezas simple por ensayo y acierto."
+  },
+  {
+    "id_manifestacion": "M-N1-LEN-1",
+    "nivel": 1,
+    "dominio": "lenguaje_comunicacion",
+    "texto_observable": "[N1] Nombra objetos cotidianos cuando se le pregunta."
+  },
+  {
+    "id_manifestacion": "M-N1-LEN-2",
+    "nivel": 1,
+    "dominio": "lenguaje_comunicacion",
+    "texto_observable": "[N1] Sigue una instrucción verbal sencilla sin apoyo gestual."
+  },
+  {
+    "id_manifestacion": "M-N1-MOF-1",
+    "nivel": 1,
+    "dominio": "motor_fino",
+    "texto_observable": "[N1] Toma objetos pequeños con pinza entre pulgar e índice."
+  },
+  {
+    "id_manifestacion": "M-N1-MOF-2",
+    "nivel": 1,
+    "dominio": "motor_fino",
+    "texto_observable": "[N1] Hace trazos intencionados con un lápiz grueso."
+  },
+  {
+    "id_manifestacion": "M-N1-MOG-1",
+    "nivel": 1,
+    "dominio": "motor_grueso",
+    "texto_observable": "[N1] Se desplaza con equilibrio sorteando un obstáculo bajo."
+  },
+  {
+    "id_manifestacion": "M-N1-MOG-2",
+    "nivel": 1,
+    "dominio": "motor_grueso",
+    "texto_observable": "[N1] Lanza y recibe una pelota a corta distancia."
+  },
+  {
+    "id_manifestacion": "M-N1-SOC-1",
+    "nivel": 1,
+    "dominio": "socioemocional",
+    "texto_observable": "[N1] Comparte un material con un par cuando la educadora lo propone."
+  },
+  {
+    "id_manifestacion": "M-N1-SOC-2",
+    "nivel": 1,
+    "dominio": "socioemocional",
+    "texto_observable": "[N1] Expresa una emoción nombrándola ('estoy contento')."
+  },
+  {
+    "id_manifestacion": "M-N2-COG-1",
+    "nivel": 2,
+    "dominio": "cognitivo",
+    "texto_observable": "[N2] Clasifica objetos por un atributo (color o forma)."
+  },
+  {
+    "id_manifestacion": "M-N2-COG-2",
+    "nivel": 2,
+    "dominio": "cognitivo",
+    "texto_observable": "[N2] Resuelve un encaje o rompecabezas simple por ensayo y acierto."
+  },
+  {
+    "id_manifestacion": "M-N2-LEN-1",
+    "nivel": 2,
+    "dominio": "lenguaje_comunicacion",
+    "texto_observable": "[N2] Nombra objetos cotidianos cuando se le pregunta."
+  },
+  {
+    "id_manifestacion": "M-N2-LEN-2",
+    "nivel": 2,
+    "dominio": "lenguaje_comunicacion",
+    "texto_observable": "[N2] Sigue una instrucción verbal sencilla sin apoyo gestual."
+  },
+  {
+    "id_manifestacion": "M-N2-MOF-1",
+    "nivel": 2,
+    "dominio": "motor_fino",
+    "texto_observable": "[N2] Toma objetos pequeños con pinza entre pulgar e índice."
+  },
+  {
+    "id_manifestacion": "M-N2-MOF-2",
+    "nivel": 2,
+    "dominio": "motor_fino",
+    "texto_observable": "[N2] Hace trazos intencionados con un lápiz grueso."
+  },
+  {
+    "id_manifestacion": "M-N2-MOG-1",
+    "nivel": 2,
+    "dominio": "motor_grueso",
+    "texto_observable": "[N2] Se desplaza con equilibrio sorteando un obstáculo bajo."
+  },
+  {
+    "id_manifestacion": "M-N2-MOG-2",
+    "nivel": 2,
+    "dominio": "motor_grueso",
+    "texto_observable": "[N2] Lanza y recibe una pelota a corta distancia."
+  },
+  {
+    "id_manifestacion": "M-N2-SOC-1",
+    "nivel": 2,
+    "dominio": "socioemocional",
+    "texto_observable": "[N2] Comparte un material con un par cuando la educadora lo propone."
+  },
+  {
+    "id_manifestacion": "M-N2-SOC-2",
+    "nivel": 2,
+    "dominio": "socioemocional",
+    "texto_observable": "[N2] Expresa una emoción nombrándola ('estoy contento')."
+  },
+  {
+    "id_manifestacion": "M-N3-COG-1",
+    "nivel": 3,
+    "dominio": "cognitivo",
+    "texto_observable": "[N3] Clasifica objetos por un atributo (color o forma)."
+  },
+  {
+    "id_manifestacion": "M-N3-COG-2",
+    "nivel": 3,
+    "dominio": "cognitivo",
+    "texto_observable": "[N3] Resuelve un encaje o rompecabezas simple por ensayo y acierto."
+  },
+  {
+    "id_manifestacion": "M-N3-LEN-1",
+    "nivel": 3,
+    "dominio": "lenguaje_comunicacion",
+    "texto_observable": "[N3] Nombra objetos cotidianos cuando se le pregunta."
+  },
+  {
+    "id_manifestacion": "M-N3-LEN-2",
+    "nivel": 3,
+    "dominio": "lenguaje_comunicacion",
+    "texto_observable": "[N3] Sigue una instrucción verbal sencilla sin apoyo gestual."
+  },
+  {
+    "id_manifestacion": "M-N3-MOF-1",
+    "nivel": 3,
+    "dominio": "motor_fino",
+    "texto_observable": "[N3] Toma objetos pequeños con pinza entre pulgar e índice."
+  },
+  {
+    "id_manifestacion": "M-N3-MOF-2",
+    "nivel": 3,
+    "dominio": "motor_fino",
+    "texto_observable": "[N3] Hace trazos intencionados con un lápiz grueso."
+  },
+  {
+    "id_manifestacion": "M-N3-MOG-1",
+    "nivel": 3,
+    "dominio": "motor_grueso",
+    "texto_observable": "[N3] Se desplaza con equilibrio sorteando un obstáculo bajo."
+  },
+  {
+    "id_manifestacion": "M-N3-MOG-2",
+    "nivel": 3,
+    "dominio": "motor_grueso",
+    "texto_observable": "[N3] Lanza y recibe una pelota a corta distancia."
+  },
+  {
+    "id_manifestacion": "M-N3-SOC-1",
+    "nivel": 3,
+    "dominio": "socioemocional",
+    "texto_observable": "[N3] Comparte un material con un par cuando la educadora lo propone."
+  },
+  {
+    "id_manifestacion": "M-N3-SOC-2",
+    "nivel": 3,
+    "dominio": "socioemocional",
+    "texto_observable": "[N3] Expresa una emoción nombrándola ('estoy contento')."
+  },
+  {
+    "id_manifestacion": "M-N4-COG-1",
+    "nivel": 4,
+    "dominio": "cognitivo",
+    "texto_observable": "[N4] Clasifica objetos por un atributo (color o forma)."
+  },
+  {
+    "id_manifestacion": "M-N4-COG-2",
+    "nivel": 4,
+    "dominio": "cognitivo",
+    "texto_observable": "[N4] Resuelve un encaje o rompecabezas simple por ensayo y acierto."
+  },
+  {
+    "id_manifestacion": "M-N4-LEN-1",
+    "nivel": 4,
+    "dominio": "lenguaje_comunicacion",
+    "texto_observable": "[N4] Nombra objetos cotidianos cuando se le pregunta."
+  },
+  {
+    "id_manifestacion": "M-N4-LEN-2",
+    "nivel": 4,
+    "dominio": "lenguaje_comunicacion",
+    "texto_observable": "[N4] Sigue una instrucción verbal sencilla sin apoyo gestual."
+  },
+  {
+    "id_manifestacion": "M-N4-MOF-1",
+    "nivel": 4,
+    "dominio": "motor_fino",
+    "texto_observable": "[N4] Toma objetos pequeños con pinza entre pulgar e índice."
+  },
+  {
+    "id_manifestacion": "M-N4-MOF-2",
+    "nivel": 4,
+    "dominio": "motor_fino",
+    "texto_observable": "[N4] Hace trazos intencionados con un lápiz grueso."
+  },
+  {
+    "id_manifestacion": "M-N4-MOG-1",
+    "nivel": 4,
+    "dominio": "motor_grueso",
+    "texto_observable": "[N4] Se desplaza con equilibrio sorteando un obstáculo bajo."
+  },
+  {
+    "id_manifestacion": "M-N4-MOG-2",
+    "nivel": 4,
+    "dominio": "motor_grueso",
+    "texto_observable": "[N4] Lanza y recibe una pelota a corta distancia."
+  },
+  {
+    "id_manifestacion": "M-N4-SOC-1",
+    "nivel": 4,
+    "dominio": "socioemocional",
+    "texto_observable": "[N4] Comparte un material con un par cuando la educadora lo propone."
+  },
+  {
+    "id_manifestacion": "M-N4-SOC-2",
+    "nivel": 4,
+    "dominio": "socioemocional",
+    "texto_observable": "[N4] Expresa una emoción nombrándola ('estoy contento')."
+  },
+  {
+    "id_manifestacion": "M-N5-COG-1",
+    "nivel": 5,
+    "dominio": "cognitivo",
+    "texto_observable": "[N5] Clasifica objetos por un atributo (color o forma)."
+  },
+  {
+    "id_manifestacion": "M-N5-COG-2",
+    "nivel": 5,
+    "dominio": "cognitivo",
+    "texto_observable": "[N5] Resuelve un encaje o rompecabezas simple por ensayo y acierto."
+  },
+  {
+    "id_manifestacion": "M-N5-LEN-1",
+    "nivel": 5,
+    "dominio": "lenguaje_comunicacion",
+    "texto_observable": "[N5] Nombra objetos cotidianos cuando se le pregunta."
+  },
+  {
+    "id_manifestacion": "M-N5-LEN-2",
+    "nivel": 5,
+    "dominio": "lenguaje_comunicacion",
+    "texto_observable": "[N5] Sigue una instrucción verbal sencilla sin apoyo gestual."
+  },
+  {
+    "id_manifestacion": "M-N5-MOF-1",
+    "nivel": 5,
+    "dominio": "motor_fino",
+    "texto_observable": "[N5] Toma objetos pequeños con pinza entre pulgar e índice."
+  },
+  {
+    "id_manifestacion": "M-N5-MOF-2",
+    "nivel": 5,
+    "dominio": "motor_fino",
+    "texto_observable": "[N5] Hace trazos intencionados con un lápiz grueso."
+  },
+  {
+    "id_manifestacion": "M-N5-MOG-1",
+    "nivel": 5,
+    "dominio": "motor_grueso",
+    "texto_observable": "[N5] Se desplaza con equilibrio sorteando un obstáculo bajo."
+  },
+  {
+    "id_manifestacion": "M-N5-MOG-2",
+    "nivel": 5,
+    "dominio": "motor_grueso",
+    "texto_observable": "[N5] Lanza y recibe una pelota a corta distancia."
+  },
+  {
+    "id_manifestacion": "M-N5-SOC-1",
+    "nivel": 5,
+    "dominio": "socioemocional",
+    "texto_observable": "[N5] Comparte un material con un par cuando la educadora lo propone."
+  },
+  {
+    "id_manifestacion": "M-N5-SOC-2",
+    "nivel": 5,
+    "dominio": "socioemocional",
+    "texto_observable": "[N5] Expresa una emoción nombrándola ('estoy contento')."
+  },
+  {
+    "id_manifestacion": "M-N6-COG-1",
+    "nivel": 6,
+    "dominio": "cognitivo",
+    "texto_observable": "[N6] Clasifica objetos por un atributo (color o forma)."
+  },
+  {
+    "id_manifestacion": "M-N6-COG-2",
+    "nivel": 6,
+    "dominio": "cognitivo",
+    "texto_observable": "[N6] Resuelve un encaje o rompecabezas simple por ensayo y acierto."
+  },
+  {
+    "id_manifestacion": "M-N6-LEN-1",
+    "nivel": 6,
+    "dominio": "lenguaje_comunicacion",
+    "texto_observable": "[N6] Nombra objetos cotidianos cuando se le pregunta."
+  },
+  {
+    "id_manifestacion": "M-N6-LEN-2",
+    "nivel": 6,
+    "dominio": "lenguaje_comunicacion",
+    "texto_observable": "[N6] Sigue una instrucción verbal sencilla sin apoyo gestual."
+  },
+  {
+    "id_manifestacion": "M-N6-MOF-1",
+    "nivel": 6,
+    "dominio": "motor_fino",
+    "texto_observable": "[N6] Toma objetos pequeños con pinza entre pulgar e índice."
+  },
+  {
+    "id_manifestacion": "M-N6-MOF-2",
+    "nivel": 6,
+    "dominio": "motor_fino",
+    "texto_observable": "[N6] Hace trazos intencionados con un lápiz grueso."
+  },
+  {
+    "id_manifestacion": "M-N6-MOG-1",
+    "nivel": 6,
+    "dominio": "motor_grueso",
+    "texto_observable": "[N6] Se desplaza con equilibrio sorteando un obstáculo bajo."
+  },
+  {
+    "id_manifestacion": "M-N6-MOG-2",
+    "nivel": 6,
+    "dominio": "motor_grueso",
+    "texto_observable": "[N6] Lanza y recibe una pelota a corta distancia."
+  },
+  {
+    "id_manifestacion": "M-N6-SOC-1",
+    "nivel": 6,
+    "dominio": "socioemocional",
+    "texto_observable": "[N6] Comparte un material con un par cuando la educadora lo propone."
+  },
+  {
+    "id_manifestacion": "M-N6-SOC-2",
+    "nivel": 6,
+    "dominio": "socioemocional",
+    "texto_observable": "[N6] Expresa una emoción nombrándola ('estoy contento')."
+  },
+  {
+    "id_manifestacion": "M-N7-COG-1",
+    "nivel": 7,
+    "dominio": "cognitivo",
+    "texto_observable": "[N7] Clasifica objetos por un atributo (color o forma)."
+  },
+  {
+    "id_manifestacion": "M-N7-COG-2",
+    "nivel": 7,
+    "dominio": "cognitivo",
+    "texto_observable": "[N7] Resuelve un encaje o rompecabezas simple por ensayo y acierto."
+  },
+  {
+    "id_manifestacion": "M-N7-LEN-1",
+    "nivel": 7,
+    "dominio": "lenguaje_comunicacion",
+    "texto_observable": "[N7] Nombra objetos cotidianos cuando se le pregunta."
+  },
+  {
+    "id_manifestacion": "M-N7-LEN-2",
+    "nivel": 7,
+    "dominio": "lenguaje_comunicacion",
+    "texto_observable": "[N7] Sigue una instrucción verbal sencilla sin apoyo gestual."
+  },
+  {
+    "id_manifestacion": "M-N7-MOF-1",
+    "nivel": 7,
+    "dominio": "motor_fino",
+    "texto_observable": "[N7] Toma objetos pequeños con pinza entre pulgar e índice."
+  },
+  {
+    "id_manifestacion": "M-N7-MOF-2",
+    "nivel": 7,
+    "dominio": "motor_fino",
+    "texto_observable": "[N7] Hace trazos intencionados con un lápiz grueso."
+  },
+  {
+    "id_manifestacion": "M-N7-MOG-1",
+    "nivel": 7,
+    "dominio": "motor_grueso",
+    "texto_observable": "[N7] Se desplaza con equilibrio sorteando un obstáculo bajo."
+  },
+  {
+    "id_manifestacion": "M-N7-MOG-2",
+    "nivel": 7,
+    "dominio": "motor_grueso",
+    "texto_observable": "[N7] Lanza y recibe una pelota a corta distancia."
+  },
+  {
+    "id_manifestacion": "M-N7-SOC-1",
+    "nivel": 7,
+    "dominio": "socioemocional",
+    "texto_observable": "[N7] Comparte un material con un par cuando la educadora lo propone."
+  },
+  {
+    "id_manifestacion": "M-N7-SOC-2",
+    "nivel": 7,
+    "dominio": "socioemocional",
+    "texto_observable": "[N7] Expresa una emoción nombrándola ('estoy contento')."
+  },
+  {
+    "id_manifestacion": "M-N8-COG-1",
+    "nivel": 8,
+    "dominio": "cognitivo",
+    "texto_observable": "[N8] Clasifica objetos por un atributo (color o forma)."
+  },
+  {
+    "id_manifestacion": "M-N8-COG-2",
+    "nivel": 8,
+    "dominio": "cognitivo",
+    "texto_observable": "[N8] Resuelve un encaje o rompecabezas simple por ensayo y acierto."
+  },
+  {
+    "id_manifestacion": "M-N8-LEN-1",
+    "nivel": 8,
+    "dominio": "lenguaje_comunicacion",
+    "texto_observable": "[N8] Nombra objetos cotidianos cuando se le pregunta."
+  },
+  {
+    "id_manifestacion": "M-N8-LEN-2",
+    "nivel": 8,
+    "dominio": "lenguaje_comunicacion",
+    "texto_observable": "[N8] Sigue una instrucción verbal sencilla sin apoyo gestual."
+  },
+  {
+    "id_manifestacion": "M-N8-MOF-1",
+    "nivel": 8,
+    "dominio": "motor_fino",
+    "texto_observable": "[N8] Toma objetos pequeños con pinza entre pulgar e índice."
+  },
+  {
+    "id_manifestacion": "M-N8-MOF-2",
+    "nivel": 8,
+    "dominio": "motor_fino",
+    "texto_observable": "[N8] Hace trazos intencionados con un lápiz grueso."
+  },
+  {
+    "id_manifestacion": "M-N8-MOG-1",
+    "nivel": 8,
+    "dominio": "motor_grueso",
+    "texto_observable": "[N8] Se desplaza con equilibrio sorteando un obstáculo bajo."
+  },
+  {
+    "id_manifestacion": "M-N8-MOG-2",
+    "nivel": 8,
+    "dominio": "motor_grueso",
+    "texto_observable": "[N8] Lanza y recibe una pelota a corta distancia."
+  },
+  {
+    "id_manifestacion": "M-N8-SOC-1",
+    "nivel": 8,
+    "dominio": "socioemocional",
+    "texto_observable": "[N8] Comparte un material con un par cuando la educadora lo propone."
+  },
+  {
+    "id_manifestacion": "M-N8-SOC-2",
+    "nivel": 8,
+    "dominio": "socioemocional",
+    "texto_observable": "[N8] Expresa una emoción nombrándola ('estoy contento')."
+  },
+  {
+    "id_manifestacion": "M-N9-COG-1",
+    "nivel": 9,
+    "dominio": "cognitivo",
+    "texto_observable": "[N9] Clasifica objetos por un atributo (color o forma)."
+  },
+  {
+    "id_manifestacion": "M-N9-COG-2",
+    "nivel": 9,
+    "dominio": "cognitivo",
+    "texto_observable": "[N9] Resuelve un encaje o rompecabezas simple por ensayo y acierto."
+  },
+  {
+    "id_manifestacion": "M-N9-LEN-1",
+    "nivel": 9,
+    "dominio": "lenguaje_comunicacion",
+    "texto_observable": "[N9] Nombra objetos cotidianos cuando se le pregunta."
+  },
+  {
+    "id_manifestacion": "M-N9-LEN-2",
+    "nivel": 9,
+    "dominio": "lenguaje_comunicacion",
+    "texto_observable": "[N9] Sigue una instrucción verbal sencilla sin apoyo gestual."
+  },
+  {
+    "id_manifestacion": "M-N9-MOF-1",
+    "nivel": 9,
+    "dominio": "motor_fino",
+    "texto_observable": "[N9] Toma objetos pequeños con pinza entre pulgar e índice."
+  },
+  {
+    "id_manifestacion": "M-N9-MOF-2",
+    "nivel": 9,
+    "dominio": "motor_fino",
+    "texto_observable": "[N9] Hace trazos intencionados con un lápiz grueso."
+  },
+  {
+    "id_manifestacion": "M-N9-MOG-1",
+    "nivel": 9,
+    "dominio": "motor_grueso",
+    "texto_observable": "[N9] Se desplaza con equilibrio sorteando un obstáculo bajo."
+  },
+  {
+    "id_manifestacion": "M-N9-MOG-2",
+    "nivel": 9,
+    "dominio": "motor_grueso",
+    "texto_observable": "[N9] Lanza y recibe una pelota a corta distancia."
+  },
+  {
+    "id_manifestacion": "M-N9-SOC-1",
+    "nivel": 9,
+    "dominio": "socioemocional",
+    "texto_observable": "[N9] Comparte un material con un par cuando la educadora lo propone."
+  },
+  {
+    "id_manifestacion": "M-N9-SOC-2",
+    "nivel": 9,
+    "dominio": "socioemocional",
+    "texto_observable": "[N9] Expresa una emoción nombrándola ('estoy contento')."
+  }
+]
