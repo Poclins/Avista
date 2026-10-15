@@ -1,0 +1,20 @@
+[
+  {
+    "version_rubrica": "v1",
+    "criterios": {
+      "n_observaciones_consistentes": 3,
+      "dominios_requeridos": [
+        "cognitivo",
+        "lenguaje_comunicacion",
+        "motor_fino",
+        "motor_grueso",
+        "socioemocional"
+      ],
+      "umbral_score_avanzar": 0.8,
+      "umbral_score_retroceder": 0.3,
+      "k_observaciones_retroceso": 3
+    },
+    "vigente_desde": "2024-01-01",
+    "descripcion": "Versión inicial de la rúbrica determinista del MVP."
+  }
+]

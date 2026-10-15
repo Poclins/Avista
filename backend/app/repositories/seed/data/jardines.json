@@ -1,0 +1,18 @@
+[
+  {
+    "id_jardin": "J-001",
+    "nombre_fantasia": "Los Girasoles",
+    "comuna": "Maipú",
+    "region": "Región Metropolitana",
+    "numero_salas": 2,
+    "numero_educadoras": 3
+  },
+  {
+    "id_jardin": "J-002",
+    "nombre_fantasia": "Pequeños Exploradores",
+    "comuna": "Valparaíso",
+    "region": "Valparaíso",
+    "numero_salas": 1,
+    "numero_educadoras": 2
+  }
+]

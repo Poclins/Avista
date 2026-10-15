@@ -1,0 +1,21 @@
+# jAImes backend — dependencias (Python 3.12)
+# Capa 2 (API/servicios) + Capa 3 (acceso a datos relacional/vectorial/storage).
+
+# --- Web / API ---
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-multipart==0.0.20          # cargas multipart (medios de observación)
+
+# --- Configuración y validación ---
+pydantic==2.10.4
+pydantic-settings==2.7.1
+
+# --- Acceso a datos relacional ---
+SQLAlchemy==2.0.36
+psycopg[binary]==3.2.3            # driver Postgres (camino AWS/pgvector); wheels self-contained
+
+# --- Base vectorial ---
+pgvector==0.3.6
+
+# --- AWS SDK (camino USE_MOCKS=false) ---
+boto3==1.35.90

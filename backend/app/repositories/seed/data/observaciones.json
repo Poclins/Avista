@@ -1,0 +1,362 @@
+[
+  {
+    "id_observacion": "O-0001",
+    "id_nino": "N-001",
+    "id_educadora": "E-002",
+    "fecha_observacion": "2024-03-29",
+    "formato_captura": "video",
+    "nivel_estimado": 4,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0002",
+    "id_nino": "N-001",
+    "id_educadora": "E-003",
+    "fecha_observacion": "2024-03-23",
+    "formato_captura": "video",
+    "nivel_estimado": 4,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0003",
+    "id_nino": "N-001",
+    "id_educadora": "E-002",
+    "fecha_observacion": "2024-03-08",
+    "formato_captura": "video",
+    "nivel_estimado": 4,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0004",
+    "id_nino": "N-002",
+    "id_educadora": "E-001",
+    "fecha_observacion": "2024-03-24",
+    "formato_captura": "texto",
+    "nivel_estimado": 9,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0005",
+    "id_nino": "N-002",
+    "id_educadora": "E-002",
+    "fecha_observacion": "2024-03-02",
+    "formato_captura": "audio",
+    "nivel_estimado": 9,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0006",
+    "id_nino": "N-002",
+    "id_educadora": "E-003",
+    "fecha_observacion": "2024-03-16",
+    "formato_captura": "video",
+    "nivel_estimado": 9,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0007",
+    "id_nino": "N-003",
+    "id_educadora": "E-003",
+    "fecha_observacion": "2024-02-20",
+    "formato_captura": "video",
+    "nivel_estimado": 6,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0008",
+    "id_nino": "N-003",
+    "id_educadora": "E-002",
+    "fecha_observacion": "2024-03-25",
+    "formato_captura": "foto",
+    "nivel_estimado": 6,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0009",
+    "id_nino": "N-003",
+    "id_educadora": "E-001",
+    "fecha_observacion": "2024-03-13",
+    "formato_captura": "video",
+    "nivel_estimado": 6,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0010",
+    "id_nino": "N-004",
+    "id_educadora": "E-003",
+    "fecha_observacion": "2024-03-03",
+    "formato_captura": "video",
+    "nivel_estimado": 3,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0011",
+    "id_nino": "N-004",
+    "id_educadora": "E-003",
+    "fecha_observacion": "2024-03-30",
+    "formato_captura": "texto",
+    "nivel_estimado": 3,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0012",
+    "id_nino": "N-004",
+    "id_educadora": "E-001",
+    "fecha_observacion": "2024-02-29",
+    "formato_captura": "foto",
+    "nivel_estimado": 3,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0013",
+    "id_nino": "N-005",
+    "id_educadora": "E-001",
+    "fecha_observacion": "2024-03-13",
+    "formato_captura": "foto",
+    "nivel_estimado": 9,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0014",
+    "id_nino": "N-005",
+    "id_educadora": "E-001",
+    "fecha_observacion": "2024-03-19",
+    "formato_captura": "video",
+    "nivel_estimado": 9,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0015",
+    "id_nino": "N-005",
+    "id_educadora": "E-001",
+    "fecha_observacion": "2024-02-06",
+    "formato_captura": "texto",
+    "nivel_estimado": 9,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0016",
+    "id_nino": "N-006",
+    "id_educadora": "E-003",
+    "fecha_observacion": "2024-03-22",
+    "formato_captura": "audio",
+    "nivel_estimado": 5,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0017",
+    "id_nino": "N-006",
+    "id_educadora": "E-003",
+    "fecha_observacion": "2024-02-03",
+    "formato_captura": "foto",
+    "nivel_estimado": 5,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0018",
+    "id_nino": "N-006",
+    "id_educadora": "E-002",
+    "fecha_observacion": "2024-03-14",
+    "formato_captura": "video",
+    "nivel_estimado": 5,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0019",
+    "id_nino": "N-007",
+    "id_educadora": "E-002",
+    "fecha_observacion": "2024-03-09",
+    "formato_captura": "audio",
+    "nivel_estimado": 5,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0020",
+    "id_nino": "N-007",
+    "id_educadora": "E-003",
+    "fecha_observacion": "2024-02-11",
+    "formato_captura": "audio",
+    "nivel_estimado": 5,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0021",
+    "id_nino": "N-007",
+    "id_educadora": "E-002",
+    "fecha_observacion": "2024-03-23",
+    "formato_captura": "audio",
+    "nivel_estimado": 5,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0022",
+    "id_nino": "N-008",
+    "id_educadora": "E-001",
+    "fecha_observacion": "2024-02-25",
+    "formato_captura": "texto",
+    "nivel_estimado": 6,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0023",
+    "id_nino": "N-008",
+    "id_educadora": "E-003",
+    "fecha_observacion": "2024-02-23",
+    "formato_captura": "texto",
+    "nivel_estimado": 6,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0024",
+    "id_nino": "N-008",
+    "id_educadora": "E-002",
+    "fecha_observacion": "2024-02-21",
+    "formato_captura": "foto",
+    "nivel_estimado": 6,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0025",
+    "id_nino": "N-009",
+    "id_educadora": "E-005",
+    "fecha_observacion": "2024-03-08",
+    "formato_captura": "audio",
+    "nivel_estimado": 8,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0026",
+    "id_nino": "N-009",
+    "id_educadora": "E-004",
+    "fecha_observacion": "2024-02-28",
+    "formato_captura": "foto",
+    "nivel_estimado": 8,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0027",
+    "id_nino": "N-009",
+    "id_educadora": "E-004",
+    "fecha_observacion": "2024-03-07",
+    "formato_captura": "video",
+    "nivel_estimado": 8,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0028",
+    "id_nino": "N-010",
+    "id_educadora": "E-004",
+    "fecha_observacion": "2024-03-13",
+    "formato_captura": "texto",
+    "nivel_estimado": 6,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0029",
+    "id_nino": "N-010",
+    "id_educadora": "E-004",
+    "fecha_observacion": "2024-02-09",
+    "formato_captura": "audio",
+    "nivel_estimado": 6,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0030",
+    "id_nino": "N-010",
+    "id_educadora": "E-004",
+    "fecha_observacion": "2024-02-25",
+    "formato_captura": "foto",
+    "nivel_estimado": 6,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0031",
+    "id_nino": "N-011",
+    "id_educadora": "E-005",
+    "fecha_observacion": "2024-02-20",
+    "formato_captura": "audio",
+    "nivel_estimado": 5,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0032",
+    "id_nino": "N-011",
+    "id_educadora": "E-005",
+    "fecha_observacion": "2024-03-03",
+    "formato_captura": "video",
+    "nivel_estimado": 5,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0033",
+    "id_nino": "N-011",
+    "id_educadora": "E-005",
+    "fecha_observacion": "2024-03-05",
+    "formato_captura": "video",
+    "nivel_estimado": 5,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0034",
+    "id_nino": "N-012",
+    "id_educadora": "E-004",
+    "fecha_observacion": "2024-03-26",
+    "formato_captura": "audio",
+    "nivel_estimado": 7,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0035",
+    "id_nino": "N-012",
+    "id_educadora": "E-004",
+    "fecha_observacion": "2024-03-28",
+    "formato_captura": "video",
+    "nivel_estimado": 7,
+    "nota_breve": "",
+    "edad_meses": null
+  },
+  {
+    "id_observacion": "O-0036",
+    "id_nino": "N-012",
+    "id_educadora": "E-004",
+    "fecha_observacion": "2024-02-02",
+    "formato_captura": "foto",
+    "nivel_estimado": 7,
+    "nota_breve": "",
+    "edad_meses": null
+  }
+]

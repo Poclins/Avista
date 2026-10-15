@@ -1,0 +1,30 @@
+{
+  "conteos": {
+    "ruta_niveles": 9,
+    "manifestaciones": 90,
+    "jardines": 2,
+    "educadoras": 5,
+    "ninos": 12,
+    "observaciones": 36,
+    "observacion_manifestaciones": 57,
+    "rubrica_versiones": 1
+  },
+  "manifestaciones_por_dominio": {
+    "cognitivo": 18,
+    "lenguaje_comunicacion": 18,
+    "motor_fino": 18,
+    "motor_grueso": 18,
+    "socioemocional": 18
+  },
+  "manifestaciones_por_nivel": {
+    "1": 10,
+    "2": 10,
+    "3": 10,
+    "4": 10,
+    "5": 10,
+    "6": 10,
+    "7": 10,
+    "8": 10,
+    "9": 10
+  }
+}

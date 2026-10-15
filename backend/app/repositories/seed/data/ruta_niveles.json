@@ -1,0 +1,128 @@
+[
+  {
+    "nivel": 1,
+    "nombre_nivel": "Vínculo inicial",
+    "edad_min_meses": 0,
+    "edad_max_meses": 8,
+    "dominios": [
+      "cognitivo",
+      "lenguaje_comunicacion",
+      "motor_fino",
+      "motor_grueso",
+      "socioemocional"
+    ],
+    "descripcion": "Nivel 1 de la ruta de desarrollo: Vínculo inicial (0–8 meses)."
+  },
+  {
+    "nivel": 2,
+    "nombre_nivel": "Exploración sensorial",
+    "edad_min_meses": 8,
+    "edad_max_meses": 16,
+    "dominios": [
+      "cognitivo",
+      "lenguaje_comunicacion",
+      "motor_fino",
+      "motor_grueso",
+      "socioemocional"
+    ],
+    "descripcion": "Nivel 2 de la ruta de desarrollo: Exploración sensorial (8–16 meses)."
+  },
+  {
+    "nivel": 3,
+    "nombre_nivel": "Primeros pasos",
+    "edad_min_meses": 16,
+    "edad_max_meses": 24,
+    "dominios": [
+      "cognitivo",
+      "lenguaje_comunicacion",
+      "motor_fino",
+      "motor_grueso",
+      "socioemocional"
+    ],
+    "descripcion": "Nivel 3 de la ruta de desarrollo: Primeros pasos (16–24 meses)."
+  },
+  {
+    "nivel": 4,
+    "nombre_nivel": "Descubrimiento activo",
+    "edad_min_meses": 24,
+    "edad_max_meses": 32,
+    "dominios": [
+      "cognitivo",
+      "lenguaje_comunicacion",
+      "motor_fino",
+      "motor_grueso",
+      "socioemocional"
+    ],
+    "descripcion": "Nivel 4 de la ruta de desarrollo: Descubrimiento activo (24–32 meses)."
+  },
+  {
+    "nivel": 5,
+    "nombre_nivel": "Lenguaje emergente",
+    "edad_min_meses": 32,
+    "edad_max_meses": 40,
+    "dominios": [
+      "cognitivo",
+      "lenguaje_comunicacion",
+      "motor_fino",
+      "motor_grueso",
+      "socioemocional"
+    ],
+    "descripcion": "Nivel 5 de la ruta de desarrollo: Lenguaje emergente (32–40 meses)."
+  },
+  {
+    "nivel": 6,
+    "nombre_nivel": "Juego simbólico",
+    "edad_min_meses": 40,
+    "edad_max_meses": 48,
+    "dominios": [
+      "cognitivo",
+      "lenguaje_comunicacion",
+      "motor_fino",
+      "motor_grueso",
+      "socioemocional"
+    ],
+    "descripcion": "Nivel 6 de la ruta de desarrollo: Juego simbólico (40–48 meses)."
+  },
+  {
+    "nivel": 7,
+    "nombre_nivel": "Autonomía creciente",
+    "edad_min_meses": 48,
+    "edad_max_meses": 56,
+    "dominios": [
+      "cognitivo",
+      "lenguaje_comunicacion",
+      "motor_fino",
+      "motor_grueso",
+      "socioemocional"
+    ],
+    "descripcion": "Nivel 7 de la ruta de desarrollo: Autonomía creciente (48–56 meses)."
+  },
+  {
+    "nivel": 8,
+    "nombre_nivel": "Pensamiento conceptual",
+    "edad_min_meses": 56,
+    "edad_max_meses": 64,
+    "dominios": [
+      "cognitivo",
+      "lenguaje_comunicacion",
+      "motor_fino",
+      "motor_grueso",
+      "socioemocional"
+    ],
+    "descripcion": "Nivel 8 de la ruta de desarrollo: Pensamiento conceptual (56–64 meses)."
+  },
+  {
+    "nivel": 9,
+    "nombre_nivel": "Preparación escolar",
+    "edad_min_meses": 64,
+    "edad_max_meses": 72,
+    "dominios": [
+      "cognitivo",
+      "lenguaje_comunicacion",
+      "motor_fino",
+      "motor_grueso",
+      "socioemocional"
+    ],
+    "descripcion": "Nivel 9 de la ruta de desarrollo: Preparación escolar (64–72 meses)."
+  }
+]

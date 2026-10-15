@@ -1,0 +1,98 @@
+[
+  {
+    "id_nino": "N-001",
+    "id_jardin": "J-001",
+    "fecha_nacimiento": "2021-03-04",
+    "sexo_registrado": "M",
+    "sala_grupo": "Sala Cuna",
+    "fecha_ingreso": "2023-01-29"
+  },
+  {
+    "id_nino": "N-002",
+    "id_jardin": "J-001",
+    "fecha_nacimiento": "2018-05-05",
+    "sexo_registrado": "M",
+    "sala_grupo": "Sala Cuna",
+    "fecha_ingreso": "2023-02-05"
+  },
+  {
+    "id_nino": "N-003",
+    "id_jardin": "J-001",
+    "fecha_nacimiento": "2021-01-02",
+    "sexo_registrado": "F",
+    "sala_grupo": "Sala Cuna",
+    "fecha_ingreso": "2023-12-01"
+  },
+  {
+    "id_nino": "N-004",
+    "id_jardin": "J-001",
+    "fecha_nacimiento": "2022-05-03",
+    "sexo_registrado": "F",
+    "sala_grupo": "Sala Cuna",
+    "fecha_ingreso": "2023-07-08"
+  },
+  {
+    "id_nino": "N-005",
+    "id_jardin": "J-001",
+    "fecha_nacimiento": "2018-10-04",
+    "sexo_registrado": "M",
+    "sala_grupo": "Nivel Medio",
+    "fecha_ingreso": "2023-11-27"
+  },
+  {
+    "id_nino": "N-006",
+    "id_jardin": "J-001",
+    "fecha_nacimiento": "2020-03-04",
+    "sexo_registrado": "M",
+    "sala_grupo": "Nivel Medio",
+    "fecha_ingreso": "2023-08-17"
+  },
+  {
+    "id_nino": "N-007",
+    "id_jardin": "J-001",
+    "fecha_nacimiento": "2020-11-02",
+    "sexo_registrado": "M",
+    "sala_grupo": "Nivel Medio",
+    "fecha_ingreso": "2023-06-07"
+  },
+  {
+    "id_nino": "N-008",
+    "id_jardin": "J-001",
+    "fecha_nacimiento": "2019-07-05",
+    "sexo_registrado": "F",
+    "sala_grupo": "Nivel Medio",
+    "fecha_ingreso": "2023-03-15"
+  },
+  {
+    "id_nino": "N-009",
+    "id_jardin": "J-002",
+    "fecha_nacimiento": "2019-12-04",
+    "sexo_registrado": "M",
+    "sala_grupo": "Nivel Medio",
+    "fecha_ingreso": "2023-10-18"
+  },
+  {
+    "id_nino": "N-010",
+    "id_jardin": "J-002",
+    "fecha_nacimiento": "2020-07-04",
+    "sexo_registrado": "F",
+    "sala_grupo": "Nivel Medio",
+    "fecha_ingreso": "2023-04-12"
+  },
+  {
+    "id_nino": "N-011",
+    "id_jardin": "J-002",
+    "fecha_nacimiento": "2020-04-03",
+    "sexo_registrado": "M",
+    "sala_grupo": "Nivel Medio",
+    "fecha_ingreso": "2023-11-20"
+  },
+  {
+    "id_nino": "N-012",
+    "id_jardin": "J-002",
+    "fecha_nacimiento": "2019-09-04",
+    "sexo_registrado": "M",
+    "sala_grupo": "Nivel Medio",
+    "fecha_ingreso": "2023-04-10"
+  }
+]

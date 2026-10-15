@@ -1,0 +1,230 @@
+[
+  {
+    "id_observacion": "O-0001",
+    "id_manifestacion": "M-N4-MOG-1"
+  },
+  {
+    "id_observacion": "O-0002",
+    "id_manifestacion": "M-N4-SOC-1"
+  },
+  {
+    "id_observacion": "O-0002",
+    "id_manifestacion": "M-N4-MOF-1"
+  },
+  {
+    "id_observacion": "O-0003",
+    "id_manifestacion": "M-N4-SOC-2"
+  },
+  {
+    "id_observacion": "O-0004",
+    "id_manifestacion": "M-N9-SOC-2"
+  },
+  {
+    "id_observacion": "O-0005",
+    "id_manifestacion": "M-N9-LEN-2"
+  },
+  {
+    "id_observacion": "O-0005",
+    "id_manifestacion": "M-N9-COG-2"
+  },
+  {
+    "id_observacion": "O-0006",
+    "id_manifestacion": "M-N9-SOC-1"
+  },
+  {
+    "id_observacion": "O-0006",
+    "id_manifestacion": "M-N9-MOF-1"
+  },
+  {
+    "id_observacion": "O-0007",
+    "id_manifestacion": "M-N6-MOG-1"
+  },
+  {
+    "id_observacion": "O-0007",
+    "id_manifestacion": "M-N6-LEN-2"
+  },
+  {
+    "id_observacion": "O-0008",
+    "id_manifestacion": "M-N6-COG-1"
+  },
+  {
+    "id_observacion": "O-0009",
+    "id_manifestacion": "M-N6-MOF-2"
+  },
+  {
+    "id_observacion": "O-0009",
+    "id_manifestacion": "M-N6-LEN-2"
+  },
+  {
+    "id_observacion": "O-0010",
+    "id_manifestacion": "M-N3-MOG-1"
+  },
+  {
+    "id_observacion": "O-0010",
+    "id_manifestacion": "M-N3-SOC-1"
+  },
+  {
+    "id_observacion": "O-0011",
+    "id_manifestacion": "M-N3-MOF-2"
+  },
+  {
+    "id_observacion": "O-0011",
+    "id_manifestacion": "M-N3-MOG-2"
+  },
+  {
+    "id_observacion": "O-0012",
+    "id_manifestacion": "M-N3-LEN-1"
+  },
+  {
+    "id_observacion": "O-0012",
+    "id_manifestacion": "M-N3-MOG-1"
+  },
+  {
+    "id_observacion": "O-0013",
+    "id_manifestacion": "M-N9-MOF-2"
+  },
+  {
+    "id_observacion": "O-0013",
+    "id_manifestacion": "M-N9-COG-2"
+  },
+  {
+    "id_observacion": "O-0014",
+    "id_manifestacion": "M-N9-MOG-2"
+  },
+  {
+    "id_observacion": "O-0015",
+    "id_manifestacion": "M-N9-SOC-2"
+  },
+  {
+    "id_observacion": "O-0015",
+    "id_manifestacion": "M-N9-SOC-1"
+  },
+  {
+    "id_observacion": "O-0016",
+    "id_manifestacion": "M-N5-COG-2"
+  },
+  {
+    "id_observacion": "O-0017",
+    "id_manifestacion": "M-N5-LEN-1"
+  },
+  {
+    "id_observacion": "O-0017",
+    "id_manifestacion": "M-N5-COG-1"
+  },
+  {
+    "id_observacion": "O-0018",
+    "id_manifestacion": "M-N5-SOC-1"
+  },
+  {
+    "id_observacion": "O-0019",
+    "id_manifestacion": "M-N5-COG-2"
+  },
+  {
+    "id_observacion": "O-0019",
+    "id_manifestacion": "M-N5-MOG-1"
+  },
+  {
+    "id_observacion": "O-0020",
+    "id_manifestacion": "M-N5-SOC-1"
+  },
+  {
+    "id_observacion": "O-0020",
+    "id_manifestacion": "M-N5-MOG-1"
+  },
+  {
+    "id_observacion": "O-0021",
+    "id_manifestacion": "M-N5-MOG-1"
+  },
+  {
+    "id_observacion": "O-0022",
+    "id_manifestacion": "M-N6-MOF-2"
+  },
+  {
+    "id_observacion": "O-0023",
+    "id_manifestacion": "M-N6-SOC-1"
+  },
+  {
+    "id_observacion": "O-0024",
+    "id_manifestacion": "M-N6-MOF-2"
+  },
+  {
+    "id_observacion": "O-0024",
+    "id_manifestacion": "M-N6-COG-2"
+  },
+  {
+    "id_observacion": "O-0025",
+    "id_manifestacion": "M-N8-SOC-2"
+  },
+  {
+    "id_observacion": "O-0026",
+    "id_manifestacion": "M-N8-SOC-2"
+  },
+  {
+    "id_observacion": "O-0026",
+    "id_manifestacion": "M-N8-LEN-2"
+  },
+  {
+    "id_observacion": "O-0027",
+    "id_manifestacion": "M-N8-LEN-2"
+  },
+  {
+    "id_observacion": "O-0028",
+    "id_manifestacion": "M-N6-LEN-2"
+  },
+  {
+    "id_observacion": "O-0028",
+    "id_manifestacion": "M-N6-MOG-2"
+  },
+  {
+    "id_observacion": "O-0029",
+    "id_manifestacion": "M-N6-LEN-1"
+  },
+  {
+    "id_observacion": "O-0030",
+    "id_manifestacion": "M-N6-SOC-1"
+  },
+  {
+    "id_observacion": "O-0030",
+    "id_manifestacion": "M-N6-MOG-1"
+  },
+  {
+    "id_observacion": "O-0031",
+    "id_manifestacion": "M-N5-LEN-1"
+  },
+  {
+    "id_observacion": "O-0031",
+    "id_manifestacion": "M-N5-MOF-1"
+  },
+  {
+    "id_observacion": "O-0032",
+    "id_manifestacion": "M-N5-MOG-2"
+  },
+  {
+    "id_observacion": "O-0032",
+    "id_manifestacion": "M-N5-LEN-1"
+  },
+  {
+    "id_observacion": "O-0033",
+    "id_manifestacion": "M-N5-COG-2"
+  },
+  {
+    "id_observacion": "O-0033",
+    "id_manifestacion": "M-N5-SOC-1"
+  },
+  {
+    "id_observacion": "O-0034",
+    "id_manifestacion": "M-N7-COG-1"
+  },
+  {
+    "id_observacion": "O-0035",
+    "id_manifestacion": "M-N7-MOG-1"
+  },
+  {
+    "id_observacion": "O-0035",
+    "id_manifestacion": "M-N7-SOC-1"
+  },
+  {
+    "id_observacion": "O-0036",
+    "id_manifestacion": "M-N7-MOF-2"
+  }
+]

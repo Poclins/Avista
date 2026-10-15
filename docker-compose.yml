@@ -1,0 +1,41 @@
+# jAImes — orquestación de la demo (Requirement 10.3: un único comando).
+#
+#   docker-compose up --build
+#
+# Levanta el backend FastAPI y una base Postgres con la extensión pgvector.
+# El backend arranca en modo mock por defecto (USE_MOCKS=true), así la demo
+# corre sin credenciales AWS aunque Postgres esté disponible para pruebas.
+
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      USE_MOCKS: "true"
+      DATABASE_URL: "postgresql+psycopg://jaimes:jaimes@db:5432/jaimes"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: jaimes
+      POSTGRES_PASSWORD: jaimes
+      POSTGRES_DB: jaimes
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U jaimes -d jaimes"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:

@@ -1,0 +1,32 @@
+[
+  {
+    "id_educadora": "E-001",
+    "id_jardin": "J-001",
+    "rol": "educadora",
+    "anios_experiencia": 4
+  },
+  {
+    "id_educadora": "E-002",
+    "id_jardin": "J-001",
+    "rol": "educadora",
+    "anios_experiencia": 11
+  },
+  {
+    "id_educadora": "E-003",
+    "id_jardin": "J-001",
+    "rol": "educadora",
+    "anios_experiencia": 17
+  },
+  {
+    "id_educadora": "E-004",
+    "id_jardin": "J-002",
+    "rol": "educadora",
+    "anios_experiencia": 17
+  },
+  {
+    "id_educadora": "E-005",
+    "id_jardin": "J-002",
+    "rol": "educadora",
+    "anios_experiencia": 4
+  }
+]
