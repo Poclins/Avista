@@ -84,6 +84,49 @@
         "chatSessionId": "sess_b77d6798-9808-4257-885b-f3a2dd96736a",
         "timestamp": 1792076414028
       }
+    ],
+    "4.1 Implementar `EmbeddingProvider`: adaptador **Titan (AWS, primario)** + adaptador mock (secundario)": [
+      {
+        "executionId": "eb8e6d99-7ba8-4d62-bab9-2b2a03516a99",
+        "chatSessionId": "sess_925160e9-793f-448d-a16c-e4be931778b8",
+        "timestamp": 1792076870480
+      },
+      {
+        "executionId": "eb8e6d99-7ba8-4d62-bab9-2b2a03516a99",
+        "chatSessionId": "sess_925160e9-793f-448d-a16c-e4be931778b8",
+        "timestamp": 1792077174944
+      }
+    ],
+    "4.2 Implementar `VectorRepo`: implementación **pgvector sobre Aurora (primaria)** + índice en memoria (secundaria)": [
+      {
+        "executionId": "eb8e6d99-7ba8-4d62-bab9-2b2a03516a99",
+        "chatSessionId": "sess_925160e9-793f-448d-a16c-e4be931778b8",
+        "timestamp": 1792077179166
+      },
+      {
+        "executionId": "eb8e6d99-7ba8-4d62-bab9-2b2a03516a99",
+        "chatSessionId": "sess_925160e9-793f-448d-a16c-e4be931778b8",
+        "timestamp": 1792077545169
+      }
+    ],
+    "4.3 Implementar `EmbeddingService` (embeber texto e indexar) con manejo de fallo de indexación": [
+      {
+        "executionId": "eb8e6d99-7ba8-4d62-bab9-2b2a03516a99",
+        "chatSessionId": "sess_925160e9-793f-448d-a16c-e4be931778b8",
+        "timestamp": 1792077552536
+      },
+      {
+        "executionId": "eb8e6d99-7ba8-4d62-bab9-2b2a03516a99",
+        "chatSessionId": "sess_925160e9-793f-448d-a16c-e4be931778b8",
+        "timestamp": 1792077850338
+      }
+    ],
+    "4. Módulo C — Base vectorial y proveedor de embeddings (AWS primario) **[independiente]**": [
+      {
+        "executionId": "eb8e6d99-7ba8-4d62-bab9-2b2a03516a99",
+        "chatSessionId": "sess_925160e9-793f-448d-a16c-e4be931778b8",
+        "timestamp": 1792077850449
+      }
     ]
   }
 }

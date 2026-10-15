@@ -91,14 +91,14 @@ Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B:
 <!-- MÓDULO C · Vectorial + embeddings — Dev 2. Depende de: A.     -->
 <!-- ============================================================= -->
 
-- [ ] 4. Módulo C — Base vectorial y proveedor de embeddings (AWS primario) **[independiente]**
-- [ ] 4.1 Implementar `EmbeddingProvider`: adaptador **Titan (AWS, primario)** + adaptador mock (secundario)
+- [x] 4. Módulo C — Base vectorial y proveedor de embeddings (AWS primario) **[independiente]**
+- [x] 4.1 Implementar `EmbeddingProvider`: adaptador **Titan (AWS, primario)** + adaptador mock (secundario)
   - `titan_embeddings.py` invoca Amazon Titan vía Bedrock; `mock_embeddings.py` deriva vectores deterministas del texto para CI/local. Selección por `USE_MOCKS`.
   - _Requirements: 4.2, 4.5_
-- [ ] 4.2 Implementar `VectorRepo`: implementación **pgvector sobre Aurora (primaria)** + índice en memoria (secundaria)
+- [x] 4.2 Implementar `VectorRepo`: implementación **pgvector sobre Aurora (primaria)** + índice en memoria (secundaria)
   - `index(doc)` y `search(query_embedding, filtros, k)` con similitud coseno (`<=>`), metadatos `id_observacion, id_nino, dominio, nivel, fecha, formato`.
   - _Requirements: 4.3, 4.6, 4.7, 11.5_
-- [ ] 4.3 Implementar `EmbeddingService` (embeber texto e indexar) con manejo de fallo de indexación
+- [x] 4.3 Implementar `EmbeddingService` (embeber texto e indexar) con manejo de fallo de indexación
   - Si falla el embedding o la indexación, conservar la observación relacional sin registro vectorial y devolver error de indexación no completada.
   - _Requirements: 4.2, 4.4_
 - [ ]* 4.4 Módulo C — Tests de aislamiento con mock embeddings + índice en memoria
