@@ -1,22 +1,42 @@
-"""Seed del dataset sintético E-1 para la base relacional (Capa 3).
+"""Seed del Dataset E-1 para la base relacional (Capa 3).
 
-Expone :func:`seed` para cargar el dataset E-1 en la base relacional de forma
-idempotente, y :func:`cargar_distribucion_y_validacion` / el atributo perezoso
-``DISTRIBUCION_Y_VALIDACION`` con los conteos esperados por tabla (fuente de
-verdad para los tests de conteo).
+Expone :func:`seed_oficial` para cargar la **fuente de verdad** (Dataset E-1
+oficial) desde el zip público ``dataset_e1_publico.zip`` vía ``DatasetLoader``,
+validando los conteos contra ``distribucion_y_validacion`` (y rechazando con
+error en español si alguno no coincide), y :func:`seed` para el dataset
+reducido/casero (solo respaldo rápido de pruebas). ``DatasetLoader`` queda
+encapsulado tras esta frontera del seed.
 """
 
+from app.repositories.seed.dataset_loader import (
+    DatasetE1,
+    DatasetLoader,
+    DatasetLoaderError,
+)
 from app.repositories.seed.seed import (
+    SeedError,
+    SeedValidationError,
     cargar_dataset,
     cargar_distribucion_y_validacion,
+    conteos_esperados,
     seed,
+    seed_oficial,
+    validar_conteos,
 )
 
 __all__ = [
     "seed",
+    "seed_oficial",
+    "conteos_esperados",
+    "validar_conteos",
+    "SeedError",
+    "SeedValidationError",
     "cargar_dataset",
     "cargar_distribucion_y_validacion",
     "DISTRIBUCION_Y_VALIDACION",
+    "DatasetLoader",
+    "DatasetE1",
+    "DatasetLoaderError",
 ]
 
 

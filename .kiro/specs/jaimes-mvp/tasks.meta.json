@@ -84,6 +84,66 @@
         "chatSessionId": "sess_b77d6798-9808-4257-885b-f3a2dd96736a",
         "timestamp": 1792076414028
       }
+    ],
+    "3.4 Módulo B — Añadir consultas agregadas para el reporte de dirección a `RelationalRepo`": [
+      {
+        "executionId": "dd47062a-c87d-471e-8805-b9d11b4184bd",
+        "chatSessionId": "sess_0668e00d-c433-435e-9f80-92d70ff7085c",
+        "timestamp": 1792076770638
+      },
+      {
+        "executionId": "dd47062a-c87d-471e-8805-b9d11b4184bd",
+        "chatSessionId": "sess_0668e00d-c433-435e-9f80-92d70ff7085c",
+        "timestamp": 1792077153148
+      }
+    ],
+    "3.5 Módulo B — Tests de consultas agregadas con SQLite + dataset sembrado": [
+      {
+        "executionId": "4a918963-68fa-4635-8a99-866a9dbe085f",
+        "chatSessionId": "sess_b9031c71-8fcf-4cc3-bd55-b8cf74707465",
+        "timestamp": 1792077377418
+      },
+      {
+        "executionId": "4a918963-68fa-4635-8a99-866a9dbe085f",
+        "chatSessionId": "sess_b9031c71-8fcf-4cc3-bd55-b8cf74707465",
+        "timestamp": 1792077594320
+      }
+    ],
+    "3.7 Módulo B — Implementar `DatasetLoader` del Dataset E-1 **oficial** (7 CSV + `consolidado.json`)": [
+      {
+        "executionId": "60d8f79d-1673-4d4f-994d-8838ade21b59",
+        "chatSessionId": "sess_fa396c83-03d2-49aa-93b8-f82f14f46e69",
+        "timestamp": 1792077677358
+      },
+      {
+        "executionId": "60d8f79d-1673-4d4f-994d-8838ade21b59",
+        "chatSessionId": "sess_fa396c83-03d2-49aa-93b8-f82f14f46e69",
+        "timestamp": 1792078261627
+      }
+    ],
+    "3.8 Módulo B — Adaptar el seed para cargar vía `DatasetLoader` (oficial E-1, 500 niños) y validar conteos": [
+      {
+        "executionId": "338bcc0a-681b-4895-8660-2a713db96888",
+        "chatSessionId": "sess_ca6f1f7d-62ee-46b2-b8d1-65861cb845c6",
+        "timestamp": 1792078367627
+      },
+      {
+        "executionId": "338bcc0a-681b-4895-8660-2a713db96888",
+        "chatSessionId": "sess_ca6f1f7d-62ee-46b2-b8d1-65861cb845c6",
+        "timestamp": 1792078744161
+      }
+    ],
+    "3.9 Módulo B — Verificación de reproducibilidad del Dataset E-1 oficial": [
+      {
+        "executionId": "20179efb-568d-44f8-a492-60f34c7c9983",
+        "chatSessionId": "sess_f893cef5-11fb-47ce-9762-8a3c4a5a8ae4",
+        "timestamp": 1792078770734
+      },
+      {
+        "executionId": "20179efb-568d-44f8-a492-60f34c7c9983",
+        "chatSessionId": "sess_f893cef5-11fb-47ce-9762-8a3c4a5a8ae4",
+        "timestamp": 1792079214254
+      }
     ]
   }
 }

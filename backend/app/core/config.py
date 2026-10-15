@@ -39,6 +39,12 @@ class Settings(BaseSettings):
     # En modo mock se usa SQLite; en AWS, Postgres/pgvector (RDS/Aurora).
     database_url: str = "sqlite:///./jaimes.db"
 
+    # --- Dataset E-1 oficial (seed) ---
+    # Ruta al zip público del Dataset E-1 oficial (7 CSV + consolidado.json).
+    # Si está presente, el seed carga vía ``DatasetLoader`` (fuente de verdad);
+    # si no, cae al dataset reducido/casero (solo respaldo rápido de pruebas).
+    dataset_zip_path: str = "./dataset_e1_publico.zip"
+
     # --- Almacenamiento de objetos ---
     s3_bucket: str = "jaimes-media"
     local_storage_dir: str = "./storage"
