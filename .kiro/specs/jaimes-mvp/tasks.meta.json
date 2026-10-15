@@ -175,67 +175,57 @@
     ],
     "5.2 Implementar `TranscriptionProvider`: adaptador **AWS (Transcribe/Textract/Rekognition, primario)** + mock (secundario)": [
       {
-        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
-        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
-        "timestamp": 1792077890276
-      },
-      {
-        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
-        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
-        "timestamp": 1792077911176
-      },
-      {
-        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
-        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
-        "timestamp": 1792078746674
+        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
+        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
+        "timestamp": 1792078368206
       }
     ],
     "5.3 Implementar `TranscriptionService` que valida formato/tamaño y enruta por `formato_captura`": [
       {
-        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
-        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
-        "timestamp": 1792077890353
-      },
-      {
-        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
-        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
-        "timestamp": 1792078752079
-      },
-      {
-        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
-        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
-        "timestamp": 1792079178823
+        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
+        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
+        "timestamp": 1792078368316
       }
     ],
     "5.4 Implementar `IngestionService` idempotente (orquesta dentro del módulo con fakes de E y repos)": [
       {
-        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
-        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
-        "timestamp": 1792077890441
-      },
-      {
-        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
-        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
-        "timestamp": 1792078753360
-      },
-      {
-        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
-        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
-        "timestamp": 1792079179852
+        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
+        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
+        "timestamp": 1792078368421
       }
     ],
     "6.1 Implementar `Classifier` (adaptador basado en reglas/LLM) que estima `nivel_estimado` (1–9) y 1–5 dominios": [
       {
-        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
-        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
-        "timestamp": 1792077890524
+        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
+        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
+        "timestamp": 1792078368525
+      },
+      {
+        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
+        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
+        "timestamp": 1792078387102
+      },
+      {
+        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
+        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
+        "timestamp": 1792078823925
       }
     ],
     "6.2 Implementar `ClassificationService`: devolver clasificación **propuesta** y soportar confirmación/corrección persistente": [
       {
-        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
-        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
-        "timestamp": 1792077890614
+        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
+        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
+        "timestamp": 1792078368632
+      },
+      {
+        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
+        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
+        "timestamp": 1792078828464
+      },
+      {
+        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
+        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
+        "timestamp": 1792079583451
       }
     ],
     "7. Módulo F — Proveedor LLM, bitácoras, rúbrica y recomendación **[independiente]** (consume interfaces de B/C vía fakes)": [
@@ -422,9 +412,16 @@
     ],
     "17.5 Calidad de presentación — guion de demo y documentación por área **[integración]**": [
       {
-        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
-        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
-        "timestamp": 1792077892958
+        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
+        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
+        "timestamp": 1792078371581
+      }
+    ],
+    "6. Módulo E — Clasificación de observaciones **[independiente]**": [
+      {
+        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
+        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
+        "timestamp": 1792079583590
       }
     ],
     "5. Módulo D — Storage, transcripción (Modelo 1) e ingesta (AWS primario) **[independiente]**": [

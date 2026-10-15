@@ -139,11 +139,11 @@ Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B:
 <!-- MÓDULO E · Clasificación — Dev 3. Depende de: A.              -->
 <!-- ============================================================= -->
 
-- [ ] 6. Módulo E — Clasificación de observaciones **[independiente]**
-- [~] 6.1 Implementar `Classifier` (adaptador basado en reglas/LLM) que estima `nivel_estimado` (1–9) y 1–5 dominios
+- [x] 6. Módulo E — Clasificación de observaciones **[independiente]**
+- [x] 6.1 Implementar `Classifier` (adaptador basado en reglas/LLM) que estima `nivel_estimado` (1–9) y 1–5 dominios
   - Vincular 1–10 manifestaciones cuyo nivel = `nivel_estimado` y dominio ∈ dominios estimados; marcar baja confianza como "pendiente de clasificación manual".
   - _Requirements: 3.1, 3.2, 3.5_
-- [~] 6.2 Implementar `ClassificationService`: devolver clasificación **propuesta** y soportar confirmación/corrección persistente
+- [x] 6.2 Implementar `ClassificationService`: devolver clasificación **propuesta** y soportar confirmación/corrección persistente
   - No persistir hasta que la educadora confirme/corrija; persistir vía interfaz `RelationalRepo`; conservar valores previos ante fallo de persistencia.
   - _Requirements: 3.3, 3.4, 3.6_
 - [ ]* 6.3 Módulo E — Tests de clasificación y de vínculo con manifestaciones (fixtures E-1)
