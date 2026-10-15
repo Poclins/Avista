@@ -70,15 +70,15 @@ Estado actual: las tareas **1 (bootstrap), 2 (MÃ³dulo A) y 3.1â€“3.3 (MÃ
 - [ ]* 3.6 MÃ³dulo B â€” DocumentaciÃ³n `docs/database/`
   - _Optional_ â€” escribir `docs/database/esquema.md` + `docs/database/README.md` (diccionario E-1 + tablas nuevas) con un diagrama ER en bloque ```mermaid```.
   - _Requirements: 12.4, 12.6_
-- [ ] 3.7 MÃ³dulo B â€” Implementar `DatasetLoader` del Dataset E-1 **oficial** (7 CSV + `consolidado.json`)
-  - Leer los **siete CSV relacionales oficiales** (`jardines`, `educadoras`, `ninos`, `ruta_niveles`, `manifestaciones`, `observaciones`, `observacion_manifestaciones`) mÃ¡s `consolidado.json`; mapear cada fila a las entidades ORM del dominio (MÃ³dulo A) con `read_csvs()`, `read_consolidado()`, `to_entities()`.
-  - Mantener `DatasetLoader` **encapsulado detrÃ¡s de la frontera del seed** (`RelationalRepo`/`VectorRepo`), de modo que cambiar de dataset (oficial â†” reducido casero) **no toque el cÃ³digo de los servicios**.
+- [x] 3.7 Módulo B — Implementar `DatasetLoader` del Dataset E-1 **oficial** (7 CSV + `consolidado.json`)
+  - Leer los **siete CSV relacionales oficiales** (`jardines`, `educadoras`, `ninos`, `ruta_niveles`, `manifestaciones`, `observaciones`, `observacion_manifestaciones`) más `consolidado.json`; mapear cada fila a las entidades ORM del dominio (Módulo A) con `read_csvs()`, `read_consolidado()`, `to_entities()`.
+  - Mantener `DatasetLoader` **encapsulado detrás de la frontera del seed** (`RelationalRepo`/`VectorRepo`), de modo que cambiar de dataset (oficial ↔ reducido casero) **no toque el código de los servicios**.
   - _Requirements: 10.8, 14.1_
-- [ ] 3.8 MÃ³dulo B â€” Adaptar el seed para cargar vÃ­a `DatasetLoader` (oficial E-1, 500 niÃ±os) y validar conteos
-  - Sustituir la carga "un JSON por tabla" por la lectura del **zip pÃºblico** `dataset_e1_publico.zip`; validar los conteos cargados contra `distribucion_y_validacion` y **rechazar con error en espaÃ±ol** si algÃºn conteo no coincide.
+- [x] 3.8 Módulo B — Adaptar el seed para cargar vía `DatasetLoader` (oficial E-1, 500 niños) y validar conteos
+  - Sustituir la carga "un JSON por tabla" por la lectura del **zip público** `dataset_e1_publico.zip`; validar los conteos cargados contra `distribucion_y_validacion` y **rechazar con error en español** si algún conteo no coincide.
   - _Requirements: 10.8, 10.9, 14.1, 14.2_
-- [ ] 3.9 MÃ³dulo B â€” VerificaciÃ³n de reproducibilidad del Dataset E-1 oficial
-  - Re-ejecutar `generador.py` con **semilla `20261013`** y **fecha de referencia `2026-10-13`** (Python 3.12.15, solo biblioteca estÃ¡ndar) y confirmar salida **idÃ©ntica bit a bit** / **hashes publicados coincidentes**, y que `validador.py` finaliza **sin errores**.
+- [x] 3.9 Módulo B — Verificación de reproducibilidad del Dataset E-1 oficial
+  - Re-ejecutar `generador.py` con **semilla `20261013`** y **fecha de referencia `2026-10-13`** (Python 3.12.15, solo biblioteca estándar) y confirmar salida **idéntica bit a bit** / **hashes publicados coincidentes**, y que `validador.py` finaliza **sin errores**.
   - _Requirements: 10.10, 14.5_
 - [ ]* 3.10 MÃ³dulo B â€” Test de carga completa del dataset oficial (500 niÃ±os) y ruta de abstenciÃ³n
   - _Optional_ â€” verificar que la carga procesa **sin error** a los 500 niÃ±os/as, incluidos los **60 con 1â€“2 observaciones** (ingreso reciente), y que los niÃ±os con **<5 observaciones** disparan la ruta de **abstenciÃ³n** del `RecommendationService` (datos insuficientes), sin interrumpir el procesamiento del resto; tratar nota/formato/manifestaciÃ³n ausente como ausencia de registro, no como dato invÃ¡lido.
@@ -91,15 +91,15 @@ Estado actual: las tareas **1 (bootstrap), 2 (MÃ³dulo A) y 3.1â€“3.3 (MÃ
 <!-- MÃ“DULO C Â· Vectorial + embeddings â€” Dev 2. Depende de: A.     -->
 <!-- ============================================================= -->
 
-- [ ] 4. MÃ³dulo C â€” Base vectorial y proveedor de embeddings (AWS primario) **[independiente]**
-- [ ] 4.1 Implementar `EmbeddingProvider`: adaptador **Titan (AWS, primario)** + adaptador mock (secundario)
-  - `titan_embeddings.py` invoca Amazon Titan vÃ­a Bedrock; `mock_embeddings.py` deriva vectores deterministas del texto para CI/local. SelecciÃ³n por `USE_MOCKS`.
+- [x] 4. Módulo C — Base vectorial y proveedor de embeddings (AWS primario) **[independiente]**
+- [x] 4.1 Implementar `EmbeddingProvider`: adaptador **Titan (AWS, primario)** + adaptador mock (secundario)
+  - `titan_embeddings.py` invoca Amazon Titan vía Bedrock; `mock_embeddings.py` deriva vectores deterministas del texto para CI/local. Selección por `USE_MOCKS`.
   - _Requirements: 4.2, 4.5_
-- [ ] 4.2 Implementar `VectorRepo`: implementaciÃ³n **pgvector sobre Aurora (primaria)** + Ã­ndice en memoria (secundaria)
+- [x] 4.2 Implementar `VectorRepo`: implementación **pgvector sobre Aurora (primaria)** + índice en memoria (secundaria)
   - `index(doc)` y `search(query_embedding, filtros, k)` con similitud coseno (`<=>`), metadatos `id_observacion, id_nino, dominio, nivel, fecha, formato`.
   - _Requirements: 4.3, 4.6, 4.7, 11.5_
-- [ ] 4.3 Implementar `EmbeddingService` (embeber texto e indexar) con manejo de fallo de indexaciÃ³n
-  - Si falla el embedding o la indexaciÃ³n, conservar la observaciÃ³n relacional sin registro vectorial y devolver error de indexaciÃ³n no completada.
+- [x] 4.3 Implementar `EmbeddingService` (embeber texto e indexar) con manejo de fallo de indexación
+  - Si falla el embedding o la indexación, conservar la observación relacional sin registro vectorial y devolver error de indexación no completada.
   - _Requirements: 4.2, 4.4_
 - [ ]* 4.4 MÃ³dulo C â€” Tests de aislamiento con mock embeddings + Ã­ndice en memoria
   - Verificar que `search(id_observacion)` recupera exactamente un registro con los seis metadatos; intercambiabilidad de adaptadores.
@@ -139,12 +139,12 @@ Estado actual: las tareas **1 (bootstrap), 2 (MÃ³dulo A) y 3.1â€“3.3 (MÃ
 <!-- MÃ“DULO E Â· ClasificaciÃ³n â€” Dev 3. Depende de: A.              -->
 <!-- ============================================================= -->
 
-- [ ] 6. MÃ³dulo E â€” ClasificaciÃ³n de observaciones **[independiente]**
-- [ ] 6.1 Implementar `Classifier` (adaptador basado en reglas/LLM) que estima `nivel_estimado` (1â€“9) y 1â€“5 dominios
-  - Vincular 1â€“10 manifestaciones cuyo nivel = `nivel_estimado` y dominio âˆˆ dominios estimados; marcar baja confianza como "pendiente de clasificaciÃ³n manual".
+- [x] 6. Módulo E — Clasificación de observaciones **[independiente]**
+- [x] 6.1 Implementar `Classifier` (adaptador basado en reglas/LLM) que estima `nivel_estimado` (1–9) y 1–5 dominios
+  - Vincular 1–10 manifestaciones cuyo nivel = `nivel_estimado` y dominio ∈ dominios estimados; marcar baja confianza como "pendiente de clasificación manual".
   - _Requirements: 3.1, 3.2, 3.5_
-- [ ] 6.2 Implementar `ClassificationService`: devolver clasificaciÃ³n **propuesta** y soportar confirmaciÃ³n/correcciÃ³n persistente
-  - No persistir hasta que la educadora confirme/corrija; persistir vÃ­a interfaz `RelationalRepo`; conservar valores previos ante fallo de persistencia.
+- [x] 6.2 Implementar `ClassificationService`: devolver clasificación **propuesta** y soportar confirmación/corrección persistente
+  - No persistir hasta que la educadora confirme/corrija; persistir vía interfaz `RelationalRepo`; conservar valores previos ante fallo de persistencia.
   - _Requirements: 3.3, 3.4, 3.6_
 - [ ]* 6.3 MÃ³dulo E â€” Tests de clasificaciÃ³n y de vÃ­nculo con manifestaciones (fixtures E-1)
   - Aislamiento con fake de `RelationalRepo`.
