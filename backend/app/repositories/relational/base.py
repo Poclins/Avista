@@ -18,6 +18,7 @@ Las implementaciones concretas gestionan la sesión/transacción internamente.
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
+from datetime import date
 from typing import Any
 
 from app.repositories.schema import (
@@ -119,6 +120,92 @@ class RelationalRepo(ABC):
 
         Agrega sobre los niños/as del jardín dado. Devuelve un dict con las
         tres claves de decisión (0 si no hay).
+        """
+
+    # --- Agregaciones periódicas del reporte de dirección (Modelo 4) ------
+    # Estas consultas aceptan un período ``[fecha_inicio, fecha_fin]`` (ambas
+    # inclusivas) y las consume el ``DirectorReportService`` del Módulo G vía
+    # esta interfaz. Toda la lógica de agregación vive aquí (Requirement 7.8):
+    # el LLM nunca infiere estas métricas.
+
+    @abstractmethod
+    def conteos_nivel_por_sala(
+        self, id_jardin: str, fecha_inicio: date, fecha_fin: date
+    ) -> dict[str, dict[str, int]]:
+        """Conteo de niños/as que subieron/mantuvieron/bajaron por sala.
+
+        Para cada niño/a del jardín, compara su ``nivel_estimado`` al cierre del
+        período (última observación con nivel dentro del período) contra el del
+        inicio (primera observación con nivel dentro del período). Cada niño/a
+        se cuenta en **exactamente una** de las tres categorías
+        (``subieron``/``mantuvieron``/``bajaron``); los niños/as sin
+        observaciones con nivel dentro del período se omiten (Requirement 7.1).
+
+        Devuelve ``{sala_grupo: {"subieron": n, "mantuvieron": n, "bajaron": n}}``
+        con una entrada por sala del jardín (ceros si no hubo movimiento).
+        """
+
+    @abstractmethod
+    def distribucion_niveles_por_sala(
+        self, id_jardin: str, fecha_inicio: date, fecha_fin: date
+    ) -> dict[str, dict[int, int]]:
+        """Distribución de niveles observados por sala dentro del período.
+
+        Devuelve ``{sala_grupo: {nivel: conteo}}`` contando las observaciones
+        con ``nivel_estimado`` asignado cuya fecha cae en el período
+        (Requirement 7.3).
+        """
+
+    @abstractmethod
+    def distribucion_niveles_por_dominio(
+        self, id_jardin: str, fecha_inicio: date, fecha_fin: date
+    ) -> dict[str, dict[int, int]]:
+        """Distribución de niveles observados por dominio dentro del período.
+
+        El dominio de cada observación se deriva de las manifestaciones
+        vinculadas (tabla puente → ``manifestaciones.dominio``). Devuelve
+        ``{dominio: {nivel: conteo}}`` (Requirement 7.3).
+        """
+
+    @abstractmethod
+    def contar_observaciones_periodo(
+        self, id_jardin: str, fecha_inicio: date, fecha_fin: date
+    ) -> dict[str, Any]:
+        """Conteo de observaciones del jardín en el período (Requirement 7.3).
+
+        Devuelve ``{"total": n, "por_educadora": {id_educadora: n, ...}}``.
+        """
+
+    @abstractmethod
+    def contar_bitacoras_periodo(
+        self, id_jardin: str, fecha_inicio: date, fecha_fin: date
+    ) -> dict[str, Any]:
+        """Conteo de bitácoras del jardín en el período (Requirement 7.3).
+
+        Devuelve ``{"total": n, "por_educadora": {id_educadora: n, ...}}``.
+        """
+
+    @abstractmethod
+    def alertas_retroceso(
+        self, id_jardin: str, fecha_inicio: date, fecha_fin: date
+    ) -> list[str]:
+        """``id_nino`` con señal de retroceso en el período (Requirement 7.3).
+
+        Un niño/a entra en la alerta si tiene una o más observaciones con
+        ``nivel_estimado`` por debajo de su nivel asignado dentro del período,
+        donde el nivel asignado es el nivel al inicio del período (primera
+        observación con nivel dentro del período).
+        """
+
+    @abstractmethod
+    def alertas_inactividad(
+        self, id_jardin: str, fecha_fin: date, dias: int = 14
+    ) -> list[str]:
+        """``id_nino`` sin observaciones en los últimos ``dias`` del período.
+
+        Devuelve los niños/as del jardín sin ninguna observación registrada en
+        la ventana ``(fecha_fin - dias, fecha_fin]`` (Requirement 7.3). Por
+        defecto son los últimos 14 días previos a la ``fecha_fin``.
         """
 
 

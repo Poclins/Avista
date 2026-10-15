@@ -85,6 +85,41 @@
         "timestamp": 1792076414028
       }
     ],
+    "3.4 Módulo B — Añadir consultas agregadas para el reporte de dirección a `RelationalRepo`": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077888982
+      }
+    ],
+    "3.7 Módulo B — Implementar `DatasetLoader` del Dataset E-1 **oficial** (7 CSV + `consolidado.json`)": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077889292
+      }
+    ],
+    "3.8 Módulo B — Adaptar el seed para cargar vía `DatasetLoader` (oficial E-1, 500 niños) y validar conteos": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077889658
+      }
+    ],
+    "3.9 Módulo B — Verificación de reproducibilidad del Dataset E-1 oficial": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077889843
+      }
+    ],
+    "4. Módulo C — Base vectorial y proveedor de embeddings (AWS primario) **[independiente]**": [
+      {
+        "executionId": "eb8e6d99-7ba8-4d62-bab9-2b2a03516a99",
+        "chatSessionId": "sess_925160e9-793f-448d-a16c-e4be931778b8",
+        "timestamp": 1792077850449
+      }
+    ],
     "4.1 Implementar `EmbeddingProvider`: adaptador **Titan (AWS, primario)** + adaptador mock (secundario)": [
       {
         "executionId": "eb8e6d99-7ba8-4d62-bab9-2b2a03516a99",
@@ -121,11 +156,282 @@
         "timestamp": 1792077850338
       }
     ],
-    "4. Módulo C — Base vectorial y proveedor de embeddings (AWS primario) **[independiente]**": [
+    "5.1 Implementar `StorageRepo`: **S3 (AWS, primario)** + almacenamiento local (secundario)": [
       {
-        "executionId": "eb8e6d99-7ba8-4d62-bab9-2b2a03516a99",
-        "chatSessionId": "sess_925160e9-793f-448d-a16c-e4be931778b8",
-        "timestamp": 1792077850449
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077890185
+      },
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077906380
+      },
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792078745225
+      }
+    ],
+    "5.2 Implementar `TranscriptionProvider`: adaptador **AWS (Transcribe/Textract/Rekognition, primario)** + mock (secundario)": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077890276
+      },
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077911176
+      },
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792078746674
+      }
+    ],
+    "5.3 Implementar `TranscriptionService` que valida formato/tamaño y enruta por `formato_captura`": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077890353
+      },
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792078752079
+      },
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792079178823
+      }
+    ],
+    "5.4 Implementar `IngestionService` idempotente (orquesta dentro del módulo con fakes de E y repos)": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077890441
+      },
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792078753360
+      },
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792079179852
+      }
+    ],
+    "6.1 Implementar `Classifier` (adaptador basado en reglas/LLM) que estima `nivel_estimado` (1–9) y 1–5 dominios": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077890524
+      }
+    ],
+    "6.2 Implementar `ClassificationService`: devolver clasificación **propuesta** y soportar confirmación/corrección persistente": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077890614
+      }
+    ],
+    "7. Módulo F — Proveedor LLM, bitácoras, rúbrica y recomendación **[independiente]** (consume interfaces de B/C vía fakes)": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077890691
+      }
+    ],
+    "7.1 Implementar `LlmProvider`: adaptador **Bedrock Claude (AWS, primario)** + mock (secundario)": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077890778
+      }
+    ],
+    "7.2 Implementar `domain/rubrica.py` (`RubricaDecision`) **puramente determinista** que consume la **rúbrica oficial** desde `rubrica_versiones.criterios` (estructura tramo de sala × núcleo × 8 niveles de progresión × conductas observables + descriptor + umbrales)": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077890854
+      }
+    ],
+    "7.3 Sembrar la **versión inicial de la rúbrica oficial** en `rubrica_versiones` (vía interfaz `RelationalRepo`)": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077890935
+      }
+    ],
+    "7.6 Implementar `BitacoraService`: RAG (recuperar evidencia) + LLM con trazabilidad y estados": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077891013
+      }
+    ],
+    "7.7 Soportar edición y aprobación de bitácora": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077891094
+      }
+    ],
+    "7.9 Implementar `RecommendationService`: recuperar evidencia previa (RAG) → `RubricaDecision` (mapea a conductas observables y decide) → LLM (argumenta) → persistir con `version_rubrica`": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077891175
+      }
+    ],
+    "8. Checkpoint — Asegurar que pasan los tests de los módulos A–F": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077891257
+      }
+    ],
+    "9.1 Implementar `DirectorReportService` (Modelo 4): agrega métricas vía `RelationalRepo` + resumen ejecutivo vía `LlmProvider`": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077891336
+      }
+    ],
+    "9.2 Implementar el contenedor de DI en `core/` que selecciona adaptadores/repos según `USE_MOCKS`": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077891412
+      }
+    ],
+    "9.3 Implementar routers FastAPI (ninos, observaciones, bitacoras, recomendaciones, reportes, ruta-niveles, health) con validación Pydantic": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077891564
+      }
+    ],
+    "9.4 Manejo de errores en español (400 formato, 404 no encontrado, 422 validación, 409 conflicto, 503 LLM)": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077891640
+      }
+    ],
+    "11.1 Instalar y configurar el tooling AWS (AWS CLI + CDK en Python)": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077891715
+      }
+    ],
+    "11.2 Escribir los stacks CDK (Python): `NetworkStack`, `DataStack`, `ComputeStack`, `AiIamStack`": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077891796
+      }
+    ],
+    "11.3 Desplegar (`cdk synth` → `cdk deploy`), sembrar E-1 en Aurora y verificar `/health`": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077891884
+      }
+    ],
+    "12. Frontend PWA — base y capa de servicios API (posterior) **[integración]** (consume la API REST que expone G)": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077891952
+      }
+    ],
+    "14.1 Ingestar el PDF de Figma y extraer las pantallas y flujos representados en los mockups": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077892033
+      }
+    ],
+    "14.2 Gap-analysis de pantallas/flujos contra el **contrato REST existente**, identificando los endpoints que consume cada pantalla y las brechas detectadas": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077892116
+      }
+    ],
+    "14.3 Producir tareas de **componentes concretos** mapeados a las pantallas existentes": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077892228
+      }
+    ],
+    "14.4 Implementar aplicando **estilos y tokens de diseño sobre la estructura existente**, sin alterar la lógica de negocio": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077892311
+      }
+    ],
+    "15.1 Cablear implementaciones concretas vía el contenedor DI y validar límites de interfaz": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077892385
+      }
+    ],
+    "15.4 Verificación de la demo en modo mock (un solo comando) y actualización del README": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077892469
+      }
+    ],
+    "16. Checkpoint final — Asegurar que pasan todos los tests": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077892554
+      }
+    ],
+    "17.1 Test de análisis estático de importaciones (arquitectura) **[independiente]**": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077892642
+      }
+    ],
+    "17.2 Verificación del KPI de impacto social y human-in-the-loop **[integración]**": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077892719
+      }
+    ],
+    "17.4 Chequeo de factibilidad y sustentabilidad **[independiente]**": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077892803
+      }
+    ],
+    "17.5 Calidad de presentación — guion de demo y documentación por área **[integración]**": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077892958
+      }
+    ],
+    "5. Módulo D — Storage, transcripción (Modelo 1) e ingesta (AWS primario) **[independiente]**": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792079179950
       }
     ]
   }
