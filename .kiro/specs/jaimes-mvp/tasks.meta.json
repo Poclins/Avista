@@ -240,6 +240,16 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792077890778
+      },
+      {
+        "executionId": "3ca25dd1-373a-4e9b-9ad0-41cd549a0749",
+        "chatSessionId": "sess_bdf0c668-31ee-40f1-ad27-c99d2b605022",
+        "timestamp": 1792082047866
+      },
+      {
+        "executionId": "3ca25dd1-373a-4e9b-9ad0-41cd549a0749",
+        "chatSessionId": "sess_bdf0c668-31ee-40f1-ad27-c99d2b605022",
+        "timestamp": 1792082546385
       }
     ],
     "7.2 Implementar `domain/rubrica.py` (`RubricaDecision`) **puramente determinista** que consume la **rúbrica oficial** desde `rubrica_versiones.criterios` (estructura tramo de sala × núcleo × 8 niveles de progresión × conductas observables + descriptor + umbrales)": [
@@ -261,6 +271,16 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792077891013
+      },
+      {
+        "executionId": "3ca25dd1-373a-4e9b-9ad0-41cd549a0749",
+        "chatSessionId": "sess_bdf0c668-31ee-40f1-ad27-c99d2b605022",
+        "timestamp": 1792082554326
+      },
+      {
+        "executionId": "3ca25dd1-373a-4e9b-9ad0-41cd549a0749",
+        "chatSessionId": "sess_bdf0c668-31ee-40f1-ad27-c99d2b605022",
+        "timestamp": 1792083040796
       }
     ],
     "7.7 Soportar edición y aprobación de bitácora": [
@@ -429,6 +449,78 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792079179950
+      }
+    ],
+    "7.2 Implementar `domain/rubrica.py` (`RubricaDecision`) **puramente determinista** que consume la **rÃºbrica oficial** desde `rubrica_versiones.criterios` (estructura tramo de sala Ã— nÃºcleo Ã— 8 niveles de progresiÃ³n Ã— conductas observables + descriptor + umbrales)": [
+      {
+        "executionId": "3ca25dd1-373a-4e9b-9ad0-41cd549a0749",
+        "chatSessionId": "sess_bdf0c668-31ee-40f1-ad27-c99d2b605022",
+        "timestamp": 1792082049875
+      },
+      {
+        "executionId": "3ca25dd1-373a-4e9b-9ad0-41cd549a0749",
+        "chatSessionId": "sess_bdf0c668-31ee-40f1-ad27-c99d2b605022",
+        "timestamp": 1792082548722
+      }
+    ],
+    "7.9 Implementar `RecommendationService`: recuperar evidencia previa (RAG) â†’ `RubricaDecision` (mapea a conductas observables y decide) â†’ LLM (argumenta) â†’ persistir con `version_rubrica`": [
+      {
+        "executionId": "3ca25dd1-373a-4e9b-9ad0-41cd549a0749",
+        "chatSessionId": "sess_bdf0c668-31ee-40f1-ad27-c99d2b605022",
+        "timestamp": 1792082556001
+      },
+      {
+        "executionId": "3ca25dd1-373a-4e9b-9ad0-41cd549a0749",
+        "chatSessionId": "sess_bdf0c668-31ee-40f1-ad27-c99d2b605022",
+        "timestamp": 1792083042639
+      }
+    ],
+    "7.7 Soportar ediciÃ³n y aprobaciÃ³n de bitÃ¡cora": [
+      {
+        "executionId": "3ca25dd1-373a-4e9b-9ad0-41cd549a0749",
+        "chatSessionId": "sess_bdf0c668-31ee-40f1-ad27-c99d2b605022",
+        "timestamp": 1792083048604
+      },
+      {
+        "executionId": "3ca25dd1-373a-4e9b-9ad0-41cd549a0749",
+        "chatSessionId": "sess_bdf0c668-31ee-40f1-ad27-c99d2b605022",
+        "timestamp": 1792083261625
+      }
+    ],
+    "7.2b Transcribir la rÃºbrica oficial (PDF) a la estructura JSON versionada de `rubrica_versiones.criterios`": [
+      {
+        "executionId": "40bfe9dd-1b9d-4d6e-a825-49be7b7e5ee4",
+        "chatSessionId": "sess_71bb2c77-3b08-43f4-8a41-592c04337b58",
+        "timestamp": 1792083349810
+      },
+      {
+        "executionId": "40bfe9dd-1b9d-4d6e-a825-49be7b7e5ee4",
+        "chatSessionId": "sess_71bb2c77-3b08-43f4-8a41-592c04337b58",
+        "timestamp": 1792083711816
+      }
+    ],
+    "7.3 Sembrar la **versiÃ³n inicial de la rÃºbrica oficial** en `rubrica_versiones` (vÃ­a interfaz `RelationalRepo`)": [
+      {
+        "executionId": "3dee6484-70bc-421e-8dea-e799d5e2f229",
+        "chatSessionId": "sess_edea3b77-f7e6-4568-9f9d-de5d4aa433d3",
+        "timestamp": 1792083834022
+      },
+      {
+        "executionId": "3dee6484-70bc-421e-8dea-e799d5e2f229",
+        "chatSessionId": "sess_edea3b77-f7e6-4568-9f9d-de5d4aa433d3",
+        "timestamp": 1792084468187
+      }
+    ],
+    "8. Checkpoint â€” Asegurar que pasan los tests de los mÃ³dulos Aâ€“F": [
+      {
+        "executionId": "ba572869-251d-4ec6-bffb-2fd5316cdb49",
+        "chatSessionId": "sess_6ed39315-605f-40af-851d-73e4e955f2f6",
+        "timestamp": 1792085410626
+      },
+      {
+        "executionId": "ba572869-251d-4ec6-bffb-2fd5316cdb49",
+        "chatSessionId": "sess_6ed39315-605f-40af-851d-73e4e955f2f6",
+        "timestamp": 1792085659185
       }
     ]
   }

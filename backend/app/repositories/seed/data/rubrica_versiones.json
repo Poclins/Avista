@@ -2,19 +2,260 @@
   {
     "version_rubrica": "v1",
     "criterios": {
-      "n_observaciones_consistentes": 3,
-      "dominios_requeridos": [
-        "cognitivo",
-        "lenguaje_comunicacion",
-        "motor_fino",
-        "motor_grueso",
-        "socioemocional"
-      ],
-      "umbral_score_avanzar": 0.8,
-      "umbral_score_retroceder": 0.3,
-      "k_observaciones_retroceso": 3
+      "version": "v1",
+      "_nota_placeholder": "[PENDIENTE RÚBRICA OFICIAL] Estructura completa y versionada de la rúbrica oficial (núcleo Identidad y Autonomía para los 3 tramos de sala, 8 niveles de progresión). Los descriptores y las conductas observables son PLACEHOLDERS pedagógicos clavados a la estructura real; deben reemplazarse por el texto verbatim del PDF oficial cuando esté disponible. La estructura, los nombres de nivel, los rangos etarios y los umbrales SÍ son definitivos.",
+      "tramos": {
+        "sala_cuna": {
+          "rango_etario_meses": [0, 24],
+          "nucleos": {
+            "identidad_y_autonomia": {
+              "niveles": [
+                {
+                  "n": 1,
+                  "nombre": "Comenzando",
+                  "descriptor": "[PENDIENTE RÚBRICA OFICIAL] Sala Cuna · Identidad y Autonomía · Comenzando: descriptor de desarrollo y aprendizaje esperado.",
+                  "conductas_observables": [
+                    "[PENDIENTE RÚBRICA OFICIAL] responde reaccion personas familiares cercanas",
+                    "[PENDIENTE RÚBRICA OFICIAL] busca contacto cuidador referencia seguridad"
+                  ]
+                },
+                {
+                  "n": 2,
+                  "nombre": "Explorando",
+                  "descriptor": "[PENDIENTE RÚBRICA OFICIAL] Sala Cuna · Identidad y Autonomía · Explorando: descriptor de desarrollo y aprendizaje esperado.",
+                  "conductas_observables": [
+                    "[PENDIENTE RÚBRICA OFICIAL] explora entorno inmediato objetos cercanos",
+                    "[PENDIENTE RÚBRICA OFICIAL] reconoce rostro propio espejo imagen"
+                  ]
+                },
+                {
+                  "n": 3,
+                  "nombre": "Desarrollando",
+                  "descriptor": "[PENDIENTE RÚBRICA OFICIAL] Sala Cuna · Identidad y Autonomía · Desarrollando: descriptor de desarrollo y aprendizaje esperado.",
+                  "conductas_observables": [
+                    "[PENDIENTE RÚBRICA OFICIAL] manifiesta preferencias objetos personas simples",
+                    "[PENDIENTE RÚBRICA OFICIAL] participa rutinas cotidianas sala apoyo"
+                  ]
+                },
+                {
+                  "n": 4,
+                  "nombre": "Afianzando",
+                  "descriptor": "[PENDIENTE RÚBRICA OFICIAL] Sala Cuna · Identidad y Autonomía · Afianzando: descriptor de desarrollo y aprendizaje esperado.",
+                  "conductas_observables": [
+                    "[PENDIENTE RÚBRICA OFICIAL] intenta acciones sencillas iniciativa propia",
+                    "[PENDIENTE RÚBRICA OFICIAL] expresa emociones basicas gestos vocalizaciones"
+                  ]
+                },
+                {
+                  "n": 5,
+                  "nombre": "Integrando",
+                  "descriptor": "[PENDIENTE RÚBRICA OFICIAL] Sala Cuna · Identidad y Autonomía · Integrando: descriptor de desarrollo y aprendizaje esperado.",
+                  "conductas_observables": [
+                    "[PENDIENTE RÚBRICA OFICIAL] colabora acciones cotidianas vestir alimentarse",
+                    "[PENDIENTE RÚBRICA OFICIAL] reconoce pertenencias propias espacios familiares"
+                  ]
+                },
+                {
+                  "n": 6,
+                  "nombre": "Ampliando",
+                  "descriptor": "[PENDIENTE RÚBRICA OFICIAL] Sala Cuna · Identidad y Autonomía · Ampliando: descriptor de desarrollo y aprendizaje esperado.",
+                  "conductas_observables": [
+                    "[PENDIENTE RÚBRICA OFICIAL] elige actividades materiales varias opciones",
+                    "[PENDIENTE RÚBRICA OFICIAL] anticipa secuencia rutinas diarias conocidas"
+                  ]
+                },
+                {
+                  "n": 7,
+                  "nombre": "Consolidando",
+                  "descriptor": "[PENDIENTE RÚBRICA OFICIAL] Sala Cuna · Identidad y Autonomía · Consolidando: descriptor de desarrollo y aprendizaje esperado.",
+                  "conductas_observables": [
+                    "[PENDIENTE RÚBRICA OFICIAL] realiza acciones autonomia creciente minima ayuda",
+                    "[PENDIENTE RÚBRICA OFICIAL] comunica necesidades deseos propios adulto"
+                  ]
+                },
+                {
+                  "n": 8,
+                  "nombre": "Profundizando",
+                  "descriptor": "[PENDIENTE RÚBRICA OFICIAL] Sala Cuna · Identidad y Autonomía · Profundizando: descriptor de desarrollo y aprendizaje esperado.",
+                  "conductas_observables": [
+                    "[PENDIENTE RÚBRICA OFICIAL] resuelve pequenos desafios cotidianos iniciativa propia",
+                    "[PENDIENTE RÚBRICA OFICIAL] expresa identidad gustos preferencias claramente"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "nivel_medio": {
+          "rango_etario_meses": [24, 48],
+          "nucleos": {
+            "identidad_y_autonomia": {
+              "niveles": [
+                {
+                  "n": 1,
+                  "nombre": "Comenzando",
+                  "descriptor": "[PENDIENTE RÚBRICA OFICIAL] Nivel Medio · Identidad y Autonomía · Comenzando: descriptor de desarrollo y aprendizaje esperado.",
+                  "conductas_observables": [
+                    "[PENDIENTE RÚBRICA OFICIAL] reconoce nombre propio responde llamado",
+                    "[PENDIENTE RÚBRICA OFICIAL] participa actividades grupales apoyo cercano"
+                  ]
+                },
+                {
+                  "n": 2,
+                  "nombre": "Explorando",
+                  "descriptor": "[PENDIENTE RÚBRICA OFICIAL] Nivel Medio · Identidad y Autonomía · Explorando: descriptor de desarrollo y aprendizaje esperado.",
+                  "conductas_observables": [
+                    "[PENDIENTE RÚBRICA OFICIAL] explora espacios materiales nuevos curiosidad",
+                    "[PENDIENTE RÚBRICA OFICIAL] intenta vestirse desvestirse prendas simples"
+                  ]
+                },
+                {
+                  "n": 3,
+                  "nombre": "Desarrollando",
+                  "descriptor": "[PENDIENTE RÚBRICA OFICIAL] Nivel Medio · Identidad y Autonomía · Desarrollando: descriptor de desarrollo y aprendizaje esperado.",
+                  "conductas_observables": [
+                    "[PENDIENTE RÚBRICA OFICIAL] expresa emociones palabras simples gestos",
+                    "[PENDIENTE RÚBRICA OFICIAL] elige juegos actividades segun preferencia"
+                  ]
+                },
+                {
+                  "n": 4,
+                  "nombre": "Afianzando",
+                  "descriptor": "[PENDIENTE RÚBRICA OFICIAL] Nivel Medio · Identidad y Autonomía · Afianzando: descriptor de desarrollo y aprendizaje esperado.",
+                  "conductas_observables": [
+                    "[PENDIENTE RÚBRICA OFICIAL] realiza rutinas higiene personal minima ayuda",
+                    "[PENDIENTE RÚBRICA OFICIAL] reconoce pertenencias propias companeros grupo"
+                  ]
+                },
+                {
+                  "n": 5,
+                  "nombre": "Integrando",
+                  "descriptor": "[PENDIENTE RÚBRICA OFICIAL] Nivel Medio · Identidad y Autonomía · Integrando: descriptor de desarrollo y aprendizaje esperado.",
+                  "conductas_observables": [
+                    "[PENDIENTE RÚBRICA OFICIAL] colabora tareas sencillas sala orden materiales",
+                    "[PENDIENTE RÚBRICA OFICIAL] expresa opiniones elecciones frente adulto"
+                  ]
+                },
+                {
+                  "n": 6,
+                  "nombre": "Ampliando",
+                  "descriptor": "[PENDIENTE RÚBRICA OFICIAL] Nivel Medio · Identidad y Autonomía · Ampliando: descriptor de desarrollo y aprendizaje esperado.",
+                  "conductas_observables": [
+                    "[PENDIENTE RÚBRICA OFICIAL] resuelve pequenos conflictos pares apoyo verbal",
+                    "[PENDIENTE RÚBRICA OFICIAL] asume responsabilidades simples encargos sala"
+                  ]
+                },
+                {
+                  "n": 7,
+                  "nombre": "Consolidando",
+                  "descriptor": "[PENDIENTE RÚBRICA OFICIAL] Nivel Medio · Identidad y Autonomía · Consolidando: descriptor de desarrollo y aprendizaje esperado.",
+                  "conductas_observables": [
+                    "[PENDIENTE RÚBRICA OFICIAL] realiza actividades autonomia sostenida varios contextos",
+                    "[PENDIENTE RÚBRICA OFICIAL] identifica emociones propias companeros nombrandolas"
+                  ]
+                },
+                {
+                  "n": 8,
+                  "nombre": "Profundizando",
+                  "descriptor": "[PENDIENTE RÚBRICA OFICIAL] Nivel Medio · Identidad y Autonomía · Profundizando: descriptor de desarrollo y aprendizaje esperado.",
+                  "conductas_observables": [
+                    "[PENDIENTE RÚBRICA OFICIAL] toma decisiones autonomas justifica elecciones propias",
+                    "[PENDIENTE RÚBRICA OFICIAL] regula emociones estrategias simples situaciones cotidianas"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "transicion": {
+          "rango_etario_meses": [48, 72],
+          "nucleos": {
+            "identidad_y_autonomia": {
+              "niveles": [
+                {
+                  "n": 1,
+                  "nombre": "Comenzando",
+                  "descriptor": "[PENDIENTE RÚBRICA OFICIAL] Transición · Identidad y Autonomía · Comenzando: descriptor de desarrollo y aprendizaje esperado.",
+                  "conductas_observables": [
+                    "[PENDIENTE RÚBRICA OFICIAL] reconoce caracteristicas propias nombre edad grupo",
+                    "[PENDIENTE RÚBRICA OFICIAL] participa actividades colectivas iniciativa inicial"
+                  ]
+                },
+                {
+                  "n": 2,
+                  "nombre": "Explorando",
+                  "descriptor": "[PENDIENTE RÚBRICA OFICIAL] Transición · Identidad y Autonomía · Explorando: descriptor de desarrollo y aprendizaje esperado.",
+                  "conductas_observables": [
+                    "[PENDIENTE RÚBRICA OFICIAL] explora roles juegos simbolicos variados",
+                    "[PENDIENTE RÚBRICA OFICIAL] expresa preferencias intereses personales claramente"
+                  ]
+                },
+                {
+                  "n": 3,
+                  "nombre": "Desarrollando",
+                  "descriptor": "[PENDIENTE RÚBRICA OFICIAL] Transición · Identidad y Autonomía · Desarrollando: descriptor de desarrollo y aprendizaje esperado.",
+                  "conductas_observables": [
+                    "[PENDIENTE RÚBRICA OFICIAL] realiza rutinas autocuidado higiene autonomia creciente",
+                    "[PENDIENTE RÚBRICA OFICIAL] expresa emociones diferenciadas vocabulario amplio"
+                  ]
+                },
+                {
+                  "n": 4,
+                  "nombre": "Afianzando",
+                  "descriptor": "[PENDIENTE RÚBRICA OFICIAL] Transición · Identidad y Autonomía · Afianzando: descriptor de desarrollo y aprendizaje esperado.",
+                  "conductas_observables": [
+                    "[PENDIENTE RÚBRICA OFICIAL] asume responsabilidades sala encargos sostenidos tiempo",
+                    "[PENDIENTE RÚBRICA OFICIAL] reconoce respeta diferencias companeros grupo"
+                  ]
+                },
+                {
+                  "n": 5,
+                  "nombre": "Integrando",
+                  "descriptor": "[PENDIENTE RÚBRICA OFICIAL] Transición · Identidad y Autonomía · Integrando: descriptor de desarrollo y aprendizaje esperado.",
+                  "conductas_observables": [
+                    "[PENDIENTE RÚBRICA OFICIAL] resuelve conflictos dialogo propone acuerdos pares",
+                    "[PENDIENTE RÚBRICA OFICIAL] planifica actividades simples anticipa pasos secuencia"
+                  ]
+                },
+                {
+                  "n": 6,
+                  "nombre": "Ampliando",
+                  "descriptor": "[PENDIENTE RÚBRICA OFICIAL] Transición · Identidad y Autonomía · Ampliando: descriptor de desarrollo y aprendizaje esperado.",
+                  "conductas_observables": [
+                    "[PENDIENTE RÚBRICA OFICIAL] regula emociones conducta estrategias autonomas situaciones",
+                    "[PENDIENTE RÚBRICA OFICIAL] expresa defiende opiniones respetando turnos grupo"
+                  ]
+                },
+                {
+                  "n": 7,
+                  "nombre": "Consolidando",
+                  "descriptor": "[PENDIENTE RÚBRICA OFICIAL] Transición · Identidad y Autonomía · Consolidando: descriptor de desarrollo y aprendizaje esperado.",
+                  "conductas_observables": [
+                    "[PENDIENTE RÚBRICA OFICIAL] actua autonomia responsabilidad diversos contextos cotidianos",
+                    "[PENDIENTE RÚBRICA OFICIAL] colabora metas comunes aportando ideas grupo"
+                  ]
+                },
+                {
+                  "n": 8,
+                  "nombre": "Profundizando",
+                  "descriptor": "[PENDIENTE RÚBRICA OFICIAL] Transición · Identidad y Autonomía · Profundizando: descriptor de desarrollo y aprendizaje esperado.",
+                  "conductas_observables": [
+                    "[PENDIENTE RÚBRICA OFICIAL] toma decisiones autonomas evaluando consecuencias simples",
+                    "[PENDIENTE RÚBRICA OFICIAL] reflexiona identidad propia proyecto personal futuro"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "umbrales": {
+        "cobertura_avanzar": 0.8,
+        "nucleos_requeridos": ["identidad_y_autonomia"],
+        "racha_retroceso": 3
+      }
     },
     "vigente_desde": "2024-01-01",
-    "descripcion": "Versión inicial de la rúbrica determinista del MVP."
+    "descripcion": "Versión inicial de la rúbrica oficial determinista (núcleo Identidad y Autonomía, 3 tramos × 8 niveles de progresión). NOTA: descriptores y conductas observables son PLACEHOLDERS pedagógicos marcados con '[PENDIENTE RÚBRICA OFICIAL]'; reemplazar por el texto verbatim del PDF oficial. La estructura (tramos, núcleos, nombres de nivel, rangos etarios y umbrales) es definitiva y extensible como datos versionados sin cambios de código."
   }
 ]

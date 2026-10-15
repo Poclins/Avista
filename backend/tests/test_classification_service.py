@@ -147,6 +147,42 @@ class _FakeRelationalRepo(RelationalRepo):
     def contar_decisiones(self, id_jardin: str):  # pragma: no cover
         raise NotImplementedError
 
+    # --- Agregaciones periódicas (reporte de dirección, no ejercitadas) ---
+    def conteos_nivel_por_sala(
+        self, id_jardin, fecha_inicio, fecha_fin
+    ):  # pragma: no cover
+        raise NotImplementedError
+
+    def distribucion_niveles_por_sala(
+        self, id_jardin, fecha_inicio, fecha_fin
+    ):  # pragma: no cover
+        raise NotImplementedError
+
+    def distribucion_niveles_por_dominio(
+        self, id_jardin, fecha_inicio, fecha_fin
+    ):  # pragma: no cover
+        raise NotImplementedError
+
+    def contar_observaciones_periodo(
+        self, id_jardin, fecha_inicio, fecha_fin
+    ):  # pragma: no cover
+        raise NotImplementedError
+
+    def contar_bitacoras_periodo(
+        self, id_jardin, fecha_inicio, fecha_fin
+    ):  # pragma: no cover
+        raise NotImplementedError
+
+    def alertas_retroceso(
+        self, id_jardin, fecha_inicio, fecha_fin
+    ):  # pragma: no cover
+        raise NotImplementedError
+
+    def alertas_inactividad(
+        self, id_jardin, fecha_fin, dias: int = 14
+    ):  # pragma: no cover
+        raise NotImplementedError
+
 
 # ---------------------------------------------------------------------------
 # Fixtures / helpers
