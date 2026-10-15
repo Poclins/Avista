@@ -64,7 +64,7 @@ Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B:
 - [~] 3.4 Módulo B — Añadir consultas agregadas para el reporte de dirección a `RelationalRepo`
   - Implementar consultas que el Módulo G consumirá vía interfaz: conteos subieron/mantuvieron/bajaron por sala, distribución por nivel y dominio, conteo de observaciones/bitácoras total y por educadora, alertas de retroceso y de inactividad (14 días).
   - _Requirements: 7.1, 7.3, 7.8_
-- [ ]* 3.5 Módulo B — Tests de consultas agregadas con SQLite + dataset sembrado
+- [x] 3.5 Módulo B — Tests de consultas agregadas con SQLite + dataset sembrado
   - Verificar cada agregación contra fixtures del seed; aislamiento total (sin otros módulos).
   - _Requirements: 7.1, 7.3_
 - [ ]* 3.6 Módulo B — Documentación `docs/database/`
@@ -91,7 +91,7 @@ Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B:
 <!-- MÓDULO C · Vectorial + embeddings — Dev 2. Depende de: A.     -->
 <!-- ============================================================= -->
 
-- [ ] 4. Módulo C — Base vectorial y proveedor de embeddings (AWS primario) **[independiente]**
+- [x] 4. Módulo C — Base vectorial y proveedor de embeddings (AWS primario) **[independiente]**
 - [~] 4.1 Implementar `EmbeddingProvider`: adaptador **Titan (AWS, primario)** + adaptador mock (secundario)
   - `titan_embeddings.py` invoca Amazon Titan vía Bedrock; `mock_embeddings.py` deriva vectores deterministas del texto para CI/local. Selección por `USE_MOCKS`.
   - _Requirements: 4.2, 4.5_
@@ -115,17 +115,17 @@ Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B:
 <!-- MÓDULO D · Ingesta + transcripción — Dev 2/3. Depende de: A.  -->
 <!-- ============================================================= -->
 
-- [ ] 5. Módulo D — Storage, transcripción (Modelo 1) e ingesta (AWS primario) **[independiente]**
-- [~] 5.1 Implementar `StorageRepo`: **S3 (AWS, primario)** + almacenamiento local (secundario)
+- [x] 5. Módulo D — Storage, transcripción (Modelo 1) e ingesta (AWS primario) **[independiente]**
+- [x] 5.1 Implementar `StorageRepo`: **S3 (AWS, primario)** + almacenamiento local (secundario)
   - `put(file) -> ref`, `get_url(ref)`; en AWS, cifrado en reposo y URLs prefirmadas de ≤300 s.
   - _Requirements: 1.2, 11.4_
-- [~] 5.2 Implementar `TranscriptionProvider`: adaptador **AWS (Transcribe/Textract/Rekognition, primario)** + mock (secundario)
+- [x] 5.2 Implementar `TranscriptionProvider`: adaptador **AWS (Transcribe/Textract/Rekognition, primario)** + mock (secundario)
   - Enrutar por formato: audio/video → Transcribe (es-CL), foto → Textract (OCR), video → también metadatos de escena Rekognition. Reintentos ≤3 y marca de "pendiente de transcripción" si persiste el fallo.
   - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.6, 2.7, 2.8_
-- [~] 5.3 Implementar `TranscriptionService` que valida formato/tamaño y enruta por `formato_captura`
+- [x] 5.3 Implementar `TranscriptionService` que valida formato/tamaño y enruta por `formato_captura`
   - Texto directo 1–50.000 chars sin transcripción; validar límites de tamaño (100 MB general, 10 MB foto, 500 MB video); errores en español.
   - _Requirements: 1.4, 2.5, 2.6_
-- [~] 5.4 Implementar `IngestionService` idempotente (orquesta dentro del módulo con fakes de E y repos)
+- [x] 5.4 Implementar `IngestionService` idempotente (orquesta dentro del módulo con fakes de E y repos)
   - Flujo: `StorageRepo` → `TranscriptionProvider` → (interfaz `Classifier`) → persistencia (interfaz `RelationalRepo`) → embedding (interfaz `EmbeddingService`). Subir el mismo archivo dos veces no crea dos observaciones.
   - _Requirements: 1.1, 1.3, 1.5_
 - [ ]* 5.5 Módulo D — Tests por formato en modo mock (texto/audio/foto/video) + idempotencia

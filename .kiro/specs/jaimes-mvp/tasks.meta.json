@@ -87,58 +87,90 @@
     ],
     "3.4 Módulo B — Añadir consultas agregadas para el reporte de dirección a `RelationalRepo`": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078365661
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077888982
       }
     ],
     "3.7 Módulo B — Implementar `DatasetLoader` del Dataset E-1 **oficial** (7 CSV + `consolidado.json`)": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078367276
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077889292
       }
     ],
     "3.8 Módulo B — Adaptar el seed para cargar vía `DatasetLoader` (oficial E-1, 500 niños) y validar conteos": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078367438
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077889658
       }
     ],
     "3.9 Módulo B — Verificación de reproducibilidad del Dataset E-1 oficial": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078367595
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077889843
+      }
+    ],
+    "4. Módulo C — Base vectorial y proveedor de embeddings (AWS primario) **[independiente]**": [
+      {
+        "executionId": "eb8e6d99-7ba8-4d62-bab9-2b2a03516a99",
+        "chatSessionId": "sess_925160e9-793f-448d-a16c-e4be931778b8",
+        "timestamp": 1792077850449
       }
     ],
     "4.1 Implementar `EmbeddingProvider`: adaptador **Titan (AWS, primario)** + adaptador mock (secundario)": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078367701
+        "executionId": "eb8e6d99-7ba8-4d62-bab9-2b2a03516a99",
+        "chatSessionId": "sess_925160e9-793f-448d-a16c-e4be931778b8",
+        "timestamp": 1792076870480
+      },
+      {
+        "executionId": "eb8e6d99-7ba8-4d62-bab9-2b2a03516a99",
+        "chatSessionId": "sess_925160e9-793f-448d-a16c-e4be931778b8",
+        "timestamp": 1792077174944
       }
     ],
     "4.2 Implementar `VectorRepo`: implementación **pgvector sobre Aurora (primaria)** + índice en memoria (secundaria)": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078367807
+        "executionId": "eb8e6d99-7ba8-4d62-bab9-2b2a03516a99",
+        "chatSessionId": "sess_925160e9-793f-448d-a16c-e4be931778b8",
+        "timestamp": 1792077179166
+      },
+      {
+        "executionId": "eb8e6d99-7ba8-4d62-bab9-2b2a03516a99",
+        "chatSessionId": "sess_925160e9-793f-448d-a16c-e4be931778b8",
+        "timestamp": 1792077545169
       }
     ],
     "4.3 Implementar `EmbeddingService` (embeber texto e indexar) con manejo de fallo de indexación": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078367960
+        "executionId": "eb8e6d99-7ba8-4d62-bab9-2b2a03516a99",
+        "chatSessionId": "sess_925160e9-793f-448d-a16c-e4be931778b8",
+        "timestamp": 1792077552536
+      },
+      {
+        "executionId": "eb8e6d99-7ba8-4d62-bab9-2b2a03516a99",
+        "chatSessionId": "sess_925160e9-793f-448d-a16c-e4be931778b8",
+        "timestamp": 1792077850338
       }
     ],
     "5.1 Implementar `StorageRepo`: **S3 (AWS, primario)** + almacenamiento local (secundario)": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078368068
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077890185
+      },
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077906380
+      },
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792078745225
       }
     ],
     "5.2 Implementar `TranscriptionProvider`: adaptador **AWS (Transcribe/Textract/Rekognition, primario)** + mock (secundario)": [
@@ -198,184 +230,184 @@
     ],
     "7. Módulo F — Proveedor LLM, bitácoras, rúbrica y recomendación **[independiente]** (consume interfaces de B/C vía fakes)": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078368739
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077890691
       }
     ],
     "7.1 Implementar `LlmProvider`: adaptador **Bedrock Claude (AWS, primario)** + mock (secundario)": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078368843
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077890778
       }
     ],
     "7.2 Implementar `domain/rubrica.py` (`RubricaDecision`) **puramente determinista** que consume la **rúbrica oficial** desde `rubrica_versiones.criterios` (estructura tramo de sala × núcleo × 8 niveles de progresión × conductas observables + descriptor + umbrales)": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078368947
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077890854
       }
     ],
     "7.3 Sembrar la **versión inicial de la rúbrica oficial** en `rubrica_versiones` (vía interfaz `RelationalRepo`)": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078369052
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077890935
       }
     ],
     "7.6 Implementar `BitacoraService`: RAG (recuperar evidencia) + LLM con trazabilidad y estados": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078369158
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077891013
       }
     ],
     "7.7 Soportar edición y aprobación de bitácora": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078369270
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077891094
       }
     ],
     "7.9 Implementar `RecommendationService`: recuperar evidencia previa (RAG) → `RubricaDecision` (mapea a conductas observables y decide) → LLM (argumenta) → persistir con `version_rubrica`": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078369373
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077891175
       }
     ],
     "8. Checkpoint — Asegurar que pasan los tests de los módulos A–F": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078369474
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077891257
       }
     ],
     "9.1 Implementar `DirectorReportService` (Modelo 4): agrega métricas vía `RelationalRepo` + resumen ejecutivo vía `LlmProvider`": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078369581
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077891336
       }
     ],
     "9.2 Implementar el contenedor de DI en `core/` que selecciona adaptadores/repos según `USE_MOCKS`": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078369688
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077891412
       }
     ],
     "9.3 Implementar routers FastAPI (ninos, observaciones, bitacoras, recomendaciones, reportes, ruta-niveles, health) con validación Pydantic": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078369789
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077891564
       }
     ],
     "9.4 Manejo de errores en español (400 formato, 404 no encontrado, 422 validación, 409 conflicto, 503 LLM)": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078369902
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077891640
       }
     ],
     "11.1 Instalar y configurar el tooling AWS (AWS CLI + CDK en Python)": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078370018
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077891715
       }
     ],
     "11.2 Escribir los stacks CDK (Python): `NetworkStack`, `DataStack`, `ComputeStack`, `AiIamStack`": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078370195
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077891796
       }
     ],
     "11.3 Desplegar (`cdk synth` → `cdk deploy`), sembrar E-1 en Aurora y verificar `/health`": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078370291
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077891884
       }
     ],
     "12. Frontend PWA — base y capa de servicios API (posterior) **[integración]** (consume la API REST que expone G)": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078370397
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077891952
       }
     ],
     "14.1 Ingestar el PDF de Figma y extraer las pantallas y flujos representados en los mockups": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078370518
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077892033
       }
     ],
     "14.2 Gap-analysis de pantallas/flujos contra el **contrato REST existente**, identificando los endpoints que consume cada pantalla y las brechas detectadas": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078370637
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077892116
       }
     ],
     "14.3 Producir tareas de **componentes concretos** mapeados a las pantallas existentes": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078370738
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077892228
       }
     ],
     "14.4 Implementar aplicando **estilos y tokens de diseño sobre la estructura existente**, sin alterar la lógica de negocio": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078370835
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077892311
       }
     ],
     "15.1 Cablear implementaciones concretas vía el contenedor DI y validar límites de interfaz": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078370943
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077892385
       }
     ],
     "15.4 Verificación de la demo en modo mock (un solo comando) y actualización del README": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078371045
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077892469
       }
     ],
     "16. Checkpoint final — Asegurar que pasan todos los tests": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078371155
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077892554
       }
     ],
     "17.1 Test de análisis estático de importaciones (arquitectura) **[independiente]**": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078371263
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077892642
       }
     ],
     "17.2 Verificación del KPI de impacto social y human-in-the-loop **[integración]**": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078371372
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077892719
       }
     ],
     "17.4 Chequeo de factibilidad y sustentabilidad **[independiente]**": [
       {
-        "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
-        "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
-        "timestamp": 1792078371474
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792077892803
       }
     ],
     "17.5 Calidad de presentación — guion de demo y documentación por área **[integración]**": [
@@ -390,6 +422,13 @@
         "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
         "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
         "timestamp": 1792079583590
+      }
+    ],
+    "5. Módulo D — Storage, transcripción (Modelo 1) e ingesta (AWS primario) **[independiente]**": [
+      {
+        "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
+        "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
+        "timestamp": 1792079179950
       }
     ]
   }
