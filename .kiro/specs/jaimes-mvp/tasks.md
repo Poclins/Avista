@@ -38,7 +38,7 @@ Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B:
   - Escribir tests unitarios de construcción/validación de los modelos y enums.
   - _Requirements: 1.4, 1.5, 3.1, 4.1, 8.1, 11.1, 13.3_
 
-- [ ] 2.1 Módulo A — Alinear/congelar las interfaces de puertos y repos para el nuevo diseño
+- [x] 2.1 Módulo A — Alinear/congelar las interfaces de puertos y repos para el nuevo diseño
   - Declarar las interfaces base que consumirán B–H: `providers/transcription/base.py` (`TranscriptionProvider`), `providers/embeddings/base.py` (`EmbeddingProvider`), `providers/llm/base.py` (`LlmProvider`), `providers/classifier/base.py` (`Classifier`); `repositories/relational/base.py` (`RelationalRepo`), `repositories/vector/base.py` (`VectorRepo`), `repositories/storage/base.py` (`StorageRepo`).
   - Definir los tipos de retorno compartidos (`ClasificacionPropuesta`, `ResultadoRubrica`) y excepciones tipadas (`TranscriptionError`, `LlmError`, `EmbeddingError`).
   - Publicar como contrato estable: una vez acordado, no cambia de forma incompatible mientras B–H estén en desarrollo.
