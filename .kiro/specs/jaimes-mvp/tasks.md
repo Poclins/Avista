@@ -61,9 +61,13 @@ Estado actual: las tareas **1 (bootstrap), 2 (MÃ³dulo A) y 3.1â€“3.3 (MÃ
   - _Requirements: 4.7, 13.2_
 - [x] 3.3 Escribir el script de seed que carga el dataset E-1 y un test que valida conteos contra `distribucion_y_validacion`
   - _Requirements: 10.8, 11.5_
-- [ ] 3.4 MÃ³dulo B â€” AÃ±adir consultas agregadas para el reporte de direcciÃ³n a `RelationalRepo`
+- [x] 3.4 MÃ³dulo B â€” AÃ±adir consultas agregadas para el reporte de direcciÃ³n a `RelationalRepo`
   - Implementar consultas que el MÃ³dulo G consumirÃ¡ vÃ­a interfaz: conteos subieron/mantuvieron/bajaron por sala, distribuciÃ³n por nivel y dominio, conteo de observaciones/bitÃ¡coras total y por educadora, alertas de retroceso y de inactividad (14 dÃ­as).
   - _Requirements: 7.1, 7.3, 7.8_
+- [ ] 3.4a Modulo B/D/E -- Actualizar los fakes de `RelationalRepo` en tests con las 7 consultas agregadas de 3.4
+  - Implementar `conteos_nivel_por_sala`, `distribucion_niveles_por_sala`, `distribucion_niveles_por_dominio`, `contar_observaciones_periodo`, `contar_bitacoras_periodo`, `alertas_retroceso`, `alertas_inactividad` en `_FakeRelationalRepo` (`tests/test_classification_service.py`) y `FakeRelationalRepo` (`tests/test_ingestion_service.py`), para que vuelvan a instanciar tras ampliarse la interfaz en 3.4.
+  - Dejar la suite completa en verde (las 22 fallas actuales son solo por fakes desactualizados, no por regresion de los servicios D/E).
+  - _Requirements: 7.1, 7.3, 13.2_
 - [x] 3.5 MÃ³dulo B â€” Tests de consultas agregadas con SQLite + dataset sembrado
   - Verificar cada agregaciÃ³n contra fixtures del seed; aislamiento total (sin otros mÃ³dulos).
   - _Requirements: 7.1, 7.3_
@@ -158,7 +162,7 @@ Estado actual: las tareas **1 (bootstrap), 2 (MÃ³dulo A) y 3.1â€“3.3 (MÃ
 <!-- Dev 3/4. Depende de: A, interfaces de B y C.                 -->
 <!-- ============================================================= -->
 
-- [~] 7. MÃ³dulo F â€” Proveedor LLM, bitÃ¡coras, rÃºbrica y recomendaciÃ³n **[independiente]** (consume interfaces de B/C vÃ­a fakes)
+- [x] 7. MÃ³dulo F â€” Proveedor LLM, bitÃ¡coras, rÃºbrica y recomendaciÃ³n **[independiente]** (consume interfaces de B/C vÃ­a fakes)
 - [x] 7.1 Implementar `LlmProvider`: adaptador **Bedrock Claude (AWS, primario)** + mock (secundario)
   - SelecciÃ³n por `USE_MOCKS`; excepciÃ³n tipada `LlmError`.
   - _Requirements: 5.3, 5.10_
@@ -205,7 +209,7 @@ Estado actual: las tareas **1 (bootstrap), 2 (MÃ³dulo A) y 3.1â€“3.3 (MÃ
   - _Optional_ â€” documentar el **modelo de la rÃºbrica oficial** (tramoÃ—nÃºcleoÃ—8 nivelesÃ—conductas observables) en `docs/backend/rubrica.md`, junto con la rÃºbrica versionada y los servicios RAG/recomendaciÃ³n, con un diagrama ```mermaid```.
   - _Requirements: 12.2, 12.6_
 
-- [ ] 8. Checkpoint â€” Asegurar que pasan los tests de los mÃ³dulos Aâ€“F
+- [x] 8. Checkpoint â€” Asegurar que pasan los tests de los mÃ³dulos Aâ€“F
   - Ensure all tests pass, ask the user if questions arise.
 
 <!-- ============================================================= -->
