@@ -1,0 +1,30 @@
+[project]
+name = "jaimes-backend"
+version = "0.1.0"
+description = "jAImes — IA para el desarrollo infantil (Fundación Integra · AWS Breaking Barriers Chile 2026)"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi==0.115.6",
+    "uvicorn[standard]==0.34.0",
+    "python-multipart==0.0.20",
+    "pydantic==2.10.4",
+    "pydantic-settings==2.7.1",
+    "SQLAlchemy==2.0.36",
+    "psycopg[binary]==3.2.3",
+    "pgvector==0.3.6",
+    "boto3==1.35.90",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==8.3.4",
+    "httpx==0.28.1",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
