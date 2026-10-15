@@ -64,7 +64,7 @@ Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B:
 - [~] 3.4 Módulo B — Añadir consultas agregadas para el reporte de dirección a `RelationalRepo`
   - Implementar consultas que el Módulo G consumirá vía interfaz: conteos subieron/mantuvieron/bajaron por sala, distribución por nivel y dominio, conteo de observaciones/bitácoras total y por educadora, alertas de retroceso y de inactividad (14 días).
   - _Requirements: 7.1, 7.3, 7.8_
-- [ ]* 3.5 Módulo B — Tests de consultas agregadas con SQLite + dataset sembrado
+- [x] 3.5 Módulo B — Tests de consultas agregadas con SQLite + dataset sembrado
   - Verificar cada agregación contra fixtures del seed; aislamiento total (sin otros módulos).
   - _Requirements: 7.1, 7.3_
 - [ ]* 3.6 Módulo B — Documentación `docs/database/`
