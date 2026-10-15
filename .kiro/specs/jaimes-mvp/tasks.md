@@ -70,14 +70,14 @@ Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B:
 - [ ]* 3.6 Módulo B — Documentación `docs/database/`
   - _Optional_ — escribir `docs/database/esquema.md` + `docs/database/README.md` (diccionario E-1 + tablas nuevas) con un diagrama ER en bloque ```mermaid```.
   - _Requirements: 12.4, 12.6_
-- [~] 3.7 Módulo B — Implementar `DatasetLoader` del Dataset E-1 **oficial** (7 CSV + `consolidado.json`)
+- [x] 3.7 Módulo B — Implementar `DatasetLoader` del Dataset E-1 **oficial** (7 CSV + `consolidado.json`)
   - Leer los **siete CSV relacionales oficiales** (`jardines`, `educadoras`, `ninos`, `ruta_niveles`, `manifestaciones`, `observaciones`, `observacion_manifestaciones`) más `consolidado.json`; mapear cada fila a las entidades ORM del dominio (Módulo A) con `read_csvs()`, `read_consolidado()`, `to_entities()`.
   - Mantener `DatasetLoader` **encapsulado detrás de la frontera del seed** (`RelationalRepo`/`VectorRepo`), de modo que cambiar de dataset (oficial ↔ reducido casero) **no toque el código de los servicios**.
   - _Requirements: 10.8, 14.1_
-- [~] 3.8 Módulo B — Adaptar el seed para cargar vía `DatasetLoader` (oficial E-1, 500 niños) y validar conteos
+- [x] 3.8 Módulo B — Adaptar el seed para cargar vía `DatasetLoader` (oficial E-1, 500 niños) y validar conteos
   - Sustituir la carga "un JSON por tabla" por la lectura del **zip público** `dataset_e1_publico.zip`; validar los conteos cargados contra `distribucion_y_validacion` y **rechazar con error en español** si algún conteo no coincide.
   - _Requirements: 10.8, 10.9, 14.1, 14.2_
-- [~] 3.9 Módulo B — Verificación de reproducibilidad del Dataset E-1 oficial
+- [x] 3.9 Módulo B — Verificación de reproducibilidad del Dataset E-1 oficial
   - Re-ejecutar `generador.py` con **semilla `20261013`** y **fecha de referencia `2026-10-13`** (Python 3.12.15, solo biblioteca estándar) y confirmar salida **idéntica bit a bit** / **hashes publicados coincidentes**, y que `validador.py` finaliza **sin errores**.
   - _Requirements: 10.10, 14.5_
 - [ ]* 3.10 Módulo B — Test de carga completa del dataset oficial (500 niños) y ruta de abstención
@@ -92,13 +92,13 @@ Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B:
 <!-- ============================================================= -->
 
 - [x] 4. Módulo C — Base vectorial y proveedor de embeddings (AWS primario) **[independiente]**
-- [~] 4.1 Implementar `EmbeddingProvider`: adaptador **Titan (AWS, primario)** + adaptador mock (secundario)
+- [x] 4.1 Implementar `EmbeddingProvider`: adaptador **Titan (AWS, primario)** + adaptador mock (secundario)
   - `titan_embeddings.py` invoca Amazon Titan vía Bedrock; `mock_embeddings.py` deriva vectores deterministas del texto para CI/local. Selección por `USE_MOCKS`.
   - _Requirements: 4.2, 4.5_
-- [~] 4.2 Implementar `VectorRepo`: implementación **pgvector sobre Aurora (primaria)** + índice en memoria (secundaria)
+- [x] 4.2 Implementar `VectorRepo`: implementación **pgvector sobre Aurora (primaria)** + índice en memoria (secundaria)
   - `index(doc)` y `search(query_embedding, filtros, k)` con similitud coseno (`<=>`), metadatos `id_observacion, id_nino, dominio, nivel, fecha, formato`.
   - _Requirements: 4.3, 4.6, 4.7, 11.5_
-- [~] 4.3 Implementar `EmbeddingService` (embeber texto e indexar) con manejo de fallo de indexación
+- [x] 4.3 Implementar `EmbeddingService` (embeber texto e indexar) con manejo de fallo de indexación
   - Si falla el embedding o la indexación, conservar la observación relacional sin registro vectorial y devolver error de indexación no completada.
   - _Requirements: 4.2, 4.4_
 - [ ]* 4.4 Módulo C — Tests de aislamiento con mock embeddings + índice en memoria
