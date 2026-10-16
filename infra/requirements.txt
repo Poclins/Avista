@@ -1,0 +1,6 @@
+# jAImes — Infraestructura como Código (AWS CDK, Python) · Módulo H.
+# Una sola lengua para backend e infraestructura; versiones fijadas (pin)
+# para reproducibilidad (Requirement 17.3).
+
+aws-cdk-lib==2.173.4
+constructs==10.4.2

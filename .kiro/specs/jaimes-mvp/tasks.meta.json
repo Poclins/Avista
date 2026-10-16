@@ -443,19 +443,24 @@
         "timestamp": 1792077891884
       },
       {
-        "executionId": "33235cce-1457-43c2-b350-dbe5c7db589c",
-        "chatSessionId": "sess_a7a2b61d-6afe-4009-8682-80d34142aeaa",
-        "timestamp": 1792111651134
+        "executionId": "325fd155-03e6-4b6f-93fb-1d1989e3b1ae",
+        "chatSessionId": "sess_2cf3ef38-59dc-4f59-a892-05139729810c",
+        "timestamp": 1792107061116
       },
       {
-        "executionId": "40e0c1bf-09ac-4781-a679-a131425f4a8b",
-        "chatSessionId": "sess_52116702-48ed-4d06-8ec7-1872f6152c7e",
-        "timestamp": 1792115511461
+        "executionId": "d4c9fb39-4122-4ccd-bf70-bbf96bf8429c",
+        "chatSessionId": "sess_bd6ceefd-2bff-436f-b71e-9c005aff0248",
+        "timestamp": 1792110651555
       },
       {
-        "executionId": "25911411-53e2-41f5-9e45-ff1586e4b4a6",
-        "chatSessionId": "sess_7774928e-58f1-4d32-9843-c6fd48925ce3",
-        "timestamp": 1792116364436
+        "executionId": "d4c9fb39-4122-4ccd-bf70-bbf96bf8429c",
+        "chatSessionId": "sess_bd6ceefd-2bff-436f-b71e-9c005aff0248",
+        "timestamp": 1792111036216
+      },
+      {
+        "executionId": "d4c9fb39-4122-4ccd-bf70-bbf96bf8429c",
+        "chatSessionId": "sess_bd6ceefd-2bff-436f-b71e-9c005aff0248",
+        "timestamp": 1792111125253
       }
     ],
     "12. Frontend PWA — base y capa de servicios API (posterior) **[integración]** (consume la API REST que expone G)": [
@@ -810,9 +815,57 @@
     ],
     "12. Frontend PWA â€” base y capa de servicios API (posterior) **[integraciÃ³n]** (consume la API REST que expone G)": [
       {
-        "executionId": "6a85994c-3127-4438-9fca-1933a53d9bab",
-        "chatSessionId": "sess_0760a3e8-b1f1-4dcd-99bc-57fb3489f2a8",
-        "timestamp": 1792106502215
+        "executionId": "7498db08-264e-437b-ab9a-23a76f56fb14",
+        "chatSessionId": "sess_854007e3-9054-40f9-9a4a-4918bd0632fc",
+        "timestamp": 1792104011161
+      },
+      {
+        "executionId": "7498db08-264e-437b-ab9a-23a76f56fb14",
+        "chatSessionId": "sess_854007e3-9054-40f9-9a4a-4918bd0632fc",
+        "timestamp": 1792105396258
+      }
+    ],
+    "13. Frontend â€” pantallas de educadora y dashboard de direcciÃ³n (estilo placeholder) **[integraciÃ³n]**": [
+      {
+        "executionId": "c328f2f5-6f4e-4199-8956-031495362b93",
+        "chatSessionId": "sess_bc96af9e-dc6b-4cc0-868b-04835c8f6f1a",
+        "timestamp": 1792105556119
+      },
+      {
+        "executionId": "c328f2f5-6f4e-4199-8956-031495362b93",
+        "chatSessionId": "sess_bc96af9e-dc6b-4cc0-868b-04835c8f6f1a",
+        "timestamp": 1792106082963
+      }
+    ],
+    "14.4 Implementar aplicando **estilos y tokens de diseÃ±o sobre la estructura existente**, sin alterar la lÃ³gica de negocio": [
+      {
+        "executionId": "64bdf92b-7b54-43ec-b10d-82fec046f09a",
+        "chatSessionId": "sess_70bdc6ab-5fbd-4ab4-9012-d3b64c4f6a1e",
+        "timestamp": 1792109193031
+      },
+      {
+        "executionId": "64bdf92b-7b54-43ec-b10d-82fec046f09a",
+        "chatSessionId": "sess_70bdc6ab-5fbd-4ab4-9012-d3b64c4f6a1e",
+        "timestamp": 1792109488014 
+      }
+    ],
+    "9. Módulo G — Reporte de dirección, API REST y contenedor DI **[integración]** (cablea B/D/E/F vía DI; integración real requiere esos módulos funcionales)": [
+      {
+        "executionId": "e86f5de2-b093-4af8-87ce-6537890f172a",
+        "chatSessionId": "sess_fe537cd3-1c8c-4b9d-8b21-9f1cad68becf",
+        "timestamp": 1792104627116
+      }
+    ],
+    "10. Transversal — Resguardo de datos sensibles (despersonalización)": [
+      {
+        "executionId": "a736b91c-24e2-4590-8fe9-33272e4d2b24",
+        "chatSessionId": "sess_6c63c7ae-69cc-4208-8225-29e8e086f8bc",
+        "timestamp": 1792105074620
+      },
+      {
+        "executionId": "a736b91c-24e2-4590-8fe9-33272e4d2b24",
+        "chatSessionId": "sess_6c63c7ae-69cc-4208-8225-29e8e086f8bc",
+        "timestamp": 1792105468882
       }
     ],
     "18.1 Rezago relativo a la composición de la sala (alerta automática a la educadora) **[integración]**": [

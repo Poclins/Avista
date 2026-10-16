@@ -1,0 +1,9 @@
+# CDK
+cdk.out/
+cdk.context.json
+*.d.ts
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
