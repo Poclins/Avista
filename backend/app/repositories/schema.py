@@ -88,7 +88,7 @@ class Educadora(Base):
         ForeignKey("jardines.id_jardin"), nullable=False
     )
     rol: Mapped[Rol] = mapped_column(
-        SAEnum(Rol, name="rol"), nullable=False, default=Rol.educadora
+        SAEnum(Rol, name="rol"), nullable=False, default=Rol.educadora_parvulos
     )
     anios_experiencia: Mapped[int] = mapped_column(Integer, nullable=False)
 

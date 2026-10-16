@@ -1,40 +1,38 @@
-// Mapas de etiquetas legibles (español de Chile) para presentar enums del
-// contrato REST. Son puramente de PRESENTACIÓN: no toman decisiones ni derivan
-// datos de negocio, solo traducen un valor del backend a texto para la UI
-// (Requirement 9.6: sin lógica de negocio en el cliente).
+﻿// Mapas de etiquetas legibles (es-CL) para presentar enums del contrato REST.
+// Puramente de PRESENTACION (Requirement 9.6: sin logica de negocio).
 
 import type { DecisionNivel, Dominio } from "../api/types";
 
 export const ETIQUETA_DOMINIO: Record<Dominio, string> = {
-  identidad_y_autonomia: "Identidad y autonomía",
-  convivencia_y_ciudadania: "Convivencia y ciudadanía",
-  corporalidad_y_movimiento: "Corporalidad y movimiento",
-  lenguaje_verbal: "Lenguaje verbal",
-  exploracion_del_entorno: "Exploración del entorno",
+  cognitivo: "Cognitivo",
+  lenguaje_comunicacion: "Lenguaje y comunicacion",
+  motor_fino: "Motor fino",
+  motor_grueso: "Motor grueso",
+  socioemocional: "Socioemocional",
 };
 
 export const DOMINIOS: Dominio[] = [
-  "identidad_y_autonomia",
-  "convivencia_y_ciudadania",
-  "corporalidad_y_movimiento",
-  "lenguaje_verbal",
-  "exploracion_del_entorno",
+  "cognitivo",
+  "lenguaje_comunicacion",
+  "motor_fino",
+  "motor_grueso",
+  "socioemocional",
 ];
 
 export const ETIQUETA_DECISION: Record<DecisionNivel, string> = {
-  avanzar: "Puede avanzar de nivel",
-  mantener: "Mantener el nivel actual",
-  retroceder: "Conviene reforzar el nivel",
+  AVANZAR: "Puede avanzar de nivel",
+  MANTENER: "Mantener el nivel actual",
+  RETROCEDER: "Conviene reforzar el nivel",
 };
 
-/** Clase CSS del badge de estado para una decisión de nivel. */
+/** Clase CSS del badge de estado para una decision de nivel. */
 export function claseEstadoDecision(decision: DecisionNivel): string {
-  return `estado estado--${decision}`;
+  return `estado estado--${decision.toLowerCase()}`;
 }
 
 /** Formatea una fecha ISO del backend a un formato local legible. */
-export function formatearFecha(iso: string | undefined): string {
-  if (!iso) return "—";
+export function formatearFecha(iso: string | undefined | null): string {
+  if (!iso) return "-";
   const fecha = new Date(iso);
   if (Number.isNaN(fecha.getTime())) return iso;
   return fecha.toLocaleDateString("es-CL", {

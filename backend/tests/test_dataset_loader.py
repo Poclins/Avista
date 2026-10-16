@@ -62,7 +62,7 @@ FILAS: dict[str, list[dict[str, str]]] = {
         {
             "id_educadora": "E-001",
             "id_jardin": "J-001",
-            "rol": "educadora",
+            "rol": "educadora_parvulos",
             "anios_experiencia": "4",
         },
     ],

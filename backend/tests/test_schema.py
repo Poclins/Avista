@@ -94,7 +94,7 @@ def _seed_jardin_educadora_nino(session: Session) -> None:
         Educadora(
             id_educadora="E-001",
             id_jardin="J-001",
-            rol=Rol.educadora,
+            rol=Rol.educadora_parvulos,
             anios_experiencia=5,
         )
     )

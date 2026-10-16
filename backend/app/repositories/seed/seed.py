@@ -7,9 +7,11 @@ queda **encapsulado detrás de la frontera del seed**: el llamador solo conoce
 la interfaz ``RelationalRepo``, de modo que cambiar de dataset (oficial ↔
 reducido casero) **no toca el código de los servicios**.
 
-Tras cargar, el seed **valida los conteos** cargados contra
-``distribucion_y_validacion`` (los conteos de referencia que vienen en
-``consolidado.json``) y **rechaza la carga con un error en español**
+Tras cargar, el seed **valida los conteos** cargados contra los conteos
+esperados derivados del propio Dataset E-1 (``conteos_esperados``: una
+comprobación de consistencia interna entre las filas ORM cargadas y las filas
+de los CSV fuente, con chequeo cruzado contra las listas anidadas del
+``consolidado.json`` oficial) y **rechaza la carga con un error en español**
 (:class:`SeedValidationError`) si algún conteo no coincide (Requirement 10.9 /
 14.2). La carga procesa los 500 niños/as sin error, incluidas las
 observaciones con nota/formato/manifestación ausente (celda vacía = ausencia de
@@ -159,29 +161,86 @@ def seed_rubrica_oficial(repo: RelationalRepo) -> int:
 # Camino OFICIAL: carga del zip público vía DatasetLoader + validación
 # ===========================================================================
 def conteos_esperados(dataset: DatasetE1) -> dict[str, int]:
-    """Extrae los conteos de referencia de ``distribucion_y_validacion``.
+    """Deriva los conteos de referencia esperados por tabla del Dataset E-1.
 
-    Los conteos esperados por tabla vienen en ``consolidado.json`` bajo la
-    clave ``conteos`` (la sección de ``distribucion_y_validacion`` del dataset
-    oficial). Se devuelve ``{tabla: n_esperado}`` para las 7 tablas relacionales
-    presentes en el dataset.
+    El ``consolidado.json`` del Dataset E-1 **oficial** NO trae una sección
+    plana ``conteos``; sus claves de nivel superior son ``fecha_referencia``,
+    ``jardines`` (lista de 20), ``naturaleza``, ``ruta_niveles`` (lista de 9) y
+    ``schema_version``. Por eso esta función deriva los conteos esperados **del
+    propio dataset** (``dataset.csvs``), de modo que la validación posterior sea
+    una **comprobación de consistencia interna** (filas ORM cargadas vs filas
+    del CSV fuente) en vez de depender de un bloque ``conteos`` ausente. Esto
+    sigue atrapando errores de mapeo o de descarte de filas, sin fabricar
+    números.
+
+    Compatibilidad hacia atrás: si ``consolidado.json`` **sí** trae un ``dict``
+    bajo la clave ``conteos`` (p. ej. el dataset reducido de pruebas), se usa
+    esa sección como fuente de los conteos esperados.
+
+    Chequeo cruzado barato: cuando el ``consolidado`` oficial trae listas
+    anidadas ``jardines`` y ``ruta_niveles``, se verifica que su largo coincida
+    con el número de filas del CSV correspondiente; una discrepancia lanza
+    :class:`SeedValidationError` en español (consolidado vs CSV incoherentes).
+
+    Args:
+        dataset: el :class:`DatasetE1` ya leído (CSV + consolidado).
+
+    Returns:
+        ``{tabla: n_esperado}`` para las 7 tablas relacionales del dataset.
 
     Raises:
-        SeedValidationError: si ``consolidado.json`` no trae la sección de
-            conteos de referencia (no se puede validar la carga).
+        SeedValidationError: si el ``consolidado`` oficial trae listas anidadas
+            (``jardines``/``ruta_niveles``) cuyo largo no cuadra con sus CSV.
     """
-    conteos = dataset.consolidado.get("conteos")
-    if not isinstance(conteos, dict):
-        raise SeedValidationError(
-            "El 'consolidado.json' del Dataset E-1 no contiene la sección de "
-            "conteos de referencia ('conteos' en 'distribucion_y_validacion'); "
-            "no es posible validar la carga."
-        )
-    esperados: dict[str, int] = {}
-    for tabla in TABLAS:
-        if tabla in conteos:
-            esperados[tabla] = int(conteos[tabla])
+    consolidado = dataset.consolidado or {}
+
+    # Compatibilidad hacia atrás: dataset reducido/de pruebas con 'conteos' plano.
+    conteos = consolidado.get("conteos")
+    if isinstance(conteos, dict):
+        esperados: dict[str, int] = {}
+        for tabla in TABLAS:
+            if tabla in conteos:
+                esperados[tabla] = int(conteos[tabla])
+        return esperados
+
+    # Dataset E-1 oficial: derivar los conteos esperados del propio CSV. La
+    # validación se vuelve una comprobación de consistencia interna (filas
+    # cargadas vs filas fuente), que atrapa descartes/duplicados de filas.
+    esperados = {tabla: len(dataset.csvs.get(tabla, [])) for tabla in TABLAS}
+
+    # Chequeo cruzado barato contra las listas anidadas del consolidado oficial:
+    # el consolidado y los CSV deben ser coherentes entre sí.
+    _verificar_consolidado_anidado(consolidado, esperados)
+
     return esperados
+
+
+def _verificar_consolidado_anidado(
+    consolidado: dict[str, Any], esperados: dict[str, int]
+) -> None:
+    """Cruza las listas anidadas del ``consolidado`` oficial con los CSV.
+
+    El ``consolidado.json`` oficial trae ``jardines`` y ``ruta_niveles`` como
+    listas; su largo debe coincidir con el número de filas del CSV homónimo. Si
+    no coincide, el dataset es internamente incoherente y se rechaza con un
+    error en español (Requirement 10.9 / 14.2).
+    """
+    discrepancias: list[str] = []
+    for tabla in ("jardines", "ruta_niveles"):
+        nested = consolidado.get(tabla)
+        if isinstance(nested, list) and tabla in esperados:
+            if len(nested) != esperados[tabla]:
+                discrepancias.append(
+                    f"- tabla '{tabla}': el 'consolidado.json' lista "
+                    f"{len(nested)} filas, pero el CSV trae {esperados[tabla]}."
+                )
+    if discrepancias:
+        detalle = "\n".join(discrepancias)
+        raise SeedValidationError(
+            "El Dataset E-1 es internamente incoherente: el 'consolidado.json' "
+            "no cuadra con los CSV.\n"
+            f"{detalle}"
+        )
 
 
 def validar_conteos(
@@ -232,9 +291,9 @@ def seed_oficial(
     Lee ``dataset_e1_publico.zip`` vía :meth:`DatasetLoader.load`, mapea cada
     fila a entidades ORM del dominio (Módulo A) con ``to_entities`` y las
     inserta en la base relacional vía ``repo`` respetando el orden de claves
-    foráneas. Al terminar, **valida los conteos cargados** contra
-    ``distribucion_y_validacion`` y **rechaza con error en español** si alguno
-    no coincide (Requirement 10.9 / 14.2).
+    foráneas. Al terminar, **valida los conteos cargados** contra los conteos
+    esperados derivados del dataset (``conteos_esperados``) y **rechaza con
+    error en español** si alguno no coincide (Requirement 10.9 / 14.2).
 
     `DatasetLoader` queda encapsulado tras esta frontera del seed: el resto del
     sistema solo conoce ``RelationalRepo``.
@@ -262,7 +321,8 @@ def seed_oficial(
             repo.add_all(entidades)
         cargados[tabla] = len(entidades)
 
-    # Validación de conteos contra distribucion_y_validacion (consolidado.json).
+    # Validación de conteos: consistencia interna (filas cargadas vs CSV fuente)
+    # con chequeo cruzado contra el consolidado.json oficial.
     # Se valida solo sobre las 7 tablas del dataset oficial; la rúbrica no viene
     # en el zip (su fuente es el PDF oficial) y se siembra aparte a continuación.
     validar_conteos(cargados, conteos_esperados(dataset))

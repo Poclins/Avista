@@ -1,11 +1,11 @@
-// SelectorRol — selector de rol para la demo (Requirement 8.4).
-// Dos opciones mutuamente excluyentes; sin autenticación real.
-// Controles con área táctil mínima de 44 x 44 px (Requirement 9.2).
+﻿// SelectorRol â€” selector de RolUI para la demo (Requirement 8.4).
+// Dos opciones mutuamente excluyentes; sin autenticaciÃ³n real.
+// Controles con Ã¡rea tÃ¡ctil mÃ­nima de 44 x 44 px (Requirement 9.2).
 
-import type { Rol } from "../api/types";
+import type { RolUI } from "../api/types";
 import { useRol } from "../roles/RolContext";
 
-const OPCIONES: { valor: Rol; etiqueta: string }[] = [
+const OPCIONES: { valor: RolUI; etiqueta: string }[] = [
   { valor: "educadora", etiqueta: "Educadora" },
   { valor: "directora", etiqueta: "Directora" },
 ];
@@ -15,9 +15,9 @@ export function SelectorRol() {
 
   return (
     <div
-      className="selector-rol"
+      className="selector-RolUI"
       role="group"
-      aria-label="Seleccionar rol activo"
+      aria-label="Seleccionar RolUI activo"
     >
       {OPCIONES.map((opcion) => {
         const activo = rol === opcion.valor;
@@ -25,7 +25,7 @@ export function SelectorRol() {
           <button
             key={opcion.valor}
             type="button"
-            className={`touch-target boton-rol${activo ? " boton-rol--activo" : ""}`}
+            className={`touch-target boton-RolUI${activo ? " boton-RolUI--activo" : ""}`}
             aria-pressed={activo}
             onClick={() => setRol(opcion.valor)}
           >
@@ -36,3 +36,5 @@ export function SelectorRol() {
     </div>
   );
 }
+
+

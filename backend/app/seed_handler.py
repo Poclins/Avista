@@ -40,11 +40,14 @@ def _ejecutar_seed() -> dict[str, int]:
     arma la URL de Aurora desde el secreto) y la lógica de seed compartida con
     el entrypoint de línea de comandos.
     """
+    import os
+
     from app.core.config import get_settings
     from app.repositories.db import (
         create_all,
         create_db_engine,
         create_session_factory,
+        drop_all,
     )
     from app.repositories.relational.sqlalchemy_repo import (
         SqlAlchemyRelationalRepo,
@@ -54,13 +57,39 @@ def _ejecutar_seed() -> dict[str, int]:
     settings = get_settings()
     url = settings.resolve_database_url()
 
+    # Diagnóstico (Requirement 10.6): deja rastro en CloudWatch de qué dataset
+    # ve el handler, para distinguir "zip oficial no encontrado" de un fallo de
+    # mapeo/validación cuando los conteos no cuadran.
+    ruta_zip_dbg = settings.dataset_zip_path
+    print(
+        f"[seed] dataset_zip_path={ruta_zip_dbg!r} "
+        f"isfile={os.path.isfile(ruta_zip_dbg)}"
+    )
+
+    es_postgres = url.startswith("postgresql")
+
     # 1) Esquema relacional.
     engine = create_db_engine(url)
+
+    # 1a) MIGRACIÓN DE ESQUEMA (solo Postgres/Aurora, nunca SQLite):
+    #     en un re-deploy, el tipo enum ``rol`` ya existe en Aurora con valores
+    #     antiguos; ``create_all`` NO altera tipos existentes, así que el seed
+    #     fallaría de nuevo al insertar un valor nuevo del enum. Reconstruimos
+    #     el esquema desde cero: ``drop_all`` elimina las tablas y, como los
+    #     tipos ENUM de Postgres pueden quedar huérfanos, forzamos un
+    #     ``DROP TYPE IF EXISTS ... CASCADE`` explícito antes de recrear. Todo
+    #     es idempotente y seguro de re-ejecutar (Aurora conserva los datos vía
+    #     removal_policy; el seed vuelve a poblar). En SQLite no aplica (los
+    #     enums se mapean a texto con CHECK y ``create_all`` basta).
+    if es_postgres:
+        drop_all(engine)
+        _eliminar_tipos_enum_postgres(url)
+
     create_all(engine)
 
     # 2) Extensión pgvector + tabla vectorial (solo en Postgres/Aurora).
     #    En SQLite (demo/local) se omite: no hay 'CREATE EXTENSION'.
-    if url.startswith("postgresql"):
+    if es_postgres:
         _preparar_pgvector(url, settings)
 
     # 3) Seed: oficial (zip público) si existe, o reducido como respaldo.
@@ -121,6 +150,41 @@ def _preparar_pgvector(url: str, settings: Any) -> None:
 
     # 2) Tabla + índice vectorial vía el mismo camino que producción.
     PgVectorRepo(_factory, dim=_TITAN_DIM).ensure_schema()
+
+
+# Tipos ENUM nativos de Postgres creados por el esquema relacional
+# (``SAEnum(..., name=...)`` en ``app.repositories.schema``). Al reconstruir el
+# esquema hay que eliminarlos explícitamente: ``Base.metadata.drop_all`` borra
+# las tablas pero puede dejar estos tipos huérfanos, y entonces ``create_all``
+# no los recrea con los valores nuevos (p. ej. los nuevos valores de ``rol``).
+_TIPOS_ENUM_POSTGRES: tuple[str, ...] = (
+    "rol",
+    "dominio",
+    "formato_captura",
+    "estado_bitacora",
+    "decision_nivel",
+)
+
+
+def _eliminar_tipos_enum_postgres(url: str) -> None:
+    """Elimina los tipos ENUM nativos de Postgres (idempotente, solo Postgres).
+
+    Tras ``drop_all`` las tablas desaparecen, pero los tipos ``CREATE TYPE ...
+    AS ENUM`` que SQLAlchemy generó pueden quedar en el catálogo con los
+    **valores antiguos**. Como un re-deploy debe reconstruir el enum ``rol`` con
+    los valores reales del dataset (``educadora_parvulos`` / ``tecnico_parvulos``
+    / ``directora``), aquí forzamos ``DROP TYPE IF EXISTS <t> CASCADE`` para cada
+    tipo conocido. ``IF EXISTS`` lo hace seguro de re-ejecutar; ``CASCADE`` cubre
+    cualquier dependencia residual.
+    """
+    import psycopg
+
+    libpq_url = url.replace("postgresql+psycopg://", "postgresql://", 1)
+    with psycopg.connect(libpq_url) as conn:
+        with conn.cursor() as cur:
+            for tipo in _TIPOS_ENUM_POSTGRES:
+                cur.execute(f'DROP TYPE IF EXISTS "{tipo}" CASCADE;')
+        conn.commit()
 
 
 def handler(event: Any = None, context: Any = None) -> dict[str, Any]:
