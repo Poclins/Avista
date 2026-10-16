@@ -20,6 +20,7 @@ provee, se deriva de forma determinista de las propias observaciones.
 
 from __future__ import annotations
 
+import re
 import unicodedata
 from datetime import date
 from typing import Any, Iterable
@@ -48,6 +49,9 @@ _STOPWORDS = frozenset(
 # Umbral mínimo de solape de tokens significativos para considerar que una
 # observación respalda una conducta observable. Es un valor fijo (determinista).
 _MIN_TOKENS_COINCIDENTES = 2
+
+# Identificador real de manifestación del Dataset E-1 (MAN-L08-MF-02).
+_MANIFESTACION_ID = re.compile(r"\bMAN-[A-Z0-9-]+\b", re.IGNORECASE)
 
 
 def _normalizar(texto: str) -> str:
@@ -256,6 +260,10 @@ class RubricaDecision:
             manifest_conducta = {
                 t for t in tokens_conducta if t.startswith("m")
             }
+            manifest_conducta.update(
+                _normalizar(ident)
+                for ident in _MANIFESTACION_ID.findall(conducta)
+            )
             respaldada = False
 
             for obs, tokens_obs, manifest_obs in evidencia_tokens:
@@ -325,7 +333,11 @@ class RubricaDecision:
             self._umbrales.get("racha_retroceso", _RACHA_RETROCESO_DEFAULT)
         )
 
-        if score >= cobertura_avanzar and nucleo in nucleos_requeridos:
+        if (
+            nivel_actual < 9
+            and score >= cobertura_avanzar
+            and nucleo in nucleos_requeridos
+        ):
             return DecisionNivel.AVANZAR
 
         if self._tiene_racha_de_retroceso(observaciones, nivel_actual, racha_min):

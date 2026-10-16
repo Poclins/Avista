@@ -42,6 +42,8 @@ export interface RequestOptions {
   formData?: FormData;
   /** Parámetros de query string. */
   query?: Query;
+  /** Timeout particular; por defecto usa REQUEST_TIMEOUT_MS. */
+  timeoutMs?: number;
   /** Señal externa para permitir cancelación adicional por el llamador. */
   signal?: AbortSignal;
 }
@@ -81,10 +83,17 @@ async function extraerMensajeError(resp: Response): Promise<string | undefined> 
  * Lanza `ApiError` (en español) ante fallo de red, timeout o estado HTTP de error.
  */
 export async function request<T>(path: string, options: RequestOptions = {}): Promise<T> {
-  const { method = "GET", body, formData, query, signal } = options;
+  const {
+    method = "GET",
+    body,
+    formData,
+    query,
+    signal,
+    timeoutMs = REQUEST_TIMEOUT_MS,
+  } = options;
 
   const timeoutController = new AbortController();
-  const timeoutId = setTimeout(() => timeoutController.abort(), REQUEST_TIMEOUT_MS);
+  const timeoutId = setTimeout(() => timeoutController.abort(), timeoutMs);
 
   // Combina la señal de timeout con la señal externa opcional del llamador.
   const signals = [timeoutController.signal, signal].filter(Boolean) as AbortSignal[];
@@ -133,7 +142,7 @@ export async function request<T>(path: string, options: RequestOptions = {}): Pr
     if (error instanceof DOMException && error.name === "AbortError") {
       if (timeoutController.signal.aborted) {
         throw new ApiError(
-          "La operación tardó demasiado (más de 10 segundos) y no pudo completarse. " +
+          `La operación tardó demasiado (más de ${Math.round(timeoutMs / 1000)} segundos) y no pudo completarse. ` +
             "Tus datos no se han perdido; puedes intentar nuevamente.",
           { isTimeout: true },
         );

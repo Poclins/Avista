@@ -59,6 +59,7 @@ from app.repositories.schema import (
     RubricaVersion,
     RutaNivel,
 )
+from app.core.nombres_sinteticos import nombres_para_nino
 from app.repositories.seed.dataset_loader import (
     TABLAS,
     DatasetE1,
@@ -345,6 +346,11 @@ def _load_json(tabla: str) -> list[dict]:
 def _to_entity(model: type[Base], fila: dict) -> Base:
     """Construye una entidad ORM desde una fila del JSON (parsea fechas)."""
     datos = dict(fila)
+    if model is Nino and datos.get("id_nino"):
+        nombre, paterno, materno = nombres_para_nino(datos["id_nino"])
+        datos.setdefault("nombre", nombre)
+        datos.setdefault("apellido_paterno", paterno)
+        datos.setdefault("apellido_materno", materno)
     for campo in _DATE_FIELDS.get(model, ()):  # type: ignore[arg-type]
         valor = datos.get(campo)
         if isinstance(valor, str):

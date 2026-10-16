@@ -1,7 +1,7 @@
-﻿// Mapas de etiquetas legibles (es-CL) para presentar enums del contrato REST.
+// Mapas de etiquetas legibles (es-CL) para presentar enums del contrato REST.
 // Puramente de PRESENTACION (Requirement 9.6: sin logica de negocio).
 
-import type { DecisionNivel, Dominio } from "../api/types";
+import type { DecisionNivel, Dominio, Nino } from "../api/types";
 
 export const ETIQUETA_DOMINIO: Record<Dominio, string> = {
   cognitivo: "Cognitivo",
@@ -40,4 +40,13 @@ export function formatearFecha(iso: string | undefined | null): string {
     month: "short",
     day: "numeric",
   });
+}
+
+
+export function nombreCompletoNino(
+  nino: Pick<Nino, "nombre" | "apellido_paterno" | "apellido_materno">,
+): string {
+  return [nino.nombre, nino.apellido_paterno, nino.apellido_materno]
+    .filter(Boolean)
+    .join(" ");
 }

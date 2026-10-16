@@ -65,13 +65,13 @@ def test_construir_url_postgres_codifica_caracteres_especiales() -> None:
 # resolve_database_url: modo mock / sin datos de Aurora → SQLite por defecto
 # ---------------------------------------------------------------------------
 def test_resolve_url_modo_mock_devuelve_sqlite_por_defecto() -> None:
-    settings = Settings(use_mocks=True, database_url="sqlite:///./jaimes.db")
+    settings = Settings(environment="development", database_url="sqlite:///./jaimes.db")
     assert settings.resolve_database_url() == "sqlite:///./jaimes.db"
 
 
 def test_resolve_url_sin_secreto_no_arma_postgres() -> None:
     """Con ``use_mocks=false`` pero sin ARN/endpoint, se conserva SQLite."""
-    settings = Settings(use_mocks=False, database_url="sqlite://")
+    settings = Settings(environment="production", database_url="sqlite://")
     assert settings.resolve_database_url() == "sqlite://"
 
 
@@ -84,7 +84,7 @@ def test_resolve_url_mock_no_llama_boto3(monkeypatch: pytest.MonkeyPatch) -> Non
 
     monkeypatch.setattr(boto3, "client", _boom)
     settings = Settings(
-        use_mocks=True,
+        environment="development",
         db_secret_arn="arn:aws:secretsmanager:...:secret:x",
         db_endpoint="host",
     )
@@ -125,7 +125,7 @@ def test_resolve_url_camino_aws_arma_postgres_desde_secreto(
     monkeypatch.setattr(boto3, "client", client_stub)
 
     settings = Settings(
-        use_mocks=False,
+        environment="production",
         db_secret_arn="arn:aws:secretsmanager:us-east-1:123:secret:jaimes-abc",
         db_endpoint="cluster.rds.amazonaws.com",
         db_port=5432,
@@ -153,7 +153,7 @@ def test_resolve_url_camino_aws_codifica_password_con_simbolos(
     monkeypatch.setattr(boto3, "client", client_stub)
 
     settings = Settings(
-        use_mocks=False,
+        environment="production",
         db_secret_arn="arn:secret",
         db_endpoint="h",
         db_port=5432,

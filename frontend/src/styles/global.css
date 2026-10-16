@@ -644,6 +644,15 @@ a.touch-target:focus-visible,
   color: var(--color-texto-suave);
 }
 
+.chip--selector {
+  cursor: pointer;
+  user-select: none;
+}
+
+.chip--selector input {
+  margin: 0;
+  accent-color: var(--color-primario);
+}
 .chip--seleccionado {
   background: var(--color-primario-claro);
   border-color: var(--color-primario-claro);
@@ -860,4 +869,19 @@ a.touch-target:focus-visible,
   .indicador-carga__spinner {
     animation: none;
   }
+}
+
+.chip-grupo--dominios {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  align-items: stretch;
+  width: 100%;
+}
+
+.chip-grupo--dominios .chip--selector {
+  width: 100%;
+  min-height: 52px;
+  height: 100%;
+  justify-content: flex-start;
+  text-align: left;
 }

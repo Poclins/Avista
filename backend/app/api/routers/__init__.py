@@ -7,6 +7,7 @@ Pydantic y delega en los servicios de la Capa 2 vía el contenedor de DI.
 
 from app.api.routers import (
     bitacoras,
+    educadoras,
     health,
     ninos,
     observaciones,
@@ -20,6 +21,7 @@ from app.api.routers import (
 # método + patrón, por lo que el orden no genera colisiones.
 all_routers = [
     health.router,
+    educadoras.router,
     ninos.router,
     observaciones.router,
     bitacoras.router,
@@ -31,6 +33,7 @@ all_routers = [
 __all__ = [
     "all_routers",
     "bitacoras",
+    "educadoras",
     "health",
     "ninos",
     "observaciones",

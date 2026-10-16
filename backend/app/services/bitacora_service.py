@@ -40,16 +40,19 @@ Garantías cubiertas (criterios 5.1–5.6):
 from __future__ import annotations
 
 import concurrent.futures
+import re
 import uuid
 from datetime import date
 from typing import Protocol, runtime_checkable
 
+from app.core.nombres_sinteticos import nombre_completo
 from app.domain.models import EstadoBitacora
 from app.providers.errors import LlmError
 from app.providers.llm.base import LlmProvider
 from app.repositories.relational.base import RelationalRepo
 from app.repositories.schema import (
     Bitacora as BitacoraORM,
+    Nino as NinoORM,
     Observacion as ObservacionORM,
     RubricaVersion as RubricaVersionORM,
 )
@@ -202,6 +205,21 @@ class BitacoraService:
 
         # --- 5) Invocar el LLM con plazo máximo verificable (5.3, 5.4) ------
         texto_generado = self._invocar_llm(prompt, contexto)
+        texto_generado = self._numerar_referencias_observaciones(
+            texto_generado, observaciones, similares
+        )
+        try:
+            nino = self._repo.get(NinoORM, id_nino)
+        except NotImplementedError:
+            nino = None
+        if nino is not None:
+            etiqueta_nino = nombre_completo(
+                nino.id_nino,
+                getattr(nino, "nombre", None),
+                getattr(nino, "apellido_paterno", None),
+                getattr(nino, "apellido_materno", None),
+            )
+            texto_generado = texto_generado.replace(id_nino, etiqueta_nino)
 
         # --- 6) Persistir en estado "borrador" (5.6) ------------------------
         bitacora = BitacoraORM(
@@ -357,7 +375,7 @@ class BitacoraService:
         lineas.append("## Evidencia del período (observaciones)")
         ids_disponibles: list[str] = []
         ids_manifestaciones: list[str] = []
-        for obs in observaciones:
+        for indice, obs in enumerate(observaciones, start=1):
             ids_disponibles.append(obs.id_observacion)
             nivel = obs.nivel_estimado if obs.nivel_estimado is not None else "s/n"
             nota = (obs.nota_breve or "").strip() or "(sin nota)"
@@ -366,16 +384,24 @@ class BitacoraService:
             )
             ids_man_obs = [m.id_manifestacion for m in manifestaciones]
             ids_manifestaciones.extend(ids_man_obs)
-            cita_man = (
-                f" manifestaciones: {', '.join(ids_man_obs)}"
-                if ids_man_obs
-                else ""
-            )
+            reglas_observables = [
+                (
+                    f"{m.id_manifestacion} "
+                    f"[{getattr(m.dominio, 'value', m.dominio)}]: "
+                    f"{m.texto_observable}"
+                )
+                for m in manifestaciones
+            ]
             lineas.append(
-                f"- {obs.id_observacion} "
+                f"- Observación {indice} (referencia interna {obs.id_observacion}) "
                 f"(fecha {obs.fecha_observacion.isoformat()}, nivel {nivel}): "
-                f"{nota}.{cita_man}"
+                f"{nota}."
             )
+            if reglas_observables:
+                lineas.append(
+                    "  Reglas/manifestaciones observables respaldadas: "
+                    + " | ".join(reglas_observables)
+                )
 
         if similares:
             lineas.append("")
@@ -422,13 +448,49 @@ class BitacoraService:
             "Redacta en español (es-CL), con registro sobrio y pedagógico, la "
             f"bitácora quincenal del niño/a {id_nino} para el período "
             f"{fecha_inicio.isoformat()} a {fecha_fin.isoformat()}. "
-            "Fundaméntate únicamente en la evidencia entregada en el contexto; "
+            "Fundaméntate únicamente en la evidencia y en las reglas/manifestaciones "
+            "observables entregadas en el contexto; "
             "no inventes datos. CADA afirmación evaluativa DEBE citar al menos "
             "una observación (por su id_observacion) o una manifestación (por "
             "su identificador) de la evidencia que la respalde. No incluyas "
-            "afirmaciones sin su cita de respaldo."
+            "afirmaciones sin su cita de respaldo. Escribe entre 120 y 180 "
+            "palabras, sin títulos ni listas, en tres párrafos breves: síntesis "
+            "del período, evidencia principal y próximo paso pedagógico. Cita "
+            "al menos una referencia por párrafo usando exclusivamente las "
+            "etiquetas 'Observación 1', 'Observación 2', etc.; no muestres UUID "
+            "ni identificadores técnicos de observación. Termina con una "
+            "oración completa."
         )
 
+    @staticmethod
+    def _numerar_referencias_observaciones(
+        texto: str,
+        observaciones: list[ObservacionORM],
+        similares: list[dict],
+    ) -> str:
+        """Reemplaza identificadores técnicos por Observación 1, 2, etc."""
+        ids: list[str] = []
+        for observacion in observaciones:
+            if observacion.id_observacion not in ids:
+                ids.append(observacion.id_observacion)
+        for documento in similares:
+            ident = str(documento.get("id_observacion", "")).strip()
+            if ident and ident not in ids:
+                ids.append(ident)
+
+        resultado = texto
+        for indice, ident in enumerate(ids, start=1):
+            patron = (
+                rf"(?<![\w-])(?:observaci[oó]n\s+)?"
+                rf"{re.escape(ident)}(?![\w-])"
+            )
+            resultado = re.sub(
+                patron,
+                f"Observación {indice}",
+                resultado,
+                flags=re.IGNORECASE,
+            )
+        return resultado
     def _invocar_llm(self, prompt: str, context: str) -> str:
         """Invoca el LLM aplicando el plazo máximo de 60 s (Requirement 5.4).
 

@@ -1,4 +1,4 @@
-﻿// Capa de servicios API tipada: una funcion por endpoint del contrato REST.
+// Capa de servicios API tipada: una funcion por endpoint del contrato REST.
 // Alineada EXACTAMENTE a los routers del backend (backend/app/api/routers).
 
 import { request } from "./client";
@@ -7,6 +7,7 @@ import type {
   ConfirmarClasificacionBody,
   DecisionRecomendacionBody,
   EditarBitacoraBody,
+  Educadora,
   FichaNino,
   GenerarBitacoraBody,
   GenerarRecomendacionBody,
@@ -20,6 +21,19 @@ import type {
   RutaNiveles,
 } from "./types";
 
+// --- Educadoras y niños relacionados ---
+
+/** GET /educadoras - opciones válidas del dataset. */
+export function listarEducadoras(): Promise<Educadora[]> {
+  return request<Educadora[]>("/educadoras");
+}
+
+/** GET /educadoras/{id}/ninos - niños/as del mismo jardín. */
+export function listarNinosDeEducadora(idEducadora: string): Promise<Nino[]> {
+  return request<Nino[]>(
+    `/educadoras/${encodeURIComponent(idEducadora)}/ninos`,
+  );
+}
 // --- Observaciones ---
 
 /** POST /ninos/{id}/observaciones (multipart: medio o texto). */
@@ -30,6 +44,7 @@ export function crearObservacion(
   return request<Observacion>(`/ninos/${encodeURIComponent(idNino)}/observaciones`, {
     method: "POST",
     formData,
+    timeoutMs: 120_000,
   });
 }
 

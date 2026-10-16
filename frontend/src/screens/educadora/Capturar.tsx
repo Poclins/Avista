@@ -1,58 +1,95 @@
-// Capturar — registra una observación (texto, audio, foto o video) para un
-// niño/a (Requirement 8.2). Envía multipart a POST /ninos/{id}/observaciones y,
-// al recibir la clasificación propuesta, navega a la pantalla de confirmación.
-// Sin lógica de negocio: la clasificación la propone el backend (Requirement 9.6).
+// Capturar - registra una observación para un niño/a seleccionado desde los
+// niños del jardín de la educadora activa. El backend clasifica la evidencia.
 
-import { useState, type FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState, type FormEvent } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { api } from "../../api";
-import type { FormatoCaptura, Observacion } from "../../api/types";
+import type {
+  Educadora,
+  FormatoCaptura,
+  Nino,
+  Observacion,
+} from "../../api/types";
 import { useAccionApi } from "../../hooks/useAccionApi";
 import { IndicadorCarga } from "../../components/IndicadorCarga";
 import { MensajeError } from "../../components/MensajeError";
+import { nombreCompletoNino } from "../etiquetas";
 
-const FORMATOS: { valor: FormatoCaptura; etiqueta: string }[] = [
+const FORMATOS: { valor: "texto" | "audio"; etiqueta: string }[] = [
   { valor: "texto", etiqueta: "Texto" },
   { valor: "audio", etiqueta: "Audio" },
-  { valor: "foto", etiqueta: "Foto" },
-  { valor: "video", etiqueta: "Video" },
 ];
 
-const ACEPTA_ARCHIVO: Record<Exclude<FormatoCaptura, "texto">, string> = {
-  audio: "audio/*",
-  foto: "image/*",
-  video: "video/*",
-};
+const ACEPTA_AUDIO = ".wav,.ogg,.opus,.mp3,audio/wav,audio/ogg,audio/opus,audio/mpeg";
 
 export function Capturar() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [mensajeExito] = useState(() =>
+    (location.state as { mensajeExito?: string } | null)?.mensajeExito ?? null,
+  );
+  const [idEducadora, setIdEducadora] = useState("");
   const [idNino, setIdNino] = useState("");
   const [formato, setFormato] = useState<FormatoCaptura>("texto");
   const [texto, setTexto] = useState("");
   const [archivo, setArchivo] = useState<File | null>(null);
 
-  const { cargando, error, ejecutar } = useAccionApi(
+  const educadorasApi = useAccionApi(api.listarEducadoras);
+  const ninosApi = useAccionApi(api.listarNinosDeEducadora);
+  const captura = useAccionApi(
     (id: string, formData: FormData) => api.crearObservacion(id, formData),
   );
 
+  const educadoras = (educadorasApi.datos ?? []) as Educadora[];
+  const ninos = (ninosApi.datos ?? []) as Nino[];
+
+  useEffect(() => {
+    if (mensajeExito) {
+      navigate(location.pathname, { replace: true, state: null });
+    }
+  }, [location.pathname, mensajeExito, navigate]);
+
+  useEffect(() => {
+    void educadorasApi.ejecutar();
+    // La función importada es estable y solo se carga al montar.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (educadoras.length === 0 || idEducadora) return;
+    const preferida =
+      educadoras.find((educadora) => educadora.id_educadora === "EDU-0001") ??
+      educadoras[0];
+    setIdEducadora(preferida.id_educadora);
+  }, [educadoras, idEducadora]);
+
+  useEffect(() => {
+    setIdNino("");
+    if (idEducadora) void ninosApi.ejecutar(idEducadora);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [idEducadora]);
+
+  useEffect(() => {
+    if (ninos.length > 0 && !idNino) setIdNino(ninos[0].id_nino);
+  }, [ninos, idNino]);
+
   async function enviar(e: FormEvent) {
     e.preventDefault();
-    const id = idNino.trim();
-    if (!id) return;
+    if (!idNino || !idEducadora) return;
 
-    // El cliente solo compone el multipart; el backend valida y clasifica.
     const formData = new FormData();
-    formData.append("formato_captura", formato);
+    formData.append("id_educadora", idEducadora);
+    formData.append("formato", formato);
     if (formato === "texto") {
-      formData.append("texto", texto);
+      formData.append("texto", texto.trim());
     } else if (archivo) {
-      formData.append("medio", archivo);
+      formData.append("archivo", archivo);
     }
 
-    const observacion = (await ejecutar(id, formData)) as Observacion | null;
+    const observacion = (await captura.ejecutar(idNino, formData)) as
+      | Observacion
+      | null;
     if (observacion) {
-      // Se pasa la observación propuesta por navegación para que la pantalla de
-      // confirmación muestre la clasificación sin volver a pedirla al backend.
       navigate(
         `/educadora/observaciones/${encodeURIComponent(
           observacion.id_observacion,
@@ -64,30 +101,64 @@ export function Capturar() {
 
   const faltaContenido =
     formato === "texto" ? texto.trim() === "" : archivo === null;
+  const cargandoOpciones = educadorasApi.cargando || ninosApi.cargando;
 
   return (
     <section className="pantalla">
       <h1 className="pantalla__titulo">Capturar observación</h1>
       <p className="pantalla__descripcion">
-        Registra evidencia de un niño/a. El sistema propondrá una clasificación
-        que podrás revisar y confirmar.
+        Selecciona una educadora y uno de los niños/as de su jardín. El sistema
+        propondrá una clasificación que podrás revisar.
       </p>
+
+      {mensajeExito ? (
+        <p className="texto-exito" role="status">{mensajeExito}</p>
+      ) : null}
 
       <form className="formulario" onSubmit={enviar}>
         <div className="campo">
-          <label className="campo__etiqueta" htmlFor="id-nino">
-            Identificador del niño/a
+          <label className="campo__etiqueta" htmlFor="id-educadora">
+            Educadora
           </label>
-          <input
+          <select
+            id="id-educadora"
+            value={idEducadora}
+            onChange={(e) => setIdEducadora(e.target.value)}
+            disabled={educadorasApi.cargando}
+          >
+            <option value="">Selecciona una educadora</option>
+            {educadoras.map((educadora) => (
+              <option key={educadora.id_educadora} value={educadora.id_educadora}>
+                {educadora.id_educadora} · {educadora.id_jardin} · {educadora.rol}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="campo">
+          <label className="campo__etiqueta" htmlFor="id-nino">
+            Niño/a del jardín
+          </label>
+          <select
             id="id-nino"
             value={idNino}
             onChange={(e) => setIdNino(e.target.value)}
-            placeholder="Ej.: nino-0001"
-            autoComplete="off"
-          />
-          <span className="campo__ayuda">
-            Se usa el identificador seudónimo; nunca el nombre real ni el RUT.
-          </span>
+            disabled={!idEducadora || ninosApi.cargando}
+          >
+            <option value="">
+              {ninosApi.cargando ? "Cargando niños/as…" : "Selecciona un niño/a"}
+            </option>
+            {ninos.map((nino) => (
+              <option key={nino.id_nino} value={nino.id_nino}>
+                {nombreCompletoNino(nino)} · sala {nino.sala_grupo}
+              </option>
+            ))}
+          </select>
+          {idEducadora && !ninosApi.cargando ? (
+            <span className="campo__ayuda">
+              {ninos.length} niño(s)/a(s) relacionados por jardín.
+            </span>
+          ) : null}
         </div>
 
         <div className="campo">
@@ -102,9 +173,9 @@ export function Capturar() {
               setArchivo(null);
             }}
           >
-            {FORMATOS.map((f) => (
-              <option key={f.valor} value={f.valor}>
-                {f.etiqueta}
+            {FORMATOS.map((opcion) => (
+              <option key={opcion.valor} value={opcion.valor}>
+                {opcion.etiqueta}
               </option>
             ))}
           </select>
@@ -112,27 +183,28 @@ export function Capturar() {
 
         {formato === "texto" ? (
           <div className="campo">
-            <label className="campo__etiqueta" htmlFor="texto">
-              Observación
-            </label>
+            <label className="campo__etiqueta" htmlFor="texto">Observación</label>
             <textarea
               id="texto"
               value={texto}
               onChange={(e) => setTexto(e.target.value)}
-              placeholder="Describe lo observado…"
+              placeholder="Describe una conducta observable…"
             />
           </div>
         ) : (
           <div className="campo">
             <label className="campo__etiqueta" htmlFor="archivo">
-              Archivo ({formato})
+              Archivo de audio WAV, OGG, Opus o MP3
             </label>
             <input
               id="archivo"
               type="file"
-              accept={ACEPTA_ARCHIVO[formato]}
+              accept={ACEPTA_AUDIO}
               onChange={(e) => setArchivo(e.target.files?.[0] ?? null)}
             />
+                        <span className="campo__ayuda">
+              WAV, OGG, Opus o MP3 de hasta 60 segundos. Se convierte automáticamente a mono 16 kHz.
+            </span>
             {archivo ? (
               <span className="campo__ayuda">Seleccionado: {archivo.name}</span>
             ) : null}
@@ -143,18 +215,22 @@ export function Capturar() {
           <button
             type="submit"
             className="touch-target boton-primario"
-            disabled={cargando || idNino.trim() === "" || faltaContenido}
+            disabled={
+              captura.cargando || cargandoOpciones || !idNino || !idEducadora || faltaContenido
+            }
           >
             Enviar y clasificar
           </button>
         </div>
       </form>
 
-      {cargando ? (
+      {cargandoOpciones ? <IndicadorCarga mensaje="Cargando opciones…" /> : null}
+      {captura.cargando ? (
         <IndicadorCarga mensaje="Enviando y clasificando la observación…" />
       ) : null}
-
-      {error ? <MensajeError mensaje={error} /> : null}
+      {educadorasApi.error ? <MensajeError mensaje={educadorasApi.error} /> : null}
+      {ninosApi.error ? <MensajeError mensaje={ninosApi.error} /> : null}
+      {captura.error ? <MensajeError mensaje={captura.error} /> : null}
     </section>
   );
 }

@@ -525,20 +525,33 @@ class RecommendationService:
         """
         return _VistaNino(fecha_nacimiento=nino.fecha_nacimiento)
 
-    @staticmethod
-    def _a_dominio_obs(obs: Any) -> Any:
-        """Adapta una ``Observacion`` ORM a la vista que consume la rúbrica.
+    def _a_dominio_obs(self, obs: Any) -> Any:
+        """Adapta una observación sin depender de relaciones ORM diferidas.
 
-        La rúbrica lee ``id_observacion``, ``fecha_observacion``,
-        ``nivel_estimado``, ``nota_breve`` y ``manifestaciones``. Las
-        manifestaciones se derivan de los vínculos ORM si están cargados.
+        Las observaciones devueltas por el repositorio están separadas de su
+        sesión. Por eso las manifestaciones se consultan explícitamente por el
+        puerto ``RelationalRepo`` en vez de activar un lazy-load inválido.
         """
         manifestaciones: list[str] = []
-        vinculos = getattr(obs, "manifestaciones", None) or []
-        for v in vinculos:
-            ident = getattr(v, "id_manifestacion", None)
-            if ident:
-                manifestaciones.append(str(ident))
+        try:
+            catalogo = self._repo.manifestaciones_de_observacion(
+                obs.id_observacion
+            )
+            manifestaciones = [
+                str(m.id_manifestacion)
+                for m in catalogo
+                if getattr(m, "id_manifestacion", None)
+            ]
+        except (AttributeError, NotImplementedError):
+            # Compatibilidad con fakes unitarios que entregan vínculos ya
+            # cargados pero no implementan la consulta del repositorio.
+            vinculos = getattr(obs, "__dict__", {}).get("manifestaciones", [])
+            manifestaciones = [
+                str(v.id_manifestacion)
+                for v in vinculos
+                if getattr(v, "id_manifestacion", None)
+            ]
+
         return _VistaObservacion(
             id_observacion=obs.id_observacion,
             fecha_observacion=obs.fecha_observacion,

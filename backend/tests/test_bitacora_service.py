@@ -385,6 +385,8 @@ def test_contexto_y_prompt_exigen_trazabilidad_por_id() -> None:
     assert "cita" in capturado["prompt"].lower()
     assert "O-77" in capturado["context"]
     assert "MAN-005" in capturado["context"]
+    assert "Comparte materiales." in capturado["context"]
+    assert "socioemocional" in capturado["context"]
 
 
 # ---------------------------------------------------------------------------
@@ -455,3 +457,18 @@ def test_rubrica_vigente_se_incluye_en_contexto() -> None:
 
     assert "v1" in capturado["context"]
     assert "Identidad y Autonomía" in capturado["context"]
+
+
+def test_referencias_tecnicas_se_numeran() -> None:
+    ident = "27df4d97552747cf9a1c7ddd052913d7"
+    observaciones = [_obs(ident, fecha=date(2026, 10, 4))]
+    texto = f"La evidencia (observación {ident}) se repite en {ident}."
+
+    resultado = BitacoraService._numerar_referencias_observaciones(
+        texto, observaciones, []
+    )
+
+    assert resultado == (
+        "La evidencia (Observación 1) se repite en Observación 1."
+    )
+    assert ident not in resultado

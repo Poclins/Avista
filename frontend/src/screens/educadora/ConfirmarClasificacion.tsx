@@ -1,19 +1,14 @@
-﻿// ConfirmarClasificacion â€” revisa la clasificaciÃ³n PROPUESTA por el backend y
-// permite confirmarla o corregirla (Requirement 8.2). Si el backend marcÃ³ la
-// propuesta como de baja confianza / pendiente de clasificaciÃ³n manual, muestra
-// una SUGERENCIA PROACTIVA para que la educadora la revise. Persiste vÃ­a
-// PATCH /observaciones/{id}/clasificacion.
-//
-// Sin lÃ³gica de negocio (Requirement 9.6): la clasificaciÃ³n la propone el
-// backend; el cliente solo presenta los valores y envÃ­a la confirmaciÃ³n/correcciÃ³n.
+// ConfirmarClasificacion - revisa nivel y dominios propuestos por el modelo.
+// Las manifestaciones se derivan automáticamente del catálogo E-1 y no se
+// editan manualmente.
 
 import { useMemo, useState, type FormEvent } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { api } from "../../api";
 import type {
+  ConfirmarClasificacionBody,
   Dominio,
   Observacion,
-  ConfirmarClasificacionBody,
 } from "../../api/types";
 import { useAccionApi } from "../../hooks/useAccionApi";
 import { IndicadorCarga } from "../../components/IndicadorCarga";
@@ -24,19 +19,20 @@ interface EstadoNavegacion {
   observacion?: Observacion;
 }
 
+function mismosDominios(a: Dominio[], b: Dominio[]): boolean {
+  return [...a].sort().join("|") === [...b].sort().join("|");
+}
+
 export function ConfirmarClasificacion() {
   const { idObservacion = "" } = useParams();
+  const navigate = useNavigate();
   const location = useLocation();
   const observacion = (location.state as EstadoNavegacion | null)?.observacion;
   const propuesta = observacion?.clasificacion;
 
   const [nivel, setNivel] = useState<number>(propuesta?.nivel_estimado ?? 1);
-  const [dominios, setDominios] = useState<Dominio[]>(
-    propuesta?.dominios ?? [],
-  );
-  const [manifestaciones, setManifestaciones] = useState<string>(
-    (propuesta?.manifestaciones ?? []).join(", "),
-  );
+  const [dominios, setDominios] = useState<Dominio[]>(propuesta?.dominios ?? []);
+  const manifestaciones = propuesta?.manifestaciones ?? [];
 
   const { cargando, error, datos, ejecutar } = useAccionApi(
     (id: string, body: ConfirmarClasificacionBody) =>
@@ -44,40 +40,50 @@ export function ConfirmarClasificacion() {
   );
   const confirmada = datos as Observacion | null;
 
-  // Sugerencia proactiva cuando el backend indica baja confianza / revisiÃ³n manual.
   const mostrarSugerencia = useMemo(
     () =>
-      Boolean(propuesta?.pendiente_clasificacion_manual || (propuesta ? propuesta.confianza < 0.5 : false)),
-    [observacion, propuesta],
+      Boolean(
+        propuesta?.pendiente_clasificacion_manual ||
+          (propuesta ? propuesta.confianza < 0.5 : false),
+      ),
+    [propuesta],
   );
 
-  function alternarDominio(d: Dominio) {
-    setDominios((prev) =>
-      prev.includes(d) ? prev.filter((x) => x !== d) : [...prev, d],
+  function alternarDominio(dominio: Dominio) {
+    setDominios((actuales) =>
+      actuales.includes(dominio)
+        ? actuales.filter((item) => item !== dominio)
+        : [...actuales, dominio],
     );
   }
 
-  function confirmar(e: FormEvent) {
+  async function confirmar(e: FormEvent) {
     e.preventDefault();
+    const fueCorregida =
+      nivel !== (propuesta?.nivel_estimado ?? 1) ||
+      !mismosDominios(dominios, propuesta?.dominios ?? []);
     const body: ConfirmarClasificacionBody = {
-      accion: "corregir",
+      accion: fueCorregida ? "corregir" : "confirmar",
       nivel_estimado: nivel,
       dominios,
-      manifestaciones: manifestaciones
-        .split(",")
-        .map((m) => m.trim())
-        .filter((m) => m !== ""),
+      // Estos IDs fueron vinculados por el backend contra el catálogo E-1.
+      manifestaciones,
     };
-    void ejecutar(idObservacion, body);
+    const resultado = await ejecutar(idObservacion, body);
+    if (resultado) {
+      navigate("/educadora/capturar", {
+        replace: true,
+        state: { mensajeExito: "La observación se subió correctamente." },
+      });
+    }
   }
 
   if (!observacion) {
     return (
       <section className="pantalla">
-        <h1 className="pantalla__titulo">Confirmar clasificaciÃ³n</h1>
+        <h1 className="pantalla__titulo">Confirmar clasificación</h1>
         <p className="texto-vacio">
-          No hay una clasificaciÃ³n propuesta disponible. Vuelve a â€œCapturarâ€
-          para registrar una observaciÃ³n y obtener una propuesta.
+          No hay una clasificación propuesta. Vuelve a «Capturar observación».
         </p>
       </section>
     );
@@ -85,34 +91,39 @@ export function ConfirmarClasificacion() {
 
   return (
     <section className="pantalla">
-      <h1 className="pantalla__titulo">Confirmar clasificaciÃ³n</h1>
+      <h1 className="pantalla__titulo">Confirmar clasificación</h1>
       <p className="pantalla__descripcion">
-        Revisa la clasificaciÃ³n propuesta para la observaciÃ³n{" "}
-        <code>{observacion.id_observacion}</code> y confÃ­rmala o corrÃ­gela.
+        Revisa la propuesta para <code>{observacion.id_observacion}</code>. Puedes
+        ajustar el nivel y los dominios; las evidencias observables las determina
+        automáticamente el modelo usando el catálogo E-1.
       </p>
 
       {mostrarSugerencia ? (
         <div className="sugerencia" role="note">
-          <span className="sugerencia__icono" aria-hidden="true">
-            ðŸ’¡
-          </span>
+          <span className="sugerencia__icono" aria-hidden="true">💡</span>
           <span>
-            El sistema no estÃ¡ seguro de esta clasificaciÃ³n. Te recomendamos
-            revisar el nivel y los dominios antes de confirmar.
+            La confianza de la propuesta es baja. Revisa nivel y dominios antes
+            de confirmar.
           </span>
         </div>
       ) : null}
 
+      {propuesta ? (
+        <p className="campo__ayuda">
+          Confianza del modelo: {Math.round(propuesta.confianza * 100)} %
+        </p>
+      ) : null}
+
       {confirmada ? (
         <p className="texto-exito" role="status">
-          ClasificaciÃ³n confirmada correctamente.
+          Clasificación confirmada correctamente.
         </p>
       ) : null}
 
       <form className="formulario" onSubmit={confirmar}>
         <div className="campo">
           <label className="campo__etiqueta" htmlFor="nivel">
-            Nivel estimado (1â€“9)
+            Nivel estimado (1–9)
           </label>
           <input
             id="nivel"
@@ -126,60 +137,68 @@ export function ConfirmarClasificacion() {
 
         <fieldset className="campo">
           <legend className="campo__etiqueta">Dominios</legend>
-          <div className="chip-grupo">
-            {DOMINIOS.map((d) => {
-              const seleccionado = dominios.includes(d);
+          <div className="chip-grupo chip-grupo--dominios">
+            {DOMINIOS.map((dominio) => {
+              const seleccionado = dominios.includes(dominio);
               return (
-                <button
-                  key={d}
-                  type="button"
-                  className={`chip touch-target${
+                <label
+                  key={dominio}
+                  className={`chip chip--selector touch-target${
                     seleccionado ? " chip--seleccionado" : ""
                   }`}
-                  aria-pressed={seleccionado}
-                  onClick={() => alternarDominio(d)}
                 >
-                  {ETIQUETA_DOMINIO[d]}
-                </button>
+                  <input
+                    type="checkbox"
+                    checked={seleccionado}
+                    onChange={() => alternarDominio(dominio)}
+                  />
+                  <span>{ETIQUETA_DOMINIO[dominio]}</span>
+                </label>
               );
             })}
           </div>
+          <span className="campo__ayuda">
+            Seleccionados: {dominios.length} de {DOMINIOS.length}.
+          </span>
         </fieldset>
 
-        <div className="campo">
-          <label className="campo__etiqueta" htmlFor="manifestaciones">
-            Manifestaciones vinculadas
-          </label>
-          <input
-            id="manifestaciones"
-            value={manifestaciones}
-            onChange={(e) => setManifestaciones(e.target.value)}
-            placeholder="Identificadores separados por coma"
-          />
+        <section className="campo" aria-labelledby="evidencias-modelo">
+          <h2 id="evidencias-modelo" className="campo__etiqueta">
+            Evidencias observables sugeridas por IA
+          </h2>
+          {manifestaciones.length > 0 ? (
+            <div className="chip-grupo">
+              {manifestaciones.map((manifestacion) => (
+                <span key={manifestacion} className="chip">
+                  {manifestacion}
+                </span>
+              ))}
+            </div>
+          ) : (
+            <span className="campo__ayuda">
+              El modelo no vinculó evidencias observables; revisa nivel y dominios.
+            </span>
+          )}
           <span className="campo__ayuda">
-            Separa los identificadores de manifestaciÃ³n con comas.
+            El catálogo se vincula automáticamente y no se edita manualmente.
           </span>
-        </div>
+        </section>
 
         <div className="barra-acciones">
           <button
             type="submit"
             className="touch-target boton-primario"
-            disabled={cargando}
+            disabled={cargando || dominios.length === 0}
           >
-            Confirmar clasificaciÃ³n
+            Confirmar clasificación
           </button>
         </div>
       </form>
 
       {cargando ? (
-        <IndicadorCarga mensaje="Guardando la clasificaciÃ³nâ€¦" />
+        <IndicadorCarga mensaje="Guardando la clasificación…" />
       ) : null}
-
       {error ? <MensajeError mensaje={error} /> : null}
     </section>
   );
 }
-
-
-

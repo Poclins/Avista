@@ -48,6 +48,7 @@ from app.providers.llm.mock_llm import MockLlmProvider
 from app.providers.transcription.aws_transcription import AwsTranscriptionProvider
 from app.providers.transcription.base import TranscriptionProvider
 from app.providers.transcription.mock_transcription import MockTranscriptionProvider
+from app.providers.transcription.nova_sonic import NovaSonicTranscriptionProvider
 from app.repositories.relational.base import RelationalRepo
 from app.repositories.relational.sqlalchemy_repo import SqlAlchemyRelationalRepo
 from app.repositories.storage.base import StorageRepo
@@ -71,7 +72,8 @@ from app.services.transcription_service import TranscriptionService
 def _mock_settings() -> Settings:
     """Config de modo demo: adaptadores mock + SQLite en memoria."""
     return Settings(
-        use_mocks=True,
+        _env_file=None,
+        environment="development",
         database_url="sqlite://",
         local_storage_dir="./.pytest_storage",
     )
@@ -85,7 +87,8 @@ def _aws_settings() -> Settings:
     pgvector se crean de forma diferida y nunca se invocan.
     """
     return Settings(
-        use_mocks=False,
+        _env_file=None,
+        environment="production",
         database_url="sqlite://",
         aws_region="us-east-1",
         s3_bucket="jaimes-test",
@@ -230,3 +233,18 @@ def test_reset_container_crea_una_instancia_nueva() -> None:
     segundo = get_container()
     assert primero is not segundo
     reset_container()
+
+
+def test_local_con_api_key_usa_bedrock_sin_cambiar_repos_locales() -> None:
+    settings = Settings(
+        environment="development",
+        database_url="sqlite://",
+        bedrock_api_key="clave-de-prueba",
+    )
+    container = Container(settings)
+
+    assert isinstance(container.llm_provider, GuardedLlmProvider)
+    assert isinstance(container.llm_provider._inner, BedrockLlmProvider)
+    assert isinstance(container.transcription_provider, NovaSonicTranscriptionProvider)
+    assert isinstance(container.vector_repo, InMemoryVectorRepo)
+    assert isinstance(container.storage_repo, LocalStorageRepo)

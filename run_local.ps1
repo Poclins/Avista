@@ -12,7 +12,7 @@ $db = Join-Path $backend "jaimes_local.db"
 # Ruta ABSOLUTA a la BD (independiente del cwd del proceso).
 $dbUrl = "sqlite:///" + ($db -replace "\\","/")
 
-$env:USE_MOCKS = "true"
+$env:ENVIRONMENT = "development"
 $env:DATABASE_URL = $dbUrl
 $env:DATASET_ZIP_PATH = $zip
 
@@ -22,7 +22,7 @@ if ((-not (Test-Path $db)) -or ((Get-Item $db).Length -eq 0)) {
 } else { Write-Host "[jAImes] BD ya sembrada." }
 
 Write-Host "[jAImes] Backend -> puerto 8000"
-$beCmd = "/c set USE_MOCKS=true&& set DATABASE_URL=$dbUrl&& ""$py"" -m uvicorn app.main:app --port 8000"
+$beCmd = "/c set DATABASE_URL=$dbUrl&& ""$py"" -m uvicorn app.main:app --port 8000"
 Start-Process cmd.exe -ArgumentList $beCmd -WorkingDirectory $backend
 
 if (-not (Test-Path (Join-Path $frontend "node_modules"))) { Push-Location $frontend; npm install; Pop-Location }
@@ -32,3 +32,4 @@ Start-Process cmd.exe -ArgumentList "/c npm run dev" -WorkingDirectory $frontend
 Start-Sleep -Seconds 4
 Write-Host "[jAImes] Listo. App (puerto 5173) y API/Swagger /docs (puerto 8000)."
 Write-Host "[jAImes] Mi sala: jardin JAR-0009, sala SG-A (19 ninos)."
+

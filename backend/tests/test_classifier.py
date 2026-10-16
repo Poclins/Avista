@@ -212,6 +212,9 @@ class TestLlmClassifier:
         clf = LlmClassifier(llm, _catalogo(), umbral_confianza=0.5)
         prop = clf.classify("Clasifica objetos por color.")
         assert prop.pendiente_clasificacion_manual is True
+        assert prop.nivel_estimado == 1
+        assert prop.dominios == [Dominio.cognitivo]
+        assert prop.manifestaciones == ["M-N1-COG-1"]
 
     def test_sin_manifestaciones_coherentes_marca_pendiente(self) -> None:
         """Si no hay manifestaciones con ese nivel×dominio, pendiente (3.2)."""
