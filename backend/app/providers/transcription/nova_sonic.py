@@ -12,8 +12,6 @@ import asyncio
 import base64
 import json
 import re
-import shutil
-import subprocess
 from concurrent.futures import ThreadPoolExecutor, TimeoutError as FutureTimeout
 from pathlib import Path
 from typing import Any
@@ -87,14 +85,14 @@ class NovaSonicTranscriptionProvider(TranscriptionProvider):
     def __init__(
         self,
         *,
-        api_key: str,
+        api_key: str | None = None,
         region: str = "us-east-1",
         model_id: str = _MODEL_ID,
         storage_dir: str | Path = "./storage",
         max_seconds: int = _MAX_SECONDS,
         client_factory: Any | None = None,
     ) -> None:
-        self._api_key = api_key.strip()
+        self._api_key = (api_key or "").strip()
         self._region = region
         self._model_id = model_id
         self._storage_dir = Path(storage_dir)
@@ -104,27 +102,19 @@ class NovaSonicTranscriptionProvider(TranscriptionProvider):
     def transcribe(self, media_ref: str, formato: FormatoCaptura) -> str:
         if formato is not FormatoCaptura.audio:
             raise TranscriptionError("Nova Sonic solo admite audio en este flujo.")
-        if not self._api_key:
-            raise TranscriptionError("Falta la API key de Amazon Nova Sonic.")
 
         path = self._resolver_archivo(media_ref)
         pcm = self._leer_y_normalizar_audio(path)
+        use_bearer = bool(self._api_key)
 
-        async def ejecutar(use_bearer: bool) -> str:
+        async def ejecutar() -> str:
             return await asyncio.wait_for(
                 self._transcribir_pcm(pcm, use_bearer=use_bearer),
                 timeout=self._max_seconds + 35,
             )
 
         def correr() -> str:
-            try:
-                return asyncio.run(ejecutar(True))
-            except Exception as exc:
-                if type(exc).__name__ != "AccessDeniedException":
-                    raise
-                # Algunas API keys LimitedAccess no incluyen streaming
-                # bidireccional. La sesión de hackathon sí puede autorizarlo.
-                return asyncio.run(ejecutar(False))
+            return asyncio.run(ejecutar())
 
         try:
             asyncio.get_running_loop()
@@ -150,8 +140,8 @@ class NovaSonicTranscriptionProvider(TranscriptionProvider):
             raise
         except Exception as exc:
             raise TranscriptionError(
-                "Nova Sonic no pudo transcribir el audio. Verifique la API key, "
-                "el acceso al modelo y que el archivo sea WAV válido."
+                "Nova Sonic no pudo transcribir el audio. Verifique las "
+                "credenciales, el acceso al modelo y que el archivo sea válido."
             ) from exc
         finally:
             executor.shutdown(wait=False, cancel_futures=True)
@@ -208,28 +198,16 @@ class NovaSonicTranscriptionProvider(TranscriptionProvider):
         return self._leer_y_normalizar_audio(path)
 
     def _credenciales_sesion(self) -> tuple[str, str, str | None]:
-        """Obtiene credenciales temporales sin imprimirlas ni persistirlas."""
+        """Obtiene credenciales temporales del rol mediante boto3.Session."""
         import boto3
 
         credentials = boto3.Session(region_name=self._region).get_credentials()
-        if credentials is not None:
-            frozen = credentials.get_frozen_credentials()
-            return frozen.access_key, frozen.secret_key, frozen.token
-
-        aws = shutil.which("aws") or r"C:\Program Files\Amazon\AWSCLIV2\aws.exe"
-        result = subprocess.run(
-            [aws, "configure", "export-credentials", "--format", "process"],
-            check=True,
-            capture_output=True,
-            text=True,
-            timeout=15,
-        )
-        payload = json.loads(result.stdout)
-        return (
-            payload["AccessKeyId"],
-            payload["SecretAccessKey"],
-            payload.get("SessionToken"),
-        )
+        if credentials is None:
+            raise TranscriptionError(
+                "No se encontraron credenciales AWS para Amazon Nova Sonic."
+            )
+        frozen = credentials.get_frozen_credentials()
+        return frozen.access_key, frozen.secret_key, frozen.token
 
     def _crear_cliente(self, *, use_bearer: bool) -> Any:
         if self._client_factory is not None:

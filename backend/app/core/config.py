@@ -33,9 +33,10 @@ class Settings(BaseSettings):
     environment: str = "development"
     debug: bool = True
 
-    # --- Modo demo / selecciÃ³n de adaptadores ---
-    # true  -> providers y storage mock (sin AWS), repos locales.
-    # false -> servicios AWS reales a travÃ©s de las mismas interfaces.
+    # --- Modo demo / selección de adaptadores ---
+    # AI_ENABLED activa Claude/Nova independientemente de ENVIRONMENT, para
+    # poder mantener SQLite, storage local y el índice en memoria en Lambda.
+    ai_enabled: bool = False
 
     # --- Base de datos relacional ---
     # En modo mock se usa SQLite; en AWS, Postgres/pgvector (RDS/Aurora).
@@ -58,6 +59,8 @@ class Settings(BaseSettings):
     # Si estÃ¡ presente, el seed carga vÃ­a ``DatasetLoader`` (fuente de verdad);
     # si no, cae al dataset reducido/casero (solo respaldo rÃ¡pido de pruebas).
     dataset_zip_path: str = "./dataset_e1_publico.zip"
+    demo_seed_db_path: str | None = None
+    frontend_dist_path: str | None = None
 
     # --- Almacenamiento de objetos ---
     s3_bucket: str = "jaimes-media"
@@ -116,8 +119,9 @@ class Settings(BaseSettings):
         return self.bedrock_api_key_value
     @property
     def use_bedrock(self) -> bool:
-        """Usa Bedrock si hay API key o si el entorno es producción."""
-        return bool(self.bedrock_api_key_value) or not self.use_mocks
+        """Indica si Claude y Nova usan Bedrock real."""
+        return self.ai_enabled or bool(self.bedrock_api_key_value)
+
     @property
     def use_mocks(self) -> bool:
         """Indica si se usan proveedores locales deterministas.

@@ -1,0 +1,32 @@
+{
+  "id": "FEAT-001",
+  "type": "feat",
+  "description": "Preparar el runtime único de jAImes: repositorios locales con IA Bedrock por IAM, bootstrap SQLite idempotente, FastAPI sirviendo la PWA y una imagen Lambda multi-stage con seed E-1 limpio. Esta feature no despliega AWS y debe completarse antes de FEAT-002.",
+  "status": "completed",
+  "steps": [
+    "Añadir AI_ENABLED y rutas configurables de seed/frontend en backend/app/core/config.py; adaptar backend/app/core/container.py para seleccionar Claude, LlmClassifier y Nova Sonic sin cambiar SQLite, LocalStorageRepo, InMemoryVectorRepo ni embeddings locales.",
+    "Migrar la ruta IAM de backend/app/providers/llm/bedrock_llm.py a boto3 Converse con global.anthropic.claude-sonnet-5, sin temperature y con thinking disabled; conservar HTTP Bearer local.",
+    "Permitir api_key vacía en backend/app/providers/transcription/nova_sonic.py y usar SigV4 de inmediato con credenciales de boto3.Session; eliminar shutil/subprocess y cualquier invocación AWS CLI en runtime.",
+    "Crear backend/app/core/bootstrap.py para copiar atómicamente el seed empaquetado a /tmp/jaimes.db solo si falta y crear /tmp/storage; invocarlo antes de construir Mangum.",
+    "Modificar backend/app/main.py para montar frontend/dist con StaticFiles(html=True) después de todos los routers y añadir pruebas de precedencia API/static.",
+    "Crear Dockerfile y .dockerignore raíz: npm ci/build con VITE_API_BASE_URL vacío, Lambda Python 3.12, dependencias fijadas, seed oficial durante build, configuración /tmp no secreta y CMD app.main.handler.",
+    "Crear deployment/smoke_lambda.ps1 y pruebas unitarias para AI_ENABLED, Converse IAM, Nova SigV4, bootstrap y serving estático."
+  ],
+  "acceptance_criteria": [
+    "ENVIRONMENT=development y AI_ENABLED=true construyen SQLite/LocalStorage/InMemoryVectorRepo junto con BedrockLlmProvider/LlmClassifier/NovaSonicTranscriptionProvider.",
+    "La llamada IAM de Claude usa converse, no incluye temperature y deshabilita thinking.",
+    "Nova sin API key crea directamente el cliente SigV4 con credenciales del rol y no ejecuta AWS CLI.",
+    "Dos bootstraps en el mismo /tmp no sobrescriben cambios; un entorno nuevo restaura el seed limpio.",
+    "La imagen contiene exactamente 500 niños con nombres completos únicos, rúbrica oficial y cero bitácoras/recomendaciones manuales.",
+    "La imagen no contiene backend/.env ni variables de API key y responde /health y / con API y PWA en el mismo origen."
+  ],
+  "verification": [
+    "cd backend; & .\\.venv\\Scripts\\python.exe -m pytest",
+    "cd frontend; npm test; $env:VITE_API_BASE_URL=\"\"; npm run build",
+    "cd <repo>; docker build -t jaimes-mvp:local -f Dockerfile .",
+    "cd <repo>; powershell -ExecutionPolicy Bypass -File .\\deployment\\smoke_lambda.ps1 -Image jaimes-mvp:local",
+    "Inspeccionar Config.Env y filesystem de jaimes-mvp:local sin usar/imprimir la key; confirmar ausencia de nombres de variables secretas/.env y consultar conteos de /var/task/resources/jaimes_seed.db."
+  ],
+  "blocked_reason": null,
+  "findings": "Runtime único implementado: ENVIRONMENT=development conserva SQLite, LocalStorageRepo, InMemoryVectorRepo y embeddings locales; AI_ENABLED=true selecciona BedrockLlmProvider/LlmClassifier/Nova Sonic. Claude IAM usa boto3 Converse con global.anthropic.claude-sonnet-5, sin temperature y con thinking disabled; Bearer queda disponible solo cuando se configura una key local. Nova acepta key vacía, elige SigV4 desde el primer intento y obtiene credenciales únicamente mediante boto3.Session, sin AWS CLI/subprocess. Bootstrap copia atómicamente el seed solo si falta y crea storage; StaticFiles se monta después de routers. Verificación: grupos dirigidos 40+40 passed; backend completo 520 passed; frontend 7 passed y build same-origin exitoso; docker build jaimes-mvp:local exitoso; smoke Lambda /health y / respondieron 200; Config.Env, historial y /var/task contienen 0 referencias/archivos secretos; seed empaquetado contiene ninos=500, nombres completos únicos=500, rubricas=1, bitacoras=0 y recomendaciones=0. Datos para FEAT-002: el asset es el Dockerfile raíz, arquitectura base x86_64 por defecto, handler app.main.handler, configuración runtime no secreta ya está dentro de la imagen, requiere permisos IAM Bedrock para Converse y streaming bidireccional, y la Function URL debe enrutar PWA/API en el mismo origen."
+}
