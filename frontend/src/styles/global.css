@@ -1,0 +1,863 @@
+/*
+  ============================================================================
+  jAImes · "Bitácora — Seguimiento pedagógico"
+  Tarea 14.4 — Estilos y TOKENS DE DISEÑO aplicados sobre la ESTRUCTURA
+  EXISTENTE (ingesta de mockups de Figma).
+
+  Esta hoja de estilos es la ÚNICA capa que cambia en 14.4. Reemplaza los
+  estilos "placeholder" de la tarea 13 por el lenguaje visual de los mockups
+  (ver docs/frontend/figma-pantallas.md · componentes-figma.md), SIN alterar:
+    · el contrato de la API REST del backend (INMUTABLE, Requirement 20.5),
+    · la lógica de negocio (el cliente no tiene lógica de negocio),
+    · la estructura de componentes (se conservan TODOS los nombres de clase
+      que ya usan los .tsx: .app-shell, .pantalla, .tarjeta, .kpi, .estado…).
+
+  Es puramente presentación: tokens de diseño + reglas CSS sobre las mismas
+  clases. Mobile-first 320–1024 px (Req 9.1), área táctil ≥44×44 px (Req 9.2),
+  indicador de carga ≤100 ms (Req 9.3), español (Chile), y respeto a
+  prefers-reduced-motion / prefers-color-scheme.
+  ============================================================================
+*/
+
+/* ---------------------------------------------------------------------------
+   1. TOKENS DE DISEÑO
+   Paleta "Bitácora": azul petróleo sereno + celeste de acompañamiento sobre
+   neutros cálidos de papel, con acentos de trayectoria (avanzar/mantener/
+   retroceder). Derivada del tono calmo, pedagógico y "una observación a la
+   vez" de los mockups. Expuesta como custom properties para que todo el
+   sistema escale desde un único punto.
+--------------------------------------------------------------------------- */
+:root {
+  /* Marca / primarios */
+  --color-primario: #1f5673; /* azul petróleo "Bitácora" */
+  --color-primario-fuerte: #16425b; /* titulares / hover */
+  --color-primario-claro: #5fa8c7; /* celeste de acompañamiento */
+  --color-primario-suave: #e3eef4; /* fondos de realce */
+  --color-acento: #c88a3f; /* ámbar cálido (destacados puntuales) */
+
+  /* Superficies / neutros cálidos (papel) */
+  --color-fondo: #f4f1ea; /* papel cálido de fondo */
+  --color-fondo-degradado: #eef2f3;
+  --color-superficie: #ffffff;
+  --color-superficie-tenue: #fbfaf6;
+  --color-texto: #22312f;
+  --color-texto-suave: #556067;
+  --color-texto-tenue: #7b858b;
+  --color-borde: #dcdccf; /* borde cálido tenue */
+  --color-borde-fuerte: #c3c9c0;
+
+  /* Avisos / banner sintético */
+  --color-aviso-fondo: #fbf0d6;
+  --color-aviso-borde: #d8ad52;
+  --color-aviso-texto: #6f5410;
+
+  /* Errores */
+  --color-error-fondo: #fbe9e7;
+  --color-error-borde: #cf5b52;
+  --color-error-texto: #8a2a22;
+
+  /* Estados de trayectoria (3 estados + abstención) */
+  --color-avanzar-fondo: #e4f3e9;
+  --color-avanzar-borde: #3f9d6b;
+  --color-avanzar-texto: #1e6b43;
+  --color-mantener-fondo: #fbf0d6;
+  --color-mantener-borde: #d8ad52;
+  --color-mantener-texto: #7a5a10;
+  --color-retroceder-fondo: #fbe9e7;
+  --color-retroceder-borde: #cf5b52;
+  --color-retroceder-texto: #8a2a22;
+  --color-insuficiente-fondo: #eceee9;
+  --color-insuficiente-borde: #a2a89f;
+  --color-insuficiente-texto: #4a524d;
+
+  /* Tipografía */
+  --fuente-base: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue",
+    sans-serif;
+  --fuente-titulo: "Segoe UI", system-ui, -apple-system, Georgia, serif;
+  --peso-regular: 400;
+  --peso-medio: 600;
+  --peso-fuerte: 700;
+
+  /* Escala de espacios (base 4 px) */
+  --espacio-1: 4px;
+  --espacio-2: 8px;
+  --espacio: 12px; /* espacio base (compat. con tarea 13) */
+  --espacio-4: 16px;
+  --espacio-5: 20px;
+  --espacio-6: 24px;
+
+  /* Radios y elevación */
+  --radio: 12px;
+  --radio-sm: 8px;
+  --radio-pastilla: 999px;
+  --sombra-1: 0 1px 2px rgba(22, 49, 47, 0.06),
+    0 1px 3px rgba(22, 49, 47, 0.08);
+  --sombra-2: 0 4px 12px rgba(22, 49, 47, 0.1);
+  --sombra-foco: 0 0 0 3px rgba(95, 168, 199, 0.45);
+
+  /* Área táctil mínima accesible (Requirement 9.2) */
+  --area-tactil: 44px;
+
+  /* Transiciones suaves y breves */
+  --trans: 160ms ease;
+}
+
+/* Modo oscuro suave, respetando la preferencia del sistema. Solo re-mapea
+   tokens; no cambia estructura ni clases. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-primario: #5fa8c7;
+    --color-primario-fuerte: #8fc6dd;
+    --color-primario-claro: #3d7f9c;
+    --color-primario-suave: #1b2f3a;
+    --color-fondo: #141b1e;
+    --color-fondo-degradado: #10171a;
+    --color-superficie: #1b242a;
+    --color-superficie-tenue: #192227;
+    --color-texto: #e7ece9;
+    --color-texto-suave: #aab6ba;
+    --color-texto-tenue: #8a979c;
+    --color-borde: #2d3a40;
+    --color-borde-fuerte: #3a4850;
+    --color-aviso-fondo: #3a3317;
+    --color-aviso-borde: #8a6f2a;
+    --color-aviso-texto: #f0dca0;
+    --color-error-fondo: #3a1f1c;
+    --color-error-borde: #a94a42;
+    --color-error-texto: #f2b7b1;
+    --sombra-1: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.4);
+    --sombra-2: 0 4px 14px rgba(0, 0, 0, 0.45);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   2. BASE
+--------------------------------------------------------------------------- */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--fuente-base);
+  color: var(--color-texto);
+  background-color: var(--color-fondo);
+  background-image: radial-gradient(
+      1200px 600px at 100% -10%,
+      var(--color-primario-suave) 0%,
+      transparent 55%
+    ),
+    linear-gradient(180deg, var(--color-fondo) 0%, var(--color-fondo-degradado) 100%);
+  background-attachment: fixed;
+  line-height: 1.5;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  /* Respeta notch/safe-areas en móviles. */
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--fuente-titulo);
+  color: var(--color-primario-fuerte);
+  letter-spacing: -0.01em;
+}
+
+a {
+  color: var(--color-primario);
+}
+
+::selection {
+  background: var(--color-primario-claro);
+  color: #06293d;
+}
+
+/* ---------------------------------------------------------------------------
+   3. CONTROLES / ÁREA TÁCTIL (Requirement 9.2)
+--------------------------------------------------------------------------- */
+.touch-target {
+  min-width: var(--area-tactil);
+  min-height: var(--area-tactil);
+  padding: 10px 18px;
+  font-size: 1rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background var(--trans), color var(--trans),
+    border-color var(--trans), box-shadow var(--trans), transform var(--trans);
+}
+
+button.touch-target,
+a.touch-target {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espacio-2);
+  border-radius: var(--radio-sm);
+  border: 1px solid var(--color-borde-fuerte);
+  background: var(--color-superficie);
+  color: var(--color-texto);
+  text-decoration: none;
+  font-weight: var(--peso-medio);
+}
+
+button.touch-target:hover,
+a.touch-target:hover {
+  border-color: var(--color-primario-claro);
+  background: var(--color-primario-suave);
+}
+
+button.touch-target:active,
+a.touch-target:active {
+  transform: translateY(1px);
+}
+
+button.touch-target:focus-visible,
+a.touch-target:focus-visible,
+.campo__control:focus-visible,
+.campo input:focus-visible,
+.campo select:focus-visible,
+.campo textarea:focus-visible {
+  outline: 2px solid var(--color-primario-claro);
+  outline-offset: 2px;
+  box-shadow: var(--sombra-foco);
+}
+
+/* ---------------------------------------------------------------------------
+   4. ESTRUCTURA GENERAL (app-shell / header / nav / main)
+--------------------------------------------------------------------------- */
+.app-shell {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: var(--espacio-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+}
+
+.banner-sintetico {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  padding: 10px 14px;
+  background: var(--color-aviso-fondo);
+  border: 1px solid var(--color-aviso-borde);
+  border-radius: var(--radio-sm);
+  color: var(--color-aviso-texto);
+  font-size: 0.9rem;
+  font-weight: var(--peso-medio);
+  box-shadow: var(--sombra-1);
+  backdrop-filter: saturate(1.1);
+}
+
+.banner-sintetico__icono {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.app-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espacio);
+  padding: var(--espacio-2) var(--espacio-1) var(--espacio-4);
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.app-header__marca {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.app-header__marca strong {
+  font-family: var(--fuente-titulo);
+  font-size: 1.35rem;
+  font-weight: var(--peso-fuerte);
+  color: var(--color-primario-fuerte);
+  letter-spacing: -0.015em;
+}
+
+.app-header__sub {
+  font-size: 0.8rem;
+  color: var(--color-texto-suave);
+}
+
+.selector-rol {
+  display: flex;
+  gap: var(--espacio-2);
+  padding: 4px;
+  background: var(--color-superficie-tenue);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-pastilla);
+}
+
+.selector-rol .touch-target,
+.boton-rol {
+  border: 1px solid transparent;
+  background: transparent;
+  border-radius: var(--radio-pastilla);
+  padding: 8px 16px;
+}
+
+.boton-rol--activo {
+  background: var(--color-primario);
+  color: #fff;
+  border-color: var(--color-primario);
+  box-shadow: var(--sombra-1);
+}
+
+.app-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-2);
+}
+
+.app-nav .nav-link {
+  border-radius: var(--radio-pastilla);
+  padding: 8px 16px;
+  font-weight: var(--peso-medio);
+}
+
+.nav-link--activo {
+  background: var(--color-primario-claro);
+  color: #06293d;
+  border-color: var(--color-primario-claro);
+  font-weight: var(--peso-fuerte);
+}
+
+.app-main {
+  background: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  padding: var(--espacio-6);
+  box-shadow: var(--sombra-1);
+}
+
+/* ---------------------------------------------------------------------------
+   5. PANTALLAS
+--------------------------------------------------------------------------- */
+.pantalla__titulo {
+  margin: 0 0 var(--espacio-1);
+  font-size: 1.5rem;
+  line-height: 1.2;
+}
+
+/* Filete de acento bajo el título de pantalla (lenguaje "trayectoria"). */
+.pantalla > .pantalla__titulo::after {
+  content: "";
+  display: block;
+  width: 48px;
+  height: 3px;
+  margin-top: var(--espacio-2);
+  border-radius: var(--radio-pastilla);
+  background: linear-gradient(
+    90deg,
+    var(--color-primario) 0%,
+    var(--color-primario-claro) 100%
+  );
+}
+
+.pantalla__descripcion {
+  margin: 0 0 var(--espacio-4);
+  color: var(--color-texto-suave);
+  max-width: 60ch;
+}
+
+.pantalla--centro {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espacio-4);
+}
+
+.pantalla--centro .pantalla__titulo::after {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.pantalla__placeholder {
+  border: 1px dashed var(--color-borde-fuerte);
+  border-radius: var(--radio);
+  padding: var(--espacio-4);
+  background: var(--color-superficie-tenue);
+  font-size: 0.9rem;
+  color: var(--color-texto-suave);
+}
+
+.pantalla__endpoints {
+  margin: var(--espacio-1) 0 0;
+  padding-left: 18px;
+}
+
+.pantalla__endpoints code {
+  background: var(--color-primario-suave);
+  color: var(--color-primario-fuerte);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+
+/* ---------------------------------------------------------------------------
+   6. INDICADOR DE CARGA (Requirement 9.3)
+--------------------------------------------------------------------------- */
+.indicador-carga {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  color: var(--color-primario);
+  font-weight: var(--peso-medio);
+}
+
+.indicador-carga--compacto {
+  font-size: 0.9rem;
+}
+
+.indicador-carga__spinner {
+  width: 18px;
+  height: 18px;
+  border: 3px solid var(--color-primario-suave);
+  border-top-color: var(--color-primario);
+  border-radius: 50%;
+  animation: girar 0.8s linear infinite;
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   7. MENSAJE DE ERROR (Requirement 9.7 — nada se descarta)
+--------------------------------------------------------------------------- */
+.mensaje-error {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  padding: var(--espacio-4);
+  background: var(--color-error-fondo);
+  border: 1px solid var(--color-error-borde);
+  border-left-width: 4px;
+  border-radius: var(--radio-sm);
+}
+
+.mensaje-error__texto {
+  margin: 0;
+  color: var(--color-error-texto);
+  font-weight: var(--peso-medio);
+}
+
+.boton-secundario {
+  align-self: flex-start;
+}
+
+/* ---------------------------------------------------------------------------
+   8. BOTONES DE ACCIÓN
+--------------------------------------------------------------------------- */
+.boton-primario {
+  background: var(--color-primario);
+  color: #fff;
+  border-color: var(--color-primario);
+  font-weight: var(--peso-medio);
+  box-shadow: var(--sombra-1);
+}
+
+.boton-primario:hover {
+  background: var(--color-primario-fuerte);
+  border-color: var(--color-primario-fuerte);
+}
+
+.boton-secundario {
+  background: var(--color-superficie);
+  color: var(--color-primario-fuerte);
+  border-color: var(--color-primario-claro);
+}
+
+.boton-primario:disabled,
+.boton-secundario:disabled,
+.touch-target:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.barra-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-2);
+  margin-top: var(--espacio-4);
+}
+
+/* ---------------------------------------------------------------------------
+   9. FORMULARIOS
+--------------------------------------------------------------------------- */
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+  margin-top: var(--espacio-4);
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+}
+
+.campo__etiqueta {
+  font-weight: var(--peso-medio);
+  font-size: 0.95rem;
+  color: var(--color-texto);
+}
+
+.campo__control,
+.campo input,
+.campo select,
+.campo textarea {
+  min-height: var(--area-tactil);
+  padding: 10px 14px;
+  font-size: 1rem;
+  font-family: inherit;
+  border: 1px solid var(--color-borde-fuerte);
+  border-radius: var(--radio-sm);
+  background: var(--color-superficie);
+  color: var(--color-texto);
+  width: 100%;
+  transition: border-color var(--trans), box-shadow var(--trans);
+}
+
+.campo input::placeholder,
+.campo textarea::placeholder {
+  color: var(--color-texto-tenue);
+}
+
+.campo textarea {
+  min-height: 120px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.campo__ayuda {
+  font-size: 0.8rem;
+  color: var(--color-texto-suave);
+}
+
+/* ---------------------------------------------------------------------------
+   10. LISTAS / TARJETAS
+--------------------------------------------------------------------------- */
+.lista {
+  list-style: none;
+  margin: var(--espacio-4) 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+}
+
+.tarjeta {
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  padding: var(--espacio-4);
+  background: var(--color-superficie);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+  box-shadow: var(--sombra-1);
+  transition: border-color var(--trans), box-shadow var(--trans),
+    transform var(--trans);
+}
+
+.tarjeta--enlace {
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+}
+
+/* Guía de "trayectoria" lateral que se enciende al enfocar/pasar. */
+.tarjeta--enlace::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10px;
+  bottom: 10px;
+  width: 3px;
+  border-radius: var(--radio-pastilla);
+  background: transparent;
+  transition: background var(--trans);
+}
+
+.tarjeta--enlace:hover,
+.tarjeta--enlace:focus-visible {
+  border-color: var(--color-primario-claro);
+  box-shadow: var(--sombra-2);
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.tarjeta--enlace:hover::before,
+.tarjeta--enlace:focus-visible::before {
+  background: var(--color-primario-claro);
+}
+
+.tarjeta__titulo {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: var(--peso-medio);
+  color: var(--color-primario-fuerte);
+}
+
+.tarjeta__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-2);
+  font-size: 0.85rem;
+  color: var(--color-texto-suave);
+}
+
+/* ---------------------------------------------------------------------------
+   11. CHIPS / ETIQUETAS
+--------------------------------------------------------------------------- */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  padding: 3px 12px;
+  border-radius: var(--radio-pastilla);
+  font-size: 0.8rem;
+  font-weight: var(--peso-medio);
+  background: var(--color-superficie-tenue);
+  border: 1px solid var(--color-borde);
+  color: var(--color-texto-suave);
+}
+
+.chip--seleccionado {
+  background: var(--color-primario-claro);
+  border-color: var(--color-primario-claro);
+  color: #06293d;
+}
+
+.chip-grupo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-1);
+}
+
+/* ---------------------------------------------------------------------------
+   12. ESTADO DE DECISIÓN (3 estados + abstención)
+   Lenguaje visual de "¿Puede subir de nivel?" de los mockups.
+--------------------------------------------------------------------------- */
+.estado {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  padding: 5px 14px;
+  border-radius: var(--radio-pastilla);
+  font-weight: var(--peso-medio);
+  font-size: 0.9rem;
+  border: 1px solid transparent;
+}
+
+.estado--avanzar {
+  background: var(--color-avanzar-fondo);
+  border-color: var(--color-avanzar-borde);
+  color: var(--color-avanzar-texto);
+}
+
+.estado--mantener {
+  background: var(--color-mantener-fondo);
+  border-color: var(--color-mantener-borde);
+  color: var(--color-mantener-texto);
+}
+
+.estado--retroceder {
+  background: var(--color-retroceder-fondo);
+  border-color: var(--color-retroceder-borde);
+  color: var(--color-retroceder-texto);
+}
+
+.estado--insuficiente {
+  background: var(--color-insuficiente-fondo);
+  border-color: var(--color-insuficiente-borde);
+  color: var(--color-insuficiente-texto);
+}
+
+/* ---------------------------------------------------------------------------
+   13. SUGERENCIA PROACTIVA (human-in-the-loop)
+--------------------------------------------------------------------------- */
+.sugerencia {
+  display: flex;
+  gap: var(--espacio-2);
+  align-items: flex-start;
+  padding: var(--espacio-4);
+  border-radius: var(--radio);
+  background: var(--color-primario-suave);
+  border: 1px solid var(--color-primario-claro);
+  border-left-width: 4px;
+  color: var(--color-primario-fuerte);
+}
+
+.sugerencia__icono {
+  font-size: 1.1rem;
+  line-height: 1.2;
+}
+
+/* ---------------------------------------------------------------------------
+   14. KPI / MÉTRICAS DEL DASHBOARD
+--------------------------------------------------------------------------- */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--espacio);
+  margin-top: var(--espacio-4);
+}
+
+.kpi {
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio);
+  padding: var(--espacio-4);
+  background: linear-gradient(
+    180deg,
+    var(--color-superficie) 0%,
+    var(--color-superficie-tenue) 100%
+  );
+  text-align: center;
+  box-shadow: var(--sombra-1);
+}
+
+.kpi__valor {
+  font-family: var(--fuente-titulo);
+  font-size: 2rem;
+  font-weight: var(--peso-fuerte);
+  color: var(--color-primario);
+  line-height: 1.1;
+}
+
+.kpi__etiqueta {
+  font-size: 0.85rem;
+  color: var(--color-texto-suave);
+  margin-top: var(--espacio-1);
+}
+
+/* ---------------------------------------------------------------------------
+   15. TABLAS (distribuciones)
+--------------------------------------------------------------------------- */
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: var(--espacio-2);
+  font-size: 0.9rem;
+  background: var(--color-superficie);
+  border-radius: var(--radio-sm);
+  overflow: hidden;
+}
+
+.tabla th,
+.tabla td {
+  border-bottom: 1px solid var(--color-borde);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.tabla th {
+  background: var(--color-primario-suave);
+  color: var(--color-primario-fuerte);
+  font-weight: var(--peso-medio);
+}
+
+.tabla tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.tabla tbody tr:nth-child(even) td {
+  background: var(--color-superficie-tenue);
+}
+
+.tabla-scroll {
+  overflow-x: auto;
+  margin-top: var(--espacio-2);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-sm);
+}
+
+/* ---------------------------------------------------------------------------
+   16. SECCIONES / TEXTO AUXILIAR
+--------------------------------------------------------------------------- */
+.seccion {
+  margin-top: var(--espacio-6);
+}
+
+.seccion__titulo {
+  margin: 0 0 var(--espacio-2);
+  font-size: 1.15rem;
+  color: var(--color-primario-fuerte);
+}
+
+.texto-vacio {
+  color: var(--color-texto-suave);
+  font-style: italic;
+}
+
+.texto-exito {
+  color: var(--color-avanzar-texto);
+  font-weight: var(--peso-medio);
+}
+
+/* Contenido de bitácora / argumento: respeta saltos de línea. */
+.texto-pre {
+  white-space: pre-wrap;
+  margin: 0;
+  padding: var(--espacio-4);
+  background: var(--color-superficie-tenue);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-sm);
+  line-height: 1.55;
+}
+
+/* ---------------------------------------------------------------------------
+   17. RESPONSIVO (mobile-first, escala a tablet/desktop 1024 px)
+--------------------------------------------------------------------------- */
+@media (min-width: 640px) {
+  .pantalla__titulo {
+    font-size: 1.75rem;
+  }
+
+  .app-main {
+    padding: calc(var(--espacio-6) + 4px) var(--espacio-6);
+  }
+}
+
+@media (min-width: 900px) {
+  .app-shell {
+    padding: var(--espacio-6);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   18. ACCESIBILIDAD / MOVIMIENTO
+--------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .indicador-carga__spinner {
+    animation: none;
+  }
+}

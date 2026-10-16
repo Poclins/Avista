@@ -1,0 +1,944 @@
+======================================================================
+ARCHIVO: Sin ttulo-1-4.pdf
+======================================================================
+  paginas: 4
+  --- pagina 1 ---
+Bitácora
+Seguimiento pedagógico
+E-1 · De la observación a la acción
+Más tiempo para 
+interacciones 
+significativas.
+Registra lo que ocurre en la sala. Revisa con criterio 
+pedagógico. Construye una trayectoria, una observación a 
+la vez.
+Observar
+Revisar
+Acompañar
+ENTORNO DEMO · DATOS FICTICIOS Acceso protegido
+Tu sala, a mano.
+Ingresa con tu identificador y confirma el contexto en el que vas a trabajar.
+Identificador de educadora o técnico
+EDU-0035
+Usa tu ID institucional. No corresponde a un RUT.
+Contraseña
+••••••••••••
+¿Necesitas recuperar tu acceso?
+Confirmar contexto de acceso
+P erfil de acceso
+Docente · Educadora de p á rvulos   ⌄
+J ard í n y  sala asignados
+J AR-0010 · B osque de Papel · S G -A   ⌄
+C h ill á n, Ñ uble · Solo se muestran tus asignaciones.
+Ingresar a mi sala
+Propuesta conceptual para el desafío E-1.
+No corresponde a un producto oficial de Integra.
+¿No ves el j ard í n q ue necesitas?
+Solicita acceso a la administración local. No puedes consultar registros de otros jardines sin 
+autorización.
+Accesos de administración local y general :  propuesta sujeta a validación. Roles profesionales del dataset :  
+educadora y t é cnico de p á rvulos.
+  --- pagina 2 ---
+Bitácora
+Seguimiento pedagógico
+Inicio
+Niños y niñas
+Nueva captura
+Revisión humana
+Bitácora
+Informes
+Nueva captura
+Jardín Sintético Bosque de Papel
+Chillán, Ñuble · JAR-0010 · Sala SG-A
+MARTES, 13 DE OCTUBRE DE 2026
+Hola, EDU-0035
+Primero, lo que observaste. Los informes pueden esperar.
+Tu pr óx ima o b servaci ó n
+Un pequeñ o  r eg i s tro .
+Un a  m ira d a  que pe r m a ne c e.
+Captura una e x periencia individual o grupal sin interrumpir el ritmo de la sala.
+Nueva captura individual Captura g rupal
+¿ C ó mo quieres re g istrar ?
+Audio · propuesta 6 0 s
+T e x to · nota breve
+F oto · carga autori z ada
+V ideo · l í mite por confirmar
+Demo • 13 oct 2026
+Por revisar
+02 E j emplo operativo
+U na transcripción individual y un registro grupal necesitan tu mirada 
+antes de incorporarse como evidencia.
+A b rir revisi ó n h umana
+In f orme b imensual
+Pendiente de apro b aci ó n
+El resumen se mantiene en borrador. Revisa el per í odo, los 
+destinatarios y el contenido antes de enviarlo.
+Revisar in f orme
+Re g istros recientes V er b it á cora
+Re g istro /  destinatario F ec h a y  autor F ormato Estado
+Borrador individual ·  Ni ñ o / a A ¹ 1 3  oct 2 0 2 6  · E D U -00 35 Audio Guardado localmente
+Jue g o compartido ·  3 participantes ¹ 1 3  oct 2 0 2 6  · E D U -00 35 T e x to grupal Pendiente de revisión
+OBS-000000 8  ·  NINO-00002 0 3  ago 2 0 25  · E D U -00 37 V ideo ² Registro del dataset
+JAR-0010 • Sala SG-A
+35
+Propuesta conceptual · E-1
+EDU-0035
+Educadora de párvulos
+L a f ec h a importa
+NIN O -0000 2  tiene su ú ltimo registro el 0 3  ago 2 0 25 . Es una evidencia histórica, no una evaluación actual. Puedes abrir su trayectoria o iniciar una nueva observación.
+¹  E j emplo de interfa z  •  datos ficticios. ²  Archivo no incluido en dataset. Las cantidades de pendientes no son m é tricas del dataset.
+D atos ficticios · U so pedagógico, no diagnóstico. Bitácora es una propuesta conceptual, no un producto oficial de Integra.
+  --- pagina 3 ---
+Bitácora
+Seguimiento pedagógico
+Inicio
+Niños y niñas
+Nueva captura
+Revisión humana
+Bitácora
+Informes
+Nueva captura
+Jardín Sintético Bosque de Papel
+Chillán, Ñuble · JAR-0010 · Sala SG-A
+MI SALA · SG-A
+Niños y niñas Nueva captura
+Encuentra una trayectoria y decide dónde sumar una nueva observación.
+Tu contexto Lectura responsa b le
+JAR-0010 · SG-A Sin re g istro ≠  sin aprendi z a j e
+Jard í n Sint é tico Bos q ue de Papel · Chillán L as fechas describen lo documentado, no el desarrollo actual.
+Buscar en esta sala Sala autori z ada Estado de documentaci ó n
+⌕   I D  o identificador ficticio SG-A   ⌄ T odos   ⌄
+Todos Con registros Sin registro Ingreso reciente
+Niño / a · ID In g reso Ú ltimo re g istro Documentaci ó n Acci ó n
+NIN O -00002 0 8  feb 2 0 25 0 3  ago 2 0 25 6  observaciones · H istórico V er trayectoria →
+Niño / a A ¹  · DEM O -A 01 oct 2 0 26 1 2  oct 2 0 26 2  registros · Ingreso reciente Abrir e j emplo →
+Niño / a B ¹  · DEM O -B 0 5  oct 2 0 26 Sin registro A ú n no hay observaciones Registrar →
+Niño / a C ¹  · DEM O - C 0 6  oct 2 0 26 1 2  oct 2 0 26 1 registro · Ingreso reciente Abrir e j emplo →
+Niño / a D ¹  · DEM O -D 1 3  oct 2 0 26 Sin registro A ú n no hay observaciones Registrar →
+Demo • 13 oct 2026
+1 caso del dataset +  4  e j emplos de interfa z . No es el total real de la sala. Anterior Si g uiente
+JAR-0010 • Sala SG-A
+35
+Propuesta conceptual · E-1
+EDU-0035
+Educadora de párvulos
+A ú n no h ay o b servaciones para Niño / a B
+Puedes iniciar un registro cuando e x ista una oportunidad de observación. No se asigna nivel ni se infiere ausencia de aprendi z a j e por falta de datos.
+Empie z a desde una experiencia compartida
+C rear re g istro g rupal
+Selecciona participantes de esta sala y revisa la evidencia de cada uno por separado.
+¹  E j emplo de interfa z  •  datos ficticios, todos en la misma sala demo SG-A. U n identificador infantil no es un nombre ni un R U T . L os ni ñ os / as de otros j ardines no están disponibles en esta selección.
+D atos ficticios · U so pedagógico, no diagnóstico. Bitácora es una propuesta conceptual, no un producto oficial de Integra.
+  --- pagina 4 ---
+Bitácora
+Seguimiento pedagógico
+Inicio
+Niños y niñas
+Nueva captura
+Revisión humana
+Bitácora
+Informes
+Jardín Sintético Bosque de Papel
+Chillán, Ñuble · JAR-0010 · Sala SG-A
+NIÑOS Y NIÑAS / TRAYECTORIA
+NINO-00002 Registrar observación
+La trayectoria reúne evidencias fechadas. No representa una evaluación actual.
+Identi f icador protegido ·  NINO-00002
+02 F oto autori z adaNacimiento :  01 oct 2 0 24  · Ingreso :  0 8  feb 2 0 25  · Sala SG-A
+E q uipo :  E DU -00 35  · Educadora de párvulos /  E DU -00 36  y E DU -00 37  · Té cnicos de párvulos
+No hay foto en el dataset. Carga opcional de foto con autori z ación :  propuesta por validar.
+Demo • 13 oct 2026
+Nueva captura Trayectoria Evidencias D atos y permisos
+Ú ltimo nivel registrado
+Registro h istórico ·  03 ago 2025
+5 ·  M ovilidad y 
+propósito
+O BS-000000 8  · E DU -00 37  · V ideo
+Ruta sint é tica • U so pedagógico. Edad orientativa del nivel :  9–
+1 2  meses ;  no diagnóstica.
+Trayectoria documentada
+3 4 5
+0 3  mar 2 0 25 0 3– 1 8  may 2 0 25 0 3  ago 2 0 25
+Entre f ec h as no se in f iere un nivel
+No hay registros posteriores al 0 3  ago 2 0 25 . Esta falta de datos no indica ausencia de 
+aprendi z a j e.
+Evidencias del ú ltimo registro
+Cognitivo ·  M AN- L 05-CO-01
+Busca un ob j eto q ue vio ocultarse completamente ba j o una tela o recipiente.
+Cognitivo ·  M AN- L 05-CO-02
+Prueba más de una acción para alcan z ar un ob j eto cercano fuera de alcance directo.
+L engua j e y comunicación ·  M AN- L 05- L C-01
+U sa un gesto convencional, como se ñ alar, mostrar o despedirse, para comunicar una intención.
+Archivo no incluido en dataset. Se muestran metadatos y v í nculos de evidencia, no reproducción de video.
+M irada por dominios
+M otor grueso M otor f ino L engua j e y comunicación Socioemocional Cognitivo
+Los dominios organi z an manifestaciones. No se calculan punta j es ni niveles por dominio. U n v í nculo no registrado no e q uivale a una habilidad ausente.
+Seis observaciones ,  con su autoría 03 mar –  03 ago 2025
+Observación F ec h a / edad registrada Autor y f ormato Nivel estimado registrado Nota breve
+OBS-000000 8 0 3  ago 2 0 25  · 10 meses E DU -00 37  · V ideo 5  · M ovilidad y propósito Sin nota opcional
+4  · Sedestación y comunicación 
+intencionalOBS-000000 7 1 8  may 2 0 25  · 7  meses E DU -00 35  · T e x to Sin nota opcional
+4  · Sedestación y comunicación 
+intencionalOBS-0000006 1 3  may 2 0 25  · 7  meses E DU -00 37  · T e x to Sin nota opcional
+4  · Sedestación y comunicación 
+intencional
+Registro reali z ado durante una 
+actividad de j uego libre.OBS-0000005 0 8  may 2 0 25  · 7  meses E DU -00 35  · V ideo
+4  · Sedestación y comunicación 
+intencionalOBS-000000 4 0 3  may 2 0 25  · 7  meses E DU -00 36  · T e x to Sin nota opcional
+3  · Alcance y e x ploración 
+corporal
+La manifestación se observó más 
+de una ve z  durante la actividad.OBS-0000003 0 3  mar 2 0 25  · 5  meses E DU -00 37  · Audio
+JAR-0010 • Sala SG-A
+35
+Propuesta conceptual · E-1
+EDU-0035
+Educadora de párvulos
+Detalle de evidencia ·  0 8  may 2025
+OBS-0000005 ·  EDU-0035 ·  V ideo ·  Nivel 4
+M AN-L0 4 -LC-01 · Balbucea secuencias repetidas de consonante y vocal durante la interacción.
+M AN-L0 4 -LC-0 2  · Responde de forma consistente a su identificador ficticio o a una llamada habitual del grupo.
+Registro histórico. Archivo no incluido en dataset.
+D atos ficticios · U so pedagógico, no diagnóstico. Bitácora es una propuesta conceptual, no un producto oficial de Integra.
+======================================================================
+ARCHIVO: Sin ttulo-11-13.pdf
+======================================================================
+  paginas: 3
+  --- pagina 1 ---
+Bitácora
+Seguimiento pedagógico
+Vista de red
+Sincronización
+Accesos
+Configuración
+Administración general · Dataset sintético
+500 niños/as • Datos ficticios para uso pedagógico
+RED DEMO / CORTE DE DATOS: 13 OCT 2026
+Una red visible, sin falsas certezas
+Panorama del dataset sintético y propuesta de seguimiento operativo. No son resultados de implementación.
+80
+Educadoras y técnicos · dataset 
+demo
+20
+Jardines · dataset demo
+500
+Niños y niñas · dataset demo
+Demo • 13 oct 2026
+2.950
+Observaciones · dataset demo
+DESA FÍ O E-1 · K P I  CEN T RA L
+Medición p endiente
+Tiem p o de doc u mentación semanal
+4  h 0 h — P or medirH oras de escritorio a h orradas
+B ase · promedio por semana M eta literal del desaf í o Observado · M edición pendiente
+Propuesta de medición futura :  l í nea base y seguimiento del tiempo declarado por el e q uipo. El dataset no contiene tiempos ;  no se calculan a h orros ni porcentajes logrados.
+Com p osición de los registros
+T e x to 1. 4 5 4
+Audio 4 9 4
+F oto 4 39
+V ideo 563
+M etadatos de formato. No h ay arc h ivos multimedia disponibles.
+Alcance del cat á logo
+8.850 v í nculos de evidencia
+9 niveles 90 manifestaciones 5 dominios
+88 5 observaciones sin nota opcional. 6 0 niños/as tienen 1 – 2 observaciones 
+por ingreso reciente.
+Sin inferencias cl í nicas
+Pocos registros ,  un nivel repetido o un nivel intermedio no registrado 
+no prueban déficit ,  estancamiento ni saltos de aprendizaje.
+Entrega diaria a la base · Estado de interfaz p ro pu esto
+No h ay integración real ni registros de sincronización en el dataset.E j em p lo o p erativo •  datos ficticios
+J ard í n Corte diario demo Estado del servidor Acción
+J AR - 0010 · B os q u e de P a p el · C h ill á n 1 3  oct · 1 8 : 00 Pendiente de sincronización V er cola →
+J AR - 001 7  · P asos de L u na · San F eli p e 1 3  oct · 1 8 : 00 Sincronizado · Ejemplo V er entrega →
+J AR - 0006 · L u z de Colores · Val p ara í so 1 3  oct · 1 8 : 00 Reintento programado · Ejemplo Revisar cone x ión →
+Red demo • 20 jardines
+AG
+Propuesta conceptual · E-1
+Admin. general
+Acceso propuesto
+Casos p ara u na lect u ra res p onsable
+N i ñ o/a y  j ard í n Tra y ectoria doc u mentada Cómo leerla
+NIN O - 00006 · J AR - 001 7  · SG - C 4  observaciones · Nivel 2 · 0 3 – 1 8  feb 2025 L a permanencia no prueba estancamiento.
+NIN O - 0000 4  · J AR - 0006 · SG - C Nivel 6  en feb 2025 →  Nivel 8  en dic 2025 Nivel 7  no registrado no significa aprendizaje omitido.
+Casos de distintos jardines :  no son participantes de la sala S G -A. El alcance nacional de la PP T  no se suma a las cifras de esta demo.
+Datos ficticios · U so pedagógico ,  no diagnóstico. B it á cora es una propuesta conceptual ,  no un producto oficial de I ntegra.
+  --- pagina 2 ---
+9:41
+Bitácora 35
+SG-A · BOSQUE DE PAPEL
+Hola, EDU-0035
+13 oct 2026 · ¿Qué observaste hoy?
+Registra ahora.
+Revisa con calma.
+Grabar observación
+Elige primero a quién corresponde.
+Escribir Adjuntar
+Antes de seguir
+2 por revisar 1 local
+Tus borradores están separados de la 
+evidencia aprobada.
+Abrir revisión
+Última actividad Ver todo
+Exploración · A, B y C
+Hoy · EDU-0035 · Grupo demo SG-A
+Pendiente de revisar por niño/a
+Puedes guardar sin conexión
+Un registro guardado localmente se enviará 
+cuando haya cone x i ó n. N o necesita esperar 
+una respuesta de I A.
+C antidades y actividad :  e j emplos operativos ,  no resultados 
+del dataset.
+E j emplo de inter f a z  · datos f icticios
+I nicio C apturar R evisar C ola
+  --- pagina 3 ---
+9:41
+Capturar audio 35
+¿A quién corresponde?
+Define el alcance antes de grabar.
+Individual Grupal
+Grupo · Sala demo SG-A
+☑ Niño/a A ☑ Niño/a B
+☑ Niño/a C
+DEMO-A / DEMO-B / DEMO-C · EDU-0035
+Cambiar participantes
+Grabando · ejemplo
+00:42
+de 01:00 · límite propuesto
+Pausar Terminar
+Al alcanzar el límite, se propone detener y conservar 
+el audio, nunca descartarlo.
+Vista previa de transcripción
+Streaming · texto provisional
+“En el rincón de exploración ofrecimos telas y 
+recipientes…”
+Esperando el siguiente fragmento. E j emplo de 
+interfaz, no audio ni transcripción del dataset.
+Si se interrumpe la conexión
+Conserva el audio localmente. L a 
+transcripción puede retomarse despu é s o 
+reemplazarse por texto manual.
+Guardar borrador local
+Audio :  6 0 s es un supuesto por validar. V ideo :  límite por 
+confirmar. El permiso de micrófono se solicita antes de 
+grabar.
+E j emplo de interfaz · datos ficticios
+Inicio Capturar R evisar Cola
+======================================================================
+ARCHIVO: Sin ttulo-14.pdf
+======================================================================
+  paginas: 1
+  --- pagina 1 ---
+9:41
+Revisar grupo 35
+Una evidencia por mirada
+Exploración · 13 oct 2026 · EDU-0035
+3 participantes · SG-A
+Relato compartido
+Telas, recipientes y objetos en el rincón de 
+exploración. Cada participante actuó de 
+forma distinta.
+Editar transcripción
+No hay un nivel para todo el grupo
+Revisa cada destinatario. Puedes aprobar a 
+uno y dejar a otro en borrador.
+A
+Niño/a A · DEMO-A
+Listo para aprobación
+Observación individual
+Buscó el objeto que vio ocultarse bajo 
+la tela.
+Nivel para esta fecha
+5 · Movilidad y propósito   ⌄
+☑ MAN-L05-CO-01 · Cognitivo
+Busca un objeto que vio ocultarse 
+completamente bajo una tela o recipiente.
+Editar evidencia de A
+B
+Niño/a B · DEMO-B
+Mantener en borrador
+Exploró el recipiente ;  falta describir una 
+acción observable con mayor precisión.
+Nivel para esta fecha
+S in nivel re g istrado
+S in evidencia seleccionada. N o si g nifica 
+ausencia de aprendi z aje.
+Completar observación de B
+C
+Niño/a C · DEMO-C
+Listo para aprobación
+Observación individual
+Balbuceó secuencias al interactuar.
+Nivel para esta fecha
+4  · S edestación y comunicación 
+intencional   ⌄
+☑ MAN-L04-LC-01
+Balbucea secuencias repetidas de consonante y 
+vocal durante la interacción.
+Editar evidencia de C
+Antes de guardar
+☑ Revis é  destinatarios y evidencias de A  y C.
+A  y C :  aprobar y g uardar. B :  conservar borrador 
+sin nivel.
+Confirmar A y C · guardar
+Guardar todo como borrador
+Ruta sint é tica •  Uso peda g ó g ico. Cada re g istro individual 
+conserva I D, fec h a, autor y selección de 1 – 5 manifestaciones 
+ú nicas del nivel ele g ido.
+Ejemplo de interfa z  · datos ficticios
+I nicio Capturar Revisar Cola
+======================================================================
+ARCHIVO: Sin ttulo-15-16_compressed.pdf
+======================================================================
+  paginas: 2
+  --- pagina 1 ---
+9:41
+Guardados y conexión 35
+Tu registro está a salvo
+2 borradores locales · conexión por recuperar
+Guardado en este dispositivo
+Puedes seguir trabajando. No cierres sesión ni 
+borres los datos locales antes de sincronizar.
+Por enviar Sincronizados
+Audio · Niño/a A
+Guardado localmente
+13 oct · 09:41 · EDU-0035 · DEMO-A
+Servidor: pendiente de envío.
+IA: transcripción no disponible.
+Docente: borrador sin aprobar.
+Reintentar al conectar
+Continuar con texto manual
+El audio se conserva al usar texto. La transcripción 
+puede retomarse después.
+Grupo · A, B y C
+Guardado localmente
+13 oct · 09:38 · EDU-0035 · Sala SG-A
+Pendiente de revisión por participante. 
+Guardar el relato no aprueba un nivel com ú n.
+A b rir revisión del grupo
+S i necesitas recuperar
+C asos de a y uda ,  no errores activos de esta cola.
+Ej emplo · con f licto al sincroni z ar
+Gu í a de recuperación
+H a y  dos versiones del mismo borrador. No se 
+sobrescribe autom á ticamente.
+Local · 09:41 · texto editad o
+Servidor · 09:35 · versión anterior
+Comparar versiones
+Elige conservar la local o la del servidor después 
+de comparar. Ambas versiones se retienen h asta 
+resolver.
+Ej emplo · permiso de micró f ono
+Gu í a de recuperación
+Si deniegas el permiso no se inicia una 
+grabación. T u borrador existente permanece 
+disponible.
+A b rir a j ustes del dispositivo
+U sar texto en su lugar
+R eintento ,  almacenamiento local y  resolución de versiones: 
+propuestas de f uncionamiento por validar. « Sincronizado »  
+describe el servidor ,  no la aprobación docente.
+Ejemplo de inter f az · datos f icticios
+Inicio C apturar R evisar Cola
+  --- pagina 2 ---
+BITÁCORA / SEGUIMIENTO PEDAGÓGICO UX v1 · 13 oct 2026
+Observar con facilidad.
+Decidir con responsabilidad.
+Mapa de alcance, decisiones y preguntas abiertas del desafío E-1. Documento de trabajo, no una pantalla de la aplicación.
+11 pantallas de escritorio 4 flujos móviles 1 tablero UX Propuesta conceptual · no oficial
+01 / Roles y límites de acceso
+Perfil Tarea principal Alcance propuesto Decisión que conserva
+Educadora de párvulos Capturar, revisar evidencia e informe Sala / jardín asignado Aprobación pedagógica y envío
+Técnico de párvulos Capturar y preparar borradores Sala asignada Autoría propia; revisión por educadora
+Administración local ¹ E q uipo, permisos y cambio de docente Un jardín H istórico de autores inalterado
+Administración g eneral ¹ Dataset, K PI y entrega diaria Red demo agregada por defecto Sin aprobación pedagógica por rol admin.
+¹  Perfiles de acceso solicitados, no roles del dataset. Reglas de permisos y aprobación sujetas a validación. Identificadores infantiles no son nombres ni RUT.
+02 / Ruta principal y decisión h umana
+1 → 2 → 3 → 4 → 5  →
+C apturar Revisar G uardar Trayectoria fec h ada I nforme aprobado
+Individual o grupal. Te x to, audio, 
+foto o video.
+Te x to editable; evidencia y nivel 
+por ni ñ o/a.
+ID, fec h a y autor. Aprobación 
+distinta de sincroni z ación.
+Solo h ec h os documentados. Sin 
+inferir entre fec h as.
+V ista previa +  destinatarios +  
+aprobar y enviar.
+Desvío se g uro :  g uardar borrador desde la captura
+Sin cone x ión o sin IA, guardar localmente y continuar con te x to. El procesamiento no blo q uea el borrador. En grupos se comparte el relato; se mantienen ID, observación, evidencia, nivel y autoría por 
+participante.
+03 / Estados independientes ,  no una sola etiqueta
+Eje Estados propuestos Q ué no si g nifica
+Almacenamiento local Sin guardar →  Guardado localmente No acredita envío al servidor.
+S ervidor / entre g a diaria Pendiente →  Sincroni z ado / Reintento / Conflicto No acredita revisión de IA ni aprobación docente.
+I A / transcripción Pendiente →  Provisional →  Disponible / No disponible No confirma evidencia, nivel ni diagnóstico.
+Revisión docente Borrador →  En revisión →  Aprobado No autori z a autom á ticamente correos futuros.
+Pendiente de aprobación →  Aprobado →  Entrega pendiente →  
+Enviado / F allidoI nforme / correo Nunca se envía antes de la aprobación docente.
+04 / M atri z  de casos UX y recuperación
+S ituación Respuesta de interfa z S i g uiente paso / criterio
+S in cone x ión durante captura Guardar localmente; mostrar servidor pendiente Continuar; reintentar sin duplicar el registro.
+Transcripción interrumpida o no disponible Te x to provisional editable; preservar audio Escribir manualmente o retomar IA despu é s.
+Permiso de micrófono / cámara dene g ado No iniciar captura; conservar borrador Abrir ajustes o usar te x to; sin bucle de permisos.
+Audio lle g a al límite Propuesta :  detener a 60  s y conservar Revisar / guardar. V ideo :  límite a ú n no definido.
+Dos versiones al sincroni z ar Mostrar local y servidor con autor / fec h a Comparar y elegir; sin sobrescritura silenciosa.
+G rupo con evidencia desi g ual Detalle individual y selección de nivel por participante Aprobar A y C; B puede seguir sin nivel en borrador.
+C ambio de docente Nueva asignación desde fec h a efectiva Conservar autores h istóricos; revisar acceso y pendientes.
+J ardín fuera del alcance Acceso no autori z ado; sin datos sensibles e x puestos Solicitar acceso local / general seg ú n alcance.
+S in resultados / ni ñ o/a sin re g istros No h ay registros con estos filtros / A ú n no h ay observaciones L impiar filtros / registrar. Nunca inferir d é ficit.
+C orreo fallido tras aprobación Aprobado, entrega fallida; no volver a pedir evidencia Reintentar entrega con tra z abilidad, sin doble envío.
+0 5  / S emántica de datos ausentes
+« Sin nota opcional »  =  nota vacía. 885  observaciones del dataset no tienen esta nota.
+« Sin registro »  =  observación o manifestación no documentada, no ausencia de aprendi z aje.
+« Ú ltimo nivel registrado »  siempre lleva fec h a. NINO- 0000 2:  nivel 5 , 0 3  ago 2 0 2 5 ; no 
+evaluación actual.
+60  ni ñ os/as con 1 –2  observaciones ingresaron recientemente. No activar alertas de d é ficit 
+por edad ni puntajes autom á ticos.
+NINO- 00006 :  nivel repetido no prueba estancamiento. NINO- 0000 4:  nivel 7  sin registro no 
+implica aprendi z aje omitido.
+06 / F uentes y discrepancias
+PPT (27  diapositivas ) :  8  niveles y 1 0  n ú cleos. CS V  / diccionario / J SON reducido :  9  niveles y 
+5  dominios. No h ay correspondencia validada.
+UI :  usar la ruta del dataset con « Ruta sint é tica •  Uso pedagógico » . Mantener descripciones 
+y observaciones del CS V , omitidas en el J SON por tama ñ o.
+PPT :  escala nacional de 85 . 000  ni ñ os/as y 1. 2 00  jardines. Demo :  5 00  ni ñ os/as, 2 0  jardines, 
+8 0  educadoras/t é cnicos. No me z clar á mbitos.
+Pi z arra actuali z ada 1 3:2:  límite audio/video sin cifra. Se propone audio de 60  s por la nota 
+anterior; video por confirmar.
+Sin medios, tiempos, transcripciones ni confian z a IA reales en el dataset. No simular activos 
+h istóricos ni resultados logrados.
+0 7  / Ruta sintética del dataset · uso peda g ó g ico
+N ivel N ombre e x acto Edad orientativa N ivel N ombre e x acto Edad orientativa
+1 Atención y regulación inicial 0 –2  meses 6 Autonomía funcional inicial 1 2– 1 8  meses
+2 Interacción y control emergente 2–4  meses Representación y combinación 
+inicial7 1 8 –2 1 meses
+3 Alcance y e x ploración corporal 4– 6  meses
+8 Combinación y participación 2 1 –27  meses
+Sedestación y comunicación 
+intencional4 6 –9  meses Secuencias y autonomía 
+creciente9 27–3 6  meses
+5 Movilidad y propósito 9– 1 2  meses
+Dominios :  Motor grueso ·  Motor fino ·  L enguaje y comunicación ·  Socioemocional ·  Cognitivo.
+Edades orientativas, no diagnósticas. El registro vincula 1 – 5  manifestaciones ú nicas del nivel elegido. Nota 
+opcional :  m á x imo 2 8 0  caracteres.
+No se calculan puntuaciones ni niveles independientes por dominio. Cat á logo :  9 0  manifestaciones y 8 . 85 0  vínculos 
+de evidencia.
+0 8  / Decisiones a validar antes de construir
+Tema S upuesto o pre g unta abierta C riterio de salida
+Tiempo semanal :  base 4  h  →  meta literal 0  h . Observado pendiente; 
+a h orro por medir.M edición del K P I Definir instrumento, línea base, muestra y seguimiento.
+F recuencia bimensual Mantener t é rmino literal; aclarar cadencia y fec h a de corte. V alidar período, responsables y destinatarios autori z ados.
+Protección y dos almacenes Separación lógica IA / ni ñ os/as es propuesta, no bac k end verificado. V alidar vínculo por ID, mínimos datos enviados, cifrado y acceso.
+Avatares por ID. F oto opcional solo con autori z ación. No h ay fotos 
+reales.Adjuntos y conservación Definir consentimiento, retención, borrado y límites de arc h ivos.
+S treamin g  y sincroni z ación diaria V ista previa y estados son moc k ups; sin integración real. V alidar conectividad, p é rdida de red y entrega idempotente.
+Resumen propuesto nunca comunica promoción como decisión 
+autom á tica.Promociones y correos automati z ados Revisión docente previa a cual q uier envío.
+README describe datos, no un c h at. C h at IA actuali z ado a ú n 
+pendiente.Alcance y pró x imos insumos No incorporar c h atbot como re q uisito. F uera :  escuc h a y beneficios.
+Principio de la versión 1 :  capturar más fácilmente no si g nifica automati z ar el juicio peda g ó g ico .
+======================================================================
+ARCHIVO: Sin ttulo-5-7.pdf
+======================================================================
+  paginas: 3
+  --- pagina 1 ---
+Bitácora
+Seguimiento pedagógico
+Inicio
+Niños y niñas
+Nueva captura
+Revisión humana
+Bitácora
+Informes
+Nueva captura
+Jardín Sintético Bosque de Papel
+Chillán, Ñuble · JAR-0010 · Sala SG-A
+NUEVA OBSERVACIÓN
+Captura individual
+Registra primero. La revisión pedagógica ocurre después, sin bloquear el borrador.
+Capturar Revisar Guardar1 2 3
+¿A quién observaste?
+Individual Grupal
+Niño/a de esta sala
+Niño / a A · D E MO -A · SG-A   ⌄
+F ec h a de observaci ó n Autor/a
+1 3  oct 2 0 26 E DU -00 35
+E j emplo de inter f a z  •  datos f icticios
+L o que ocurri ó
+T e x to Audio F oto V ideo
+Descripci ó n de la e x periencia
+D urante el j uego con telas, Niño / a A buscó un ob j eto que hab í a visto ocultarse. Probó 
+levantar la tela y luego despla z ar el recipiente para alcan z arlo.
+T u re g istro ,  paso a paso
+Captura sin cali f icar1
+T e x to, audio o un ad j unto autori z ado.
+Revisa las propuestas2
+Edita el te x to y confirma evidencia y nivel.
+G uarda con f ec h a y  autor3
+Cada observación mantiene su destinatario.
+Antes de g rabar
+Audio :  hasta 6 0 s propuestos.
+V ideo :  l í mite por confirmar.
+Comprueba permisos del dispositivo y autori z ación 
+para ad j untos. Las reglas de consentimiento y 
+retención están por validar.
+Estado del borrador
+Cambios sin g uardar
+La evidencia a ú n no está aprobada. Guardar no 
+implica sincroni z ar ni validar una propuesta de IA.
+Demo • 13 oct 2026
+T e x to de e j emplo. D escribe acciones observables, sin diagnósticos ni j uicios.
+Nota breve opcional
+Registro reali z ado durante una actividad de j uego libre.
+M á x imo 28 0 caracteres. Si la de j as vac í a :  « Sin nota opcional » .
+Añadir ad j unto autori z ado
+No se ha ad j untado un archivo. Los registros históricos del dataset no incluyen medios.
+El borrador no necesita IA
+Puedes guardar aunque no haya cone x ión o la transcripción no esté disponible. El estado local y el estado 
+del servidor se muestran por separado.
+JAR-0010 • Sala SG-A
+35
+Propuesta conceptual · E-1
+EDU-0035
+Educadora de párvulos
+No se env í a ning ú n correo desde esta captura.G uardar borrador Enviar a revisi ó n
+D atos ficticios · U so pedagógico, no diagnóstico. Bitácora es una propuesta conceptual, no un producto oficial de Integra.
+  --- pagina 2 ---
+Bitácora
+Seguimiento pedagógico
+Inicio
+Niños y niñas
+Nueva captura
+Revisión humana
+Bitácora
+Informes
+Jardín Sintético Bosque de Papel
+Chillán, Ñuble · JAR-0010 · Sala SG-A
+NUEVA OBSERVACIÓN / MISMA SALA
+Una experiencia, distintas miradas
+Comparte el relato del grupo. Conserva la observación, evidencia y nivel de cada niño/a por separado.
+Capturar Revisar Guardar1 2 3
+E j emplo de inter f a z  •  datos f icticios
+L a captura grupal es un flu j o propuesto, no una entidad del dataset. D E MO -A, D E MO -B y D E MO -C pertenecen a la misma sala demo SG-A.
+Demo • 13 oct 2026
+Nueva captura Relato compartido
+Individual G rupal
+F ec h a de la experiencia Autor/a del g rupo
+1 3  oct 2 0 26 E DU -00 35
+T exto Audio F oto V ideo
+¿Q ué ocurri ó  en el g rupo ?
+En el rincón de e x ploración ofrecimos telas, recipientes y ob j etos. Cada participante 
+e x ploró los materiales a su ritmo. Registr é  acciones diferentes y separar é  sus evidencias 
+en la revisión.
+Nota compartida opcional
+E x periencia de e x ploración con materiales cotidianos.
+M á x imo 28 0 caracteres. No reempla z a el detalle individual.
+Participantes ·  S G -A
+Buscar en mi sala
+⌕   Identificador ficticio
+A
+☑  Ni ñ o/a A
+D E MO -A · 
+Seleccionado
+Q uitar
+B
+☑  Ni ñ o/a B
+D E MO -B · 
+Seleccionado
+Q uitar
+C
+☑  Ni ñ o/a C
+D E MO -C · 
+Seleccionado
+Q uitar
+3 participantes seleccionados
+A ñ adir participante
+Sin nivel com ú n
+En la revisión podrás aceptar, cambiar o de j ar sin 
+registrar un nivel para cada participante. No e x iste 
+« Aplicar nivel a todos » .
+Detalle por participante
+El relato no se copia como evidencia aprobada para todos.
+Ni ñ o/a A ·  DEMO-A
+O b servaci ó n individual edita b le
+A
+Buscó el ob j eto oculto ba j o la tela.
+Ni ñ o/a B ·  DEMO-B
+O b servaci ó n individual edita b le
+B
+E x ploró el recipiente ;  falta precisar una acción observable.
+Ni ñ o/a C ·  DEMO-C
+O b servaci ó n individual edita b le
+C
+Balbuceó secuencias al interactuar.
+Límite de acceso
+Solo puedes seleccionar niños/as de tu sala 
+autori z ada. Solicita acceso local para traba j ar en 
+otra sala.
+JAR-0010 • Sala SG-A
+35
+Propuesta conceptual · E-1
+EDU-0035
+Educadora de párvulos
+Sincroni z ación y aprobación serán estados distintos.G uardar b orrador g rupal Revisar por participante
+D atos ficticios · U so pedagógico, no diagnóstico. Bitácora es una propuesta conceptual, no un producto oficial de Integra.
+  --- pagina 3 ---
+Bitácora
+Seguimiento pedagógico
+Inicio
+Niños y niñas
+Nueva captura
+Revisión humana
+Bitácora
+Informes
+Jardín Sintético Bosque de Papel
+Chillán, Ñuble · JAR-0010 · Sala SG-A
+REVISIÓN / EJEMPLO INDIVIDUAL
+Tu criterio tiene la última palabra
+La IA propone un borrador. Tú editas, decides qué evidencia corresponde y apruebas su incorporación.
+Capturar Revisar Guardar1 2 3
+Borrador g uardado localmente Servidor :  pendiente IA :  propuesta disponible Docente :  sin aprobar
+Demo • 13 oct 2026
+Nueva captura
+Transcripción editable
+Ni ñ o/a A ·  DEMO-AA 1 3  oct 2 0 26  · E DU -00 35  · Audio demo de 00 :42
+E j emplo de inter f a z  •  datos f icticios
+Borrador de transcripción
+D urante el j uego, Niño / a A vio que escond í  un ob j eto deba j o de 
+una tela. Levantó la tela para buscarlo. D espués probó mover el 
+recipiente y acercarse al ob j eto. Al terminar señaló otro material 
+para pedirlo.
+Te x to de e j emplo, no transcripción del dataset. Edita cualquier palabra o atribución 
+incorrecta.
+Editar te x to Usar te x to manual
+El medio original es un e j emplo de captura ;  no se simula reproducción de un archivo 
+histórico.
+C uando la IA no est á  disponible
+Puedes continuar con te x to manual y conservar el borrador. La cone x ión no 
+determina la aprobación pedagógica.
+G uardar y  continuar después
+Nivel propuesto ,  no aprobado
+Ruta sintética • Uso peda g ó g ico
+Nivel estimado para este re g istro
+5  · M ovilidad y propósito   ⌄
+Corresponde al relato de esta fecha, no a un « nivel actual » . Edades orientativas, 
+no diagnósticas.
+C ambiar nivel De j ar sin nivel
+Evidencias propuestas
+MAN-L05- C O-01
+Busca un ob j eto que vio ocultarse completamente ba j o una tela o 
+recipiente.
+☑  C onservar ·  C o g nitivo
+MAN-L05- C O-02
+Prueba más de una acción para alcan z ar un ob j eto cercano fuera de 
+alcance directo.
+☑  C onservar ·  C o g nitivo
+MAN-L05-L C -01
+U sa un gesto convencional, como señalar, mostrar o despedirse, para 
+comunicar una intención.
+☐  Revisar atribución ·  Len g ua j e y  comunicación
+Selecciona entre 1 y  5 mani f estaciones únicas
+Todas deben corresponder al nivel elegido. Si cambias el nivel, revisa 
+otra ve z  la selección. Sin evidencia suficiente, conserva el borrador.
+JAR-0010 • Sala SG-A
+35
+Propuesta conceptual · E-1
+EDU-0035
+Educadora de párvulos
+☑  Revisé la transcripción ,  el destinatario y  las evidencias seleccionadas .
+G uardar borrador Aprobar evidencia y  g uardar
+La aprobación queda asociada a E DU -00 35 . El guardado conserva fecha y autor ;  la sincroni z ación puede completarse después. No env í a informes.
+D atos ficticios · U so pedagógico, no diagnóstico. Bitácora es una propuesta conceptual, no un producto oficial de Integra.
+======================================================================
+ARCHIVO: Sin ttulo-8-10.pdf
+======================================================================
+  paginas: 3
+  --- pagina 1 ---
+Bitácora
+Seguimiento pedagógico
+Inicio
+Niños y niñas
+Nueva captura
+Revisión humana
+Bitácora
+Informes
+Jardín Sintético Bosque de Papel
+Chillán, Ñuble · JAR-0010 · Sala SG-A
+ARCHIVO PEDAGÓGICO
+Bitácora Nueva captura
+Cada registro conserva su fecha, formato y autoría. Los estados operativos no se infieren del dataset.
+Todos Individuales Grupales
+Buscar Autor/a F ec h a Estado
+⌕  Niño/a, ID o texto T odos   ⌄ T odas las fechas   ⌄ T odos   ⌄
+Demo • 13 oct 2026
+Nueva captura
+Re g istro / alcance F ec h a y  autor F ormato Estado / f uente Acci ó n
+DE M O-R01 ·  Ni ñ o/a A 1 3  oct 2 0 26  · ED U -00 35 Audio · Individual B orrador · Local ¹ Continuar →
+DE M O-G01 ·  A ,  B ,  C 1 3  oct 2 0 26  · ED U -00 35 T exto · Grupal En revisión ¹ Revisar por niño/a →
+DE M O-R02 ·  Ni ñ o/a C 1 2  oct 2 0 26  · ED U -00 35 T exto · Individual Aprobado · Sincroni z ado ¹ V er detalle →
+OBS-000000 8  ·  NINO-00002 0 3  ago 2 0 25  · ED U -00 3 7 V ideo Dataset · Sin estado operativo V er detalle →
+OBS-000000 7  ·  NINO-00002 1 8  may 2 0 25  · ED U -00 35 T exto Dataset · Sin estado operativo V er detalle →
+OBS-0000006 ·  NINO-00002 1 3  may 2 0 25  · ED U -00 3 7 T exto Dataset · Sin estado operativo V er detalle →
+OBS-0000005 ·  NINO-00002 0 8  may 2 0 25  · ED U -00 35 V ideo Dataset · Sin estado operativo V er detalle →
+OBS-000000 4  ·  NINO-00002 0 3  may 2 0 25  · ED U -00 36 T exto Dataset · Sin estado operativo V er detalle →
+OBS-0000003 ·  NINO-00002 0 3  mar 2 0 25  · ED U -00 3 7 Audio Dataset · Sin estado operativo V er detalle →
+¹  E j emplos de interfa z  •  datos ficticios. « Sincroni z ado »  no significa q ue una propuesta de IA est é  aprobada. U na nota opcional vacía se muestra como « Sin nota opcional » .
+Detalle seleccionado ·  OBS-000000 8
+0 3  ago 2 0 25  · ED U -00 3 7  · NIN O -0000 2Video Arc h ivo no incluido en dataset
+5 ·  M ovilidad y  prop ó sito
+Sin nota opcional
+3  manifestaciones vinculadas :  M AN-L0 5 -C O -01, M AN-L0 5 -C O -0 2  y M AN-L0 5 -LC-01.
+A b rir tra y ectoria f ec h ada
+JAR-0010 • Sala SG-A
+35
+Propuesta conceptual · E-1
+EDU-0035
+Educadora de párvulos
+Cuando un f iltro no encuentra re g istros
+M ostramos « No hay registros con estos filtros »  y la acción « Limpiar filtros » . Nunca se interpreta como ausencia de aprendi z a j e.
+Datos ficticios · U so pedagógico, no diagnóstico. B itácora es una propuesta conceptual, no un producto oficial de Integra.
+  --- pagina 2 ---
+Bitácora
+Seguimiento pedagógico
+Inicio
+Niños y niñas
+Nueva captura
+Revisión humana
+Bitácora
+Informes
+Nueva captura
+Jardín Sintético Bosque de Papel
+Chillán, Ñuble · JAR-0010 · Sala SG-A
+COMUNICACIÓN CON FAMILIAS
+Informe bimensual
+Vista previa antes del envío. Ningún correo se entrega sin aprobación explícita de la educadora.
+Pendiente de aprobaci ó n docente ·  No enviado
+L a preparación de un resumen puede automati z arse. Su revisión y autori z ación de envío no. L as promociones automáticas tampoco se comunican sin validación humana.
+Bitácora Borrador ·  V ista previa
+Seguimiento pedagógico
+Una tra y ectoria para compartir
+NIN O -0000 2  · JAR-0010 · SG- A
+Período de e j emplo :  0 3  mar –  0 3  ago 2 0 25
+02 NINO-00002
+6  observaciones históricas · 3  autores
+Lo que qued ó  documentado
+L os registros muestran evidencias de nivel 3  en mar z o, nivel 4  en mayo y nivel 5  el 0 3  de 
+agosto de 2 0 25 . Cada nivel describe lo observado en su f echa ;  no permite in f erir lo 
+ocurrido entre registros.
+El último nivel registrado es 5  · M ovilidad y propósito, por E DU -00 37 . No existen registros 
+posteriores en este caso del dataset.
+Dos miradas del ú ltimo re g istro
+Cognitivo · Buscó un ob j eto oculto y probó más de una acción para alcan z ar otro ob j eto.
+L engua j e y comunicación · U só un gesto convencional para comunicar una intención.
+Resumen editable de M AN- L 0 5 -C O -01, M AN- L 0 5 -C O -0 2  y M AN- L 0 5 - L C-01. Sin punta j es por dominio.
+Para se g uir acompa ñ ando
+Propuesta para revisar :  o f recer oportunidades de exploración con ob j etos y observar las 
+distintas f ormas de comunicar una intención. No constituye diagnóstico ni prescripción.
+Alcance de esta vista previa
+Ruta sint é tica • U so pedagógico. Este in f orme se construye como e j emplo con registros 
+históricos f icticios ;  no acredita una evaluación actual.
+Preparar el envío
+Docente que aprueba
+E DU -00 35  · Educadora de párvulos
+Destinatarios autori z ados
+F amilia demo · f amilia @ e j emplo.invalid
+D estinatario de inter f a z  f icticio. Autori z ación y canales por 
+validar.
+Asunto
+In f orme bimensual · NIN O -0000 2
+Período del informe
+0 3  mar –  0 3  ago 2 0 25  · E j emplo
+Editar contenido
+Aprobaci ó n e x plícita
+☑  R evisé el contenido y  el destinatario .
+Al aprobar se registra la autoría de la decisión. El envío 
+tendrá un estado independiente de la aprobación.
+Aprobar y  enviar
+G uardar sin enviar
+L a acción es una propuesta de inter f a z . No se envía un correo 
+real desde este moc k up.
+Demo • 13 oct 2026
+Estados de entre g a
+Ahora :  pendiente de aprobación.
+D espu é s de aprobar :  aprobado, pendiente de entrega.
+Con f irmación del servicio :  enviado o entrega f allida con 
+reintento.
+JAR-0010 • Sala SG-A
+35
+Propuesta conceptual · E-1
+EDU-0035
+Educadora de párvulos
+« Bimensual »:  cadencia por aclarar
+Se conserva el t é rmino solicitado. L a f recuencia exacta, el período de corte y los destinatarios deben validarse antes de automati z ar la generación.
+D atos f icticios · U so pedagógico, no diagnóstico. Bitácora es una propuesta conceptual, no un producto o f icial de Integra.
+  --- pagina 3 ---
+Bitácora
+Seguimiento pedagógico
+Equipo y permisos
+Reasignaciones
+Salas
+Actividad
+Jardín Sintético Bosque de Papel
+Chillán, Ñuble · JAR-0010 · Sala SG-A
+ACCESO LOCAL PROPUESTO · JAR-0010
+Equipo y continuidad pedagógica Solicitar incorporación
+Gestiona asignaciones sin perder la historia ni confundir el perfil de acceso con la profesión.
+Equipo y permisos Cambio de docente Registro de cambios
+Identificador Rol profesional Alcance Permisos propuestos Acción
+Capturar, revisar y aprobar 
+informesEDU-0035 Educadora de párvulos JAR-0010 · SG-A Gestionar →
+EDU-0036 Té cnico de párvulos JAR-0010 · SG-A Capturar y enviar a revisión Gestionar →
+EDU-003 7 Té cnico de párvulos JAR-0010 · SG-A Capturar y enviar a revisión Gestionar →
+Demo • 13 oct 2026
+Permisos por v alidar
+L os roles profesionales provienen del dataset. L os accesos local / general y estas reglas de aprobación son propuestas. N o modifican el registro histórico de autores.
+Cam b io de docente · V ista pre v ia
+E j emplo de interfa z  •  datos ficticios
+Asignación que termina N ue v a responsa b le
+E DU -00 35  · SG-A D E MO -E DU  · Educadora   ⌄
+V igente desde
+1 4  oct 2 0 26
+M oti v o del cam b io
+Reasignación de responsable de sala
+Q ué cam b ia Q ué se conser v a
+Responsa b le de S G -A desde la fec h a 
+efecti v a Autores y fechas de observaciones previas
+Acceso futuro del equipo ,  seg ú n apro b ación 
+local
+Ví nculos ni ñ o / a – evidencia y archivos 
+autori z ados
+Pendientes transferidos a la nue v a 
+responsa b le Autor original de cada borrador y revisión
+☐  Confirmo la fec h a y el alcance de la reasignación.
+Confirmar reasignación Cancelar
+Autoría que no se so b rescri b e
+O B S-000000 5  seguirá mostrando E DU -00 35  como autora 
+del 0 8  may 2 0 25 .
+O B S-000000 8  seguirá mostrando E DU -00 3 7  como autor 
+del 0 3  ago 2 0 25 .
+El cambio de responsable no convierte a la nueva docente en autora 
+de registros anteriores.
+F uera del alcance local
+Acceso no autori z ado
+N o puedes administrar otro j ard í n desde este conte x to.
+Solicitar acceso
+Tra z a b ilidad del cam b io
+Se propone registrar q ui é n autori z a, fecha efectiva, responsable 
+anterior, nueva responsable y motivo.
+L a auditor í a y la gestión de pendientes re q uieren validación 
+operativa.
+Administración local
+AL
+Propuesta conceptual · E-1
+Admin. local
+Acceso propuesto
+D atos ficticios · U so pedagógico, no diagnóstico. B itácora es una propuesta conceptual, no un producto oficial de I ntegra.
+M atri z  de permisos propuesta
+Acción Educadora Técnico Admin. local
+Captura en sala asignada S í S í Seg ú n asignación docente
+Apro b ación pedagógica /  informe S í Env í a a revisión N o por el acceso administrativo
+Reasignación y permisos locales N o N o S í , con tra z abilidad
+Consulta de otros j ardines N o N o N o
