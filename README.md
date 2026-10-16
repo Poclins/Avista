@@ -1,10 +1,10 @@
-# jAImes — De la observación a la acción
+# Avista — De la observación a la acción
 
-**IA que le devuelve tiempo a las educadoras de párvulos para que se lo dediquen a los niños y niñas.**
+**IA que observa junto a la educadora y le devuelve tiempo para dedicarlo a los niños y niñas.**
 
 Proyecto para el desafío *"IA para el Desarrollo Infantil"* · **Fundación Integra** · **AWS Breaking Barriers Chile 2026**.
 
-> ⚠️ Todos los datos usados en la demo son **sintéticos (inventados) y seudonimizados** (dataset oficial E-1). jAImes es una herramienta **pedagógica**, no un instrumento clínico ni de diagnóstico.
+> ⚠️ Todos los datos usados en la demo son **sintéticos (inventados) y seudonimizados** (dataset oficial E-1). Avista es una herramienta **pedagógica**, no un instrumento clínico ni de diagnóstico.
 
 ---
 
@@ -12,16 +12,16 @@ Proyecto para el desafío *"IA para el Desarrollo Infantil"* · **Fundación Int
 
 Las educadoras de párvulos ("tías") dedican alrededor de **4 horas a la semana** a escribir informes a mano sobre cómo avanza cada niño o niña. Ese es tiempo que no están con los párvulos.
 
-## Qué hace jAImes
+## Qué hace Avista
 
-jAImes toma lo que la educadora ya genera de forma natural durante el día — una nota escrita, una foto de un apunte, un audio o un video — y lo convierte **automáticamente** en:
+Avista toma lo que la educadora ya genera de forma natural durante el día — una nota escrita, una foto de un apunte, un audio o un video — y lo convierte **automáticamente** en:
 
 - **Observaciones ordenadas**: clasifica cada registro por área de desarrollo y nivel.
 - **Bitácoras quincenales**: redacta un borrador del informe de cada niño/a, listo para revisar y aprobar.
 - **Recomendaciones de nivel**: sugiere si un niño/a puede *avanzar*, *mantenerse* o *retroceder*, siempre citando la evidencia real que respalda la sugerencia.
 - **Reportes de dirección**: entrega a la directora del jardín un panorama agregado del avance de su jardín, sin tener que revisar caso por caso.
 
-**La decisión final siempre es de una persona.** jAImes propone y fundamenta; la educadora confirma, corrige o rechaza. La IA nunca decide sola.
+**La decisión final siempre es de una persona.** Avista propone y fundamenta; la educadora confirma, corrige o rechaza. La IA nunca decide sola.
 
 ### ¿Cómo se traduce en impacto?
 
@@ -31,7 +31,7 @@ El objetivo es llevar esas ~4 horas semanales de documentación hacia **casi cer
 
 ## Cómo probarlo en 1 comando (sin cuenta de AWS)
 
-jAImes trae un **modo local** que funciona en tu computador sin internet ni credenciales de AWS: usa una base de datos local y versiones "de prueba" de los servicios de IA. Ideal para la demo.
+Avista trae un **modo local** que funciona en tu computador sin internet ni credenciales de AWS: usa una base de datos local y versiones "de prueba" de los servicios de IA. Ideal para la demo.
 
 **Requisitos:** [Python 3.12+](https://www.python.org/downloads/) y [Node.js 18+](https://nodejs.org/) instalados.
 
@@ -62,7 +62,7 @@ Levanta el backend en http://localhost:8000 y una base de datos `pgvector`.
 
 ## Cómo está construido (explicado simple)
 
-jAImes está organizado en **3 capas** bien separadas, como una cocina de restaurante: quien atiende las mesas (la app) no toca las ollas (los datos); todo pasa por la cocina (la lógica).
+Avista está organizado en **3 capas** bien separadas, como una cocina de restaurante: quien atiende las mesas (la app) no toca las ollas (los datos); todo pasa por la cocina (la lógica).
 
 ```
 Capa 1 · Lo que ve la persona   ->  frontend/   App móvil (PWA) en React
