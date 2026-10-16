@@ -1,11 +1,11 @@
-// ConfirmarClasificacion — revisa la clasificación PROPUESTA por el backend y
-// permite confirmarla o corregirla (Requirement 8.2). Si el backend marcó la
-// propuesta como de baja confianza / pendiente de clasificación manual, muestra
-// una SUGERENCIA PROACTIVA para que la educadora la revise. Persiste vía
+﻿// ConfirmarClasificacion â€” revisa la clasificaciÃ³n PROPUESTA por el backend y
+// permite confirmarla o corregirla (Requirement 8.2). Si el backend marcÃ³ la
+// propuesta como de baja confianza / pendiente de clasificaciÃ³n manual, muestra
+// una SUGERENCIA PROACTIVA para que la educadora la revise. Persiste vÃ­a
 // PATCH /observaciones/{id}/clasificacion.
 //
-// Sin lógica de negocio (Requirement 9.6): la clasificación la propone el
-// backend; el cliente solo presenta los valores y envía la confirmación/corrección.
+// Sin lÃ³gica de negocio (Requirement 9.6): la clasificaciÃ³n la propone el
+// backend; el cliente solo presenta los valores y envÃ­a la confirmaciÃ³n/correcciÃ³n.
 
 import { useMemo, useState, type FormEvent } from "react";
 import { useLocation, useParams } from "react-router-dom";
@@ -44,13 +44,10 @@ export function ConfirmarClasificacion() {
   );
   const confirmada = datos as Observacion | null;
 
-  // Sugerencia proactiva cuando el backend indica baja confianza / revisión manual.
+  // Sugerencia proactiva cuando el backend indica baja confianza / revisiÃ³n manual.
   const mostrarSugerencia = useMemo(
     () =>
-      Boolean(
-        observacion?.pendiente_clasificacion_manual ||
-          propuesta?.confianza_baja,
-      ),
+      Boolean(propuesta?.pendiente_clasificacion_manual || (propuesta ? propuesta.confianza < 0.5 : false)),
     [observacion, propuesta],
   );
 
@@ -63,7 +60,8 @@ export function ConfirmarClasificacion() {
   function confirmar(e: FormEvent) {
     e.preventDefault();
     const body: ConfirmarClasificacionBody = {
-      nivel,
+      accion: "corregir",
+      nivel_estimado: nivel,
       dominios,
       manifestaciones: manifestaciones
         .split(",")
@@ -76,10 +74,10 @@ export function ConfirmarClasificacion() {
   if (!observacion) {
     return (
       <section className="pantalla">
-        <h1 className="pantalla__titulo">Confirmar clasificación</h1>
+        <h1 className="pantalla__titulo">Confirmar clasificaciÃ³n</h1>
         <p className="texto-vacio">
-          No hay una clasificación propuesta disponible. Vuelve a “Capturar”
-          para registrar una observación y obtener una propuesta.
+          No hay una clasificaciÃ³n propuesta disponible. Vuelve a â€œCapturarâ€
+          para registrar una observaciÃ³n y obtener una propuesta.
         </p>
       </section>
     );
@@ -87,19 +85,19 @@ export function ConfirmarClasificacion() {
 
   return (
     <section className="pantalla">
-      <h1 className="pantalla__titulo">Confirmar clasificación</h1>
+      <h1 className="pantalla__titulo">Confirmar clasificaciÃ³n</h1>
       <p className="pantalla__descripcion">
-        Revisa la clasificación propuesta para la observación{" "}
-        <code>{observacion.id_observacion}</code> y confírmala o corrígela.
+        Revisa la clasificaciÃ³n propuesta para la observaciÃ³n{" "}
+        <code>{observacion.id_observacion}</code> y confÃ­rmala o corrÃ­gela.
       </p>
 
       {mostrarSugerencia ? (
         <div className="sugerencia" role="note">
           <span className="sugerencia__icono" aria-hidden="true">
-            💡
+            ðŸ’¡
           </span>
           <span>
-            El sistema no está seguro de esta clasificación. Te recomendamos
+            El sistema no estÃ¡ seguro de esta clasificaciÃ³n. Te recomendamos
             revisar el nivel y los dominios antes de confirmar.
           </span>
         </div>
@@ -107,14 +105,14 @@ export function ConfirmarClasificacion() {
 
       {confirmada ? (
         <p className="texto-exito" role="status">
-          Clasificación confirmada correctamente.
+          ClasificaciÃ³n confirmada correctamente.
         </p>
       ) : null}
 
       <form className="formulario" onSubmit={confirmar}>
         <div className="campo">
           <label className="campo__etiqueta" htmlFor="nivel">
-            Nivel estimado (1–9)
+            Nivel estimado (1â€“9)
           </label>
           <input
             id="nivel"
@@ -159,7 +157,7 @@ export function ConfirmarClasificacion() {
             placeholder="Identificadores separados por coma"
           />
           <span className="campo__ayuda">
-            Separa los identificadores de manifestación con comas.
+            Separa los identificadores de manifestaciÃ³n con comas.
           </span>
         </div>
 
@@ -169,16 +167,19 @@ export function ConfirmarClasificacion() {
             className="touch-target boton-primario"
             disabled={cargando}
           >
-            Confirmar clasificación
+            Confirmar clasificaciÃ³n
           </button>
         </div>
       </form>
 
       {cargando ? (
-        <IndicadorCarga mensaje="Guardando la clasificación…" />
+        <IndicadorCarga mensaje="Guardando la clasificaciÃ³nâ€¦" />
       ) : null}
 
       {error ? <MensajeError mensaje={error} /> : null}
     </section>
   );
 }
+
+
+

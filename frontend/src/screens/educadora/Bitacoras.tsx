@@ -1,12 +1,12 @@
-// Bitacoras — ver, generar, editar y aprobar bitácoras quincenales de un
-// niño/a (Requirement 8.2).
+﻿// Bitacoras â€” ver, generar, editar y aprobar bitÃ¡coras quincenales de un
+// niÃ±o/a (Requirement 8.2).
 //
 // Consume:
-//   GET   /ninos/{id}/bitacoras   → listar
-//   POST  /ninos/{id}/bitacoras   → generar (body: periodo)
-//   PATCH /bitacoras/{id}         → editar (contenido) / aprobar (estado)
+//   GET   /ninos/{id}/bitacoras   â†’ listar
+//   POST  /ninos/{id}/bitacoras   â†’ generar (body: periodo)
+//   PATCH /bitacoras/{id}         â†’ editar (contenido) / aprobar (estado)
 //
-// Sin lógica de negocio (Requirement 9.6): el contenido lo genera el backend
+// Sin lÃ³gica de negocio (Requirement 9.6): el contenido lo genera el backend
 // (RAG + LLM); el cliente solo muestra, edita el texto y cambia el estado.
 
 import { useState, type FormEvent } from "react";
@@ -15,7 +15,6 @@ import type { Bitacora } from "../../api/types";
 import { useAccionApi } from "../../hooks/useAccionApi";
 import { IndicadorCarga } from "../../components/IndicadorCarga";
 import { MensajeError } from "../../components/MensajeError";
-import { formatearFecha } from "../etiquetas";
 
 export function Bitacoras() {
   const [idNino, setIdNino] = useState("");
@@ -26,10 +25,7 @@ export function Bitacoras() {
   const listado = useAccionApi((id: string) => api.listarBitacoras(id));
   const generar = useAccionApi(
     (id: string) =>
-      api.generarBitacora(id, {
-        periodo_inicio: periodoInicio,
-        periodo_fin: periodoFin,
-      }),
+      api.generarBitacora(id, { id_educadora: "EDU-0001", fecha_inicio: periodoInicio, fecha_fin: periodoFin }),
   );
 
   const bitacoras = (listado.datos ?? []) as Bitacora[];
@@ -50,16 +46,16 @@ export function Bitacoras() {
 
   return (
     <section className="pantalla">
-      <h1 className="pantalla__titulo">Bitácoras</h1>
+      <h1 className="pantalla__titulo">BitÃ¡coras</h1>
       <p className="pantalla__descripcion">
-        Consulta las bitácoras de un niño/a, genera una nueva para un período y
-        edítala o apruébala.
+        Consulta las bitÃ¡coras de un niÃ±o/a, genera una nueva para un perÃ­odo y
+        edÃ­tala o apruÃ©bala.
       </p>
 
       <form className="formulario" onSubmit={consultar}>
         <div className="campo">
           <label className="campo__etiqueta" htmlFor="id-nino-bit">
-            Identificador del niño/a
+            Identificador del niÃ±o/a
           </label>
           <input
             id="id-nino-bit"
@@ -75,18 +71,18 @@ export function Bitacoras() {
             className="touch-target boton-primario"
             disabled={listado.cargando || idNino.trim() === ""}
           >
-            Ver bitácoras
+            Ver bitÃ¡coras
           </button>
         </div>
       </form>
 
       {idConsultado !== null ? (
         <section className="seccion">
-          <h2 className="seccion__titulo">Generar bitácora</h2>
+          <h2 className="seccion__titulo">Generar bitÃ¡cora</h2>
           <div className="formulario">
             <div className="campo">
               <label className="campo__etiqueta" htmlFor="periodo-inicio">
-                Período — inicio
+                PerÃ­odo â€” inicio
               </label>
               <input
                 id="periodo-inicio"
@@ -97,7 +93,7 @@ export function Bitacoras() {
             </div>
             <div className="campo">
               <label className="campo__etiqueta" htmlFor="periodo-fin">
-                Período — fin
+                PerÃ­odo â€” fin
               </label>
               <input
                 id="periodo-fin"
@@ -117,19 +113,19 @@ export function Bitacoras() {
                 }
                 onClick={() => void generarBitacora()}
               >
-                Generar bitácora
+                Generar bitÃ¡cora
               </button>
             </div>
           </div>
           {generar.cargando ? (
-            <IndicadorCarga mensaje="Generando la bitácora…" />
+            <IndicadorCarga mensaje="Generando la bitÃ¡coraâ€¦" />
           ) : null}
           {generar.error ? <MensajeError mensaje={generar.error} /> : null}
         </section>
       ) : null}
 
       {listado.cargando ? (
-        <IndicadorCarga mensaje="Cargando bitácoras…" />
+        <IndicadorCarga mensaje="Cargando bitÃ¡corasâ€¦" />
       ) : null}
       {listado.error ? (
         <MensajeError
@@ -155,7 +151,7 @@ export function Bitacoras() {
           </ul>
         ) : (
           <p className="texto-vacio">
-            No hay bitácoras para este niño/a. Genera una nueva arriba.
+            No hay bitÃ¡coras para este niÃ±o/a. Genera una nueva arriba.
           </p>
         )
       ) : null}
@@ -171,13 +167,13 @@ function TarjetaBitacora({
   onCambio: () => void;
 }) {
   const [editando, setEditando] = useState(false);
-  const [contenido, setContenido] = useState(bitacora.contenido);
+  const [contenido, setContenido] = useState(bitacora.texto_generado);
 
   const editar = useAccionApi(() =>
-    api.editarBitacora(bitacora.id_bitacora, { contenido }),
+    api.editarBitacora(bitacora.id_bitacora, { accion: "editar", texto: contenido }),
   );
   const aprobar = useAccionApi(() =>
-    api.editarBitacora(bitacora.id_bitacora, { estado: "aprobada" }),
+    api.editarBitacora(bitacora.id_bitacora, { accion: "aprobar" }),
   );
 
   const esBorrador = bitacora.estado === "borrador";
@@ -199,8 +195,7 @@ function TarjetaBitacora({
     <li className="tarjeta">
       <span className="tarjeta__meta">
         <span>
-          {formatearFecha(bitacora.periodo_inicio)} –{" "}
-          {formatearFecha(bitacora.periodo_fin)}
+          {bitacora.periodo}
         </span>
         <span className="chip">{bitacora.estado}</span>
       </span>
@@ -210,18 +205,12 @@ function TarjetaBitacora({
           <textarea
             value={contenido}
             onChange={(e) => setContenido(e.target.value)}
-            aria-label="Contenido de la bitácora"
+            aria-label="Contenido de la bitÃ¡cora"
           />
         </div>
       ) : (
-        <p className="texto-pre">{bitacora.contenido}</p>
+        <p className="texto-pre">{bitacora.texto_generado}</p>
       )}
-
-      {bitacora.citas.length > 0 ? (
-        <span className="campo__ayuda">
-          Citas: {bitacora.citas.join(", ")}
-        </span>
-      ) : null}
 
       <div className="barra-acciones">
         {esBorrador && !editando ? (
@@ -229,7 +218,7 @@ function TarjetaBitacora({
             type="button"
             className="touch-target boton-secundario"
             onClick={() => {
-              setContenido(bitacora.contenido);
+              setContenido(bitacora.texto_generado);
               setEditando(true);
             }}
           >
@@ -270,13 +259,17 @@ function TarjetaBitacora({
       </div>
 
       {editar.cargando ? (
-        <IndicadorCarga compacto mensaje="Guardando…" />
+        <IndicadorCarga compacto mensaje="Guardandoâ€¦" />
       ) : null}
       {aprobar.cargando ? (
-        <IndicadorCarga compacto mensaje="Aprobando…" />
+        <IndicadorCarga compacto mensaje="Aprobandoâ€¦" />
       ) : null}
       {editar.error ? <MensajeError mensaje={editar.error} /> : null}
       {aprobar.error ? <MensajeError mensaje={aprobar.error} /> : null}
     </li>
   );
 }
+
+
+
+

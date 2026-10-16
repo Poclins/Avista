@@ -1,21 +1,12 @@
-// FichaNino — ficha y trayectoria de un niño/a (Requirement 8.2) con el flujo
-// "¿Puede subir de nivel?" que muestra uno de 3 estados (avanzar / mantener /
-// retroceder) y permite registrar la decisión de la educadora.
-//
-// Consume:
-//   GET  /ninos/{id}                       → ficha + trayectoria
-//   POST /ninos/{id}/recomendaciones       → recomendación de nivel (3 estados)
-//   POST /recomendaciones/{id}/decision    → decisión de la educadora
-//
-// Sin lógica de negocio (Requirement 9.6): la decisión de nivel la calcula el
-// backend (rúbrica determinista); el cliente solo la presenta y registra la
-// respuesta de la educadora.
+﻿// FichaNino - ficha y trayectoria de un nino/a (Requirement 8.2) con el flujo
+// "Puede subir de nivel?" (recomendacion de nivel: la rubrica decide, la IA
+// argumenta). Sin logica de negocio en el cliente (Requirement 9.6).
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { api } from "../../api";
 import type {
-  DecisionEducadora,
+  Dominio,
   FichaNino as FichaNinoDTO,
   Recomendacion,
 } from "../../api/types";
@@ -28,45 +19,50 @@ import {
   claseEstadoDecision,
   formatearFecha,
 } from "../etiquetas";
-import type { Dominio } from "../../api/types";
 
-const DECISIONES_EDUCADORA: { valor: DecisionEducadora; etiqueta: string }[] = [
+// Decision humana final: texto libre en el backend (DecisionEducadoraIn).
+const DECISIONES_EDUCADORA: { valor: string; etiqueta: string }[] = [
   { valor: "acepto", etiqueta: "Aceptar" },
   { valor: "ajusto", etiqueta: "Ajustar" },
   { valor: "rechazo", etiqueta: "Rechazar" },
 ];
 
+// Educadora de demo e id para generar la recomendacion.
+const ID_EDUCADORA_DEMO = "EDU-0001";
+
 export function FichaNino() {
   const { idNino = "" } = useParams();
+  const [nivelActual, setNivelActual] = useState(1);
 
   const ficha = useAccionApi((id: string) => api.obtenerFichaNino(id));
-  const recomendacion = useAccionApi((id: string) =>
-    api.generarRecomendacion(id),
+  const recomendacion = useAccionApi((id: string, nivel: number) =>
+    api.generarRecomendacion(id, {
+      id_educadora: ID_EDUCADORA_DEMO,
+      nivel_actual: nivel,
+    }),
   );
-  const decision = useAccionApi(
-    (idRec: string, d: DecisionEducadora) =>
-      api.registrarDecisionRecomendacion(idRec, { decision_educadora: d }),
+  const decision = useAccionApi((idRec: string, d: string) =>
+    api.registrarDecisionRecomendacion(idRec, { decision_educadora: d }),
   );
 
   useEffect(() => {
     if (idNino) void ficha.ejecutar(idNino);
-    // Se recarga solo cuando cambia el niño/a.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idNino]);
 
   const datosFicha = ficha.datos as FichaNinoDTO | null;
-  // La recomendación mostrada: la recién registrada con decisión o la generada.
-  const rec = (decision.datos ?? recomendacion.datos) as Recomendacion | null;
+  const rec = recomendacion.datos as Recomendacion | null;
+  const decisionRegistrada = decision.datos;
 
   return (
     <section className="pantalla">
-      <h1 className="pantalla__titulo">Ficha del niño/a</h1>
+      <h1 className="pantalla__titulo">Ficha del nino/a</h1>
       <p className="pantalla__descripcion">
         Identificador <code>{idNino}</code>
       </p>
 
       {ficha.cargando ? (
-        <IndicadorCarga mensaje="Cargando ficha…" />
+        <IndicadorCarga mensaje="Cargando ficha..." />
       ) : ficha.error ? (
         <MensajeError
           mensaje={ficha.error}
@@ -76,53 +72,74 @@ export function FichaNino() {
         <>
           <div className="tarjeta">
             <span className="tarjeta__meta">
-              <span>Sala: {datosFicha.nino.sala}</span>
-              {datosFicha.nino.tramo ? (
-                <span>Tramo: {datosFicha.nino.tramo}</span>
-              ) : null}
+              <span>Sala: {datosFicha.nino.sala_grupo}</span>
+              <span>Jardin: {datosFicha.nino.id_jardin}</span>
+              <span>Ingreso: {formatearFecha(datosFicha.nino.fecha_ingreso)}</span>
             </span>
           </div>
 
-          {/* --- "¿Puede subir de nivel?" --- */}
           <section className="seccion">
-            <h2 className="seccion__titulo">¿Puede subir de nivel?</h2>
+            <h2 className="seccion__titulo">Puede subir de nivel?</h2>
+            <div className="campo">
+              <label className="campo__etiqueta" htmlFor="nivel">
+                Nivel actual (1-9)
+              </label>
+              <input
+                id="nivel"
+                type="number"
+                min={1}
+                max={9}
+                value={nivelActual}
+                onChange={(e) => setNivelActual(Number(e.target.value))}
+              />
+            </div>
             <div className="barra-acciones">
               <button
                 type="button"
                 className="touch-target boton-primario"
                 disabled={recomendacion.cargando}
-                onClick={() => void recomendacion.ejecutar(idNino)}
+                onClick={() => void recomendacion.ejecutar(idNino, nivelActual)}
               >
-                Evaluar recomendación
+                Evaluar recomendacion
               </button>
             </div>
 
             {recomendacion.cargando ? (
-              <IndicadorCarga mensaje="Evaluando la trayectoria…" />
+              <IndicadorCarga mensaje="Evaluando la trayectoria..." />
             ) : null}
             {recomendacion.error ? (
               <MensajeError mensaje={recomendacion.error} />
             ) : null}
 
-            {rec ? <PanelRecomendacion rec={rec} decision={decision} /> : null}
+            {rec ? (
+              <PanelRecomendacion
+                rec={rec}
+                decisionRegistrada={decisionRegistrada?.decision_educadora ?? null}
+                cargandoDecision={decision.cargando}
+                errorDecision={decision.error}
+                onDecidir={(d) => {
+                  if (rec.id_recomendacion)
+                    void decision.ejecutar(rec.id_recomendacion, d);
+                }}
+              />
+            ) : null}
           </section>
 
-          {/* --- Trayectoria de observaciones --- */}
           <section className="seccion">
             <h2 className="seccion__titulo">Trayectoria</h2>
-            {datosFicha.observaciones.length > 0 ? (
+            {datosFicha.trayectoria.length > 0 ? (
               <ul className="lista">
-                {datosFicha.observaciones.map((obs) => (
+                {datosFicha.trayectoria.map((obs) => (
                   <li key={obs.id_observacion} className="tarjeta">
                     <span className="tarjeta__meta">
-                      <span>{formatearFecha(obs.fecha)}</span>
+                      <span>{formatearFecha(obs.fecha_observacion)}</span>
                       <span>Formato: {obs.formato_captura}</span>
-                      {obs.clasificacion ? (
-                        <span>Nivel: {obs.clasificacion.nivel_estimado}</span>
+                      {obs.nivel_estimado !== null ? (
+                        <span>Nivel: {obs.nivel_estimado}</span>
                       ) : null}
                     </span>
-                    {obs.texto ? (
-                      <p className="texto-pre">{obs.texto}</p>
+                    {obs.nota_breve ? (
+                      <p className="texto-pre">{obs.nota_breve}</p>
                     ) : null}
                     {obs.clasificacion ? (
                       <span className="chip-grupo">
@@ -138,7 +155,7 @@ export function FichaNino() {
               </ul>
             ) : (
               <p className="texto-vacio">
-                Este niño/a aún no tiene observaciones registradas.
+                Este nino/a aun no tiene observaciones registradas.
               </p>
             )}
           </section>
@@ -150,18 +167,24 @@ export function FichaNino() {
 
 function PanelRecomendacion({
   rec,
-  decision,
+  decisionRegistrada,
+  cargandoDecision,
+  errorDecision,
+  onDecidir,
 }: {
   rec: Recomendacion;
-  decision: ReturnType<typeof useAccionApi<[string, DecisionEducadora], Recomendacion>>;
+  decisionRegistrada: string | null;
+  cargandoDecision: boolean;
+  errorDecision: string | null;
+  onDecidir: (d: string) => void;
 }) {
-  if (rec.datos_insuficientes) {
+  if (rec.datos_insuficientes || rec.decision === null) {
     return (
       <div className="tarjeta">
         <span className="estado estado--insuficiente">Datos insuficientes</span>
         <p className="texto-pre">
-          Aún no hay evidencia suficiente para recomendar un cambio de nivel.
-          Registra más observaciones.
+          Aun no hay evidencia suficiente para recomendar un cambio de nivel.
+          Registra mas observaciones (faltan {rec.observaciones_faltantes}).
         </p>
       </div>
     );
@@ -173,17 +196,17 @@ function PanelRecomendacion({
         {ETIQUETA_DECISION[rec.decision]}
       </span>
       <span className="tarjeta__meta">
-        <span>Tramo: {rec.tramo}</span>
-        <span>Núcleo: {rec.nucleo}</span>
-        <span>Nivel actual: {rec.nivel_actual}</span>
+        <span>Tramo: {rec.tramo ?? "-"}</span>
+        <span>Nucleo: {rec.nucleo ?? "-"}</span>
+        <span>Nivel actual: {rec.nivel_actual ?? "-"}</span>
       </span>
-      {rec.argumento ? <p className="texto-pre">{rec.argumento}</p> : null}
+      {rec.argumento_ia ? <p className="texto-pre">{rec.argumento_ia}</p> : null}
 
       <div className="seccion">
-        <h3 className="seccion__titulo">Decisión de la educadora</h3>
-        {rec.decision_educadora ? (
+        <h3 className="seccion__titulo">Decision de la educadora</h3>
+        {decisionRegistrada ? (
           <p className="texto-exito" role="status">
-            Decisión registrada: {rec.decision_educadora}.
+            Decision registrada: {decisionRegistrada}.
           </p>
         ) : (
           <div className="barra-acciones">
@@ -192,20 +215,18 @@ function PanelRecomendacion({
                 key={d.valor}
                 type="button"
                 className="touch-target boton-secundario"
-                disabled={decision.cargando}
-                onClick={() =>
-                  void decision.ejecutar(rec.id_recomendacion, d.valor)
-                }
+                disabled={cargandoDecision}
+                onClick={() => onDecidir(d.valor)}
               >
                 {d.etiqueta}
               </button>
             ))}
           </div>
         )}
-        {decision.cargando ? (
-          <IndicadorCarga compacto mensaje="Registrando decisión…" />
+        {cargandoDecision ? (
+          <IndicadorCarga compacto mensaje="Registrando decision..." />
         ) : null}
-        {decision.error ? <MensajeError mensaje={decision.error} /> : null}
+        {errorDecision ? <MensajeError mensaje={errorDecision} /> : null}
       </div>
     </div>
   );

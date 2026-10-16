@@ -203,7 +203,7 @@ _FILAS: dict[str, list[dict[str, str]]] = {
         {
             "id_educadora": "E-001",
             "id_jardin": "J-001",
-            "rol": "educadora",
+            "rol": "educadora_parvulos",
             "anios_experiencia": "4",
         },
     ],
@@ -315,6 +315,57 @@ def test_seed_oficial_carga_desde_zip_y_valida_conteos(
     assert _contar(session_factory, RubricaVersion) >= 1
 
 
+def test_seed_oficial_carga_roles_reales_del_dataset(
+    repo, session_factory, tmp_path
+) -> None:
+    """Los valores de ``rol`` del Dataset E-1 oficial se cargan sin error.
+
+    La columna ``rol`` del ``educadoras.csv`` oficial trae exactamente dos
+    valores de aula —``educadora_parvulos`` y ``tecnico_parvulos``— más
+    ``directora``. El enum ``Rol`` del dominio/esquema debe aceptarlos tal cual
+    (la fuente de verdad es el dataset). Este test construye un zip oficial de
+    juguete con esos tres valores y verifica que persisten intactos.
+    """
+    filas = {tabla: [dict(f) for f in _FILAS[tabla]] for tabla in TABLAS}
+    filas["jardines"][0]["numero_educadoras"] = "3"
+    filas["educadoras"] = [
+        {"id_educadora": "E-001", "id_jardin": "J-001",
+         "rol": "educadora_parvulos", "anios_experiencia": "4"},
+        {"id_educadora": "E-002", "id_jardin": "J-001",
+         "rol": "tecnico_parvulos", "anios_experiencia": "9"},
+        {"id_educadora": "E-003", "id_jardin": "J-001",
+         "rol": "directora", "anios_experiencia": "15"},
+    ]
+    conteos = {t: len(filas[t]) for t in TABLAS}
+
+    ruta = tmp_path / "dataset_e1_publico.zip"
+    with zipfile.ZipFile(ruta, "w") as zf:
+        for tabla in TABLAS:
+            buffer = io.StringIO(newline="")
+            writer = csv.DictWriter(buffer, fieldnames=list(filas[tabla][0]))
+            writer.writeheader()
+            writer.writerows(filas[tabla])
+            zf.writestr(f"{CARPETA_DATOS}/{tabla}.csv", buffer.getvalue())
+        zf.writestr(
+            f"{CARPETA_DATOS}/{NOMBRE_CONSOLIDADO}",
+            json.dumps({"conteos": conteos}, ensure_ascii=False),
+        )
+
+    cargados = seed_oficial(repo, ruta)
+    assert cargados["educadoras"] == 3
+
+    with session_factory() as session:
+        roles = {
+            e.id_educadora: (e.rol.value if hasattr(e.rol, "value") else str(e.rol))
+            for e in session.execute(select(Educadora)).scalars().all()
+        }
+    assert roles == {
+        "E-001": "educadora_parvulos",
+        "E-002": "tecnico_parvulos",
+        "E-003": "directora",
+    }
+
+
 def test_seed_oficial_mapea_celdas_vacias_como_ausencia(
     repo, session_factory, zip_oficial
 ) -> None:
@@ -371,17 +422,105 @@ def test_validar_conteos_detecta_tabla_faltante() -> None:
 
 
 def test_conteos_esperados_desde_consolidado() -> None:
-    """``conteos_esperados`` extrae la sección 'conteos' de consolidado.json."""
+    """Compat. hacia atrás: usa la sección 'conteos' plana si está presente."""
     dataset = DatasetE1(csvs={}, consolidado={"conteos": dict(_CONTEOS_OK)})
     esperados = conteos_esperados(dataset)
     assert esperados == _CONTEOS_OK
 
 
-def test_conteos_esperados_falla_sin_seccion_de_conteos() -> None:
-    """Si falta la sección de conteos no se puede validar: error en español."""
-    dataset = DatasetE1(csvs={}, consolidado={})
-    with pytest.raises(SeedValidationError, match="conteos de referencia"):
+def test_conteos_esperados_consolidado_oficial_sin_conteos() -> None:
+    """Dataset E-1 oficial (consolidado anidado, SIN 'conteos') valida OK.
+
+    El ``consolidado.json`` oficial no trae un bloque plano ``conteos`` (sus
+    claves son ``fecha_referencia``, ``jardines``, ``naturaleza``,
+    ``ruta_niveles``, ``schema_version``). ``conteos_esperados`` debe derivar
+    los conteos del propio CSV y, si las listas anidadas del consolidado
+    cuadran, no debe lanzar.
+    """
+    csvs = {tabla: list(_FILAS[tabla]) for tabla in TABLAS}
+    consolidado_oficial = {
+        "fecha_referencia": "2026-10-13",
+        "schema_version": "1.0.0",
+        "naturaleza": "sintetico",
+        # Listas anidadas coherentes con los CSV (1 jardín, 1 nivel de ruta).
+        "jardines": [{"id_jardin": "J-001"}],
+        "ruta_niveles": [{"nivel": 1}],
+    }
+    dataset = DatasetE1(csvs=csvs, consolidado=consolidado_oficial)
+    esperados = conteos_esperados(dataset)
+    # Los conteos esperados se derivan del CSV (consistencia interna).
+    assert esperados == {tabla: len(_FILAS[tabla]) for tabla in TABLAS}
+
+
+def test_conteos_esperados_rechaza_consolidado_anidado_incoherente() -> None:
+    """Si las listas anidadas del consolidado no cuadran con los CSV, se rechaza."""
+    csvs = {tabla: list(_FILAS[tabla]) for tabla in TABLAS}
+    # El CSV trae 1 jardín, pero el consolidado dice 3: incoherencia interna.
+    consolidado_incoherente = {
+        "fecha_referencia": "2026-10-13",
+        "jardines": [{"id_jardin": "J-001"}, {"id_jardin": "J-002"}, {"id": "J-003"}],
+        "ruta_niveles": [{"nivel": 1}],
+    }
+    dataset = DatasetE1(csvs=csvs, consolidado=consolidado_incoherente)
+    with pytest.raises(SeedValidationError) as exc:
         conteos_esperados(dataset)
+    mensaje = str(exc.value)
+    assert "jardines" in mensaje
+    assert "incoherente" in mensaje.lower()
+
+
+def test_seed_oficial_oficial_sin_conteos_valida_y_detecta_mismatch(
+    repo, session_factory, tmp_path
+) -> None:
+    """Un zip con consolidado estilo oficial (sin 'conteos') seedea OK.
+
+    Y si se simula un descarte de fila (consolidado anidado que no cuadra con el
+    CSV) el seed debe rechazar con ``SeedValidationError`` en español.
+    """
+    # 1) Zip estilo oficial: consolidado anidado coherente, SIN clave 'conteos'.
+    ruta_ok = tmp_path / "dataset_oficial_ok.zip"
+    with zipfile.ZipFile(ruta_ok, "w") as zf:
+        for tabla in TABLAS:
+            buffer = io.StringIO(newline="")
+            writer = csv.DictWriter(buffer, fieldnames=_CABECERAS[tabla])
+            writer.writeheader()
+            writer.writerows(_FILAS[tabla])
+            zf.writestr(f"{CARPETA_DATOS}/{tabla}.csv", buffer.getvalue())
+        consolidado = {
+            "fecha_referencia": "2026-10-13",
+            "schema_version": "1.0.0",
+            "jardines": [{"id_jardin": "J-001"}],
+            "ruta_niveles": [{"nivel": 1}],
+        }
+        zf.writestr(
+            f"{CARPETA_DATOS}/{NOMBRE_CONSOLIDADO}",
+            json.dumps(consolidado, ensure_ascii=False),
+        )
+    cargados = seed_oficial(repo, ruta_ok)
+    assert {t: cargados[t] for t in TABLAS} == _CONTEOS_OK
+    assert _contar(session_factory, Observacion) == 2
+
+    # 2) Zip incoherente: el consolidado dice 9 ruta_niveles pero el CSV trae 1.
+    ruta_mal = tmp_path / "dataset_oficial_mal.zip"
+    with zipfile.ZipFile(ruta_mal, "w") as zf:
+        for tabla in TABLAS:
+            buffer = io.StringIO(newline="")
+            writer = csv.DictWriter(buffer, fieldnames=_CABECERAS[tabla])
+            writer.writeheader()
+            writer.writerows(_FILAS[tabla])
+            zf.writestr(f"{CARPETA_DATOS}/{tabla}.csv", buffer.getvalue())
+        consolidado_mal = {
+            "fecha_referencia": "2026-10-13",
+            "jardines": [{"id_jardin": "J-001"}],
+            "ruta_niveles": [{"nivel": n} for n in range(1, 10)],  # 9 ≠ 1 CSV
+        }
+        zf.writestr(
+            f"{CARPETA_DATOS}/{NOMBRE_CONSOLIDADO}",
+            json.dumps(consolidado_mal, ensure_ascii=False),
+        )
+    with pytest.raises(SeedValidationError) as exc:
+        seed_oficial(repo, ruta_mal)
+    assert "ruta_niveles" in str(exc.value)
 
 
 # ===========================================================================

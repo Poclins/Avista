@@ -57,8 +57,12 @@ def test_estado_bitacora_valores() -> None:
 
 
 def test_rol_valores() -> None:
-    """Rol expone educadora y directora."""
-    assert {r.value for r in Rol} == {"educadora", "directora"}
+    """Rol expone los valores reales del Dataset E-1 oficial."""
+    assert {r.value for r in Rol} == {
+        "educadora_parvulos",
+        "tecnico_parvulos",
+        "directora",
+    }
 
 
 def test_enum_es_str() -> None:
@@ -85,7 +89,7 @@ def test_jardin_construccion() -> None:
 
 def test_educadora_rol_por_defecto() -> None:
     educadora = Educadora(id_educadora="E-001", id_jardin="J-001", anios_experiencia=5)
-    assert educadora.rol is Rol.educadora
+    assert educadora.rol is Rol.educadora_parvulos
 
 
 def test_nino_sin_pii() -> None:

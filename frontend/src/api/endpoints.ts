@@ -1,6 +1,5 @@
-// Capa de servicios API tipada: una función por endpoint del contrato REST
-// (Módulo G). No contiene lógica de negocio; solo compone la llamada y devuelve
-// datos tipados (Requirement 9.6).
+﻿// Capa de servicios API tipada: una funcion por endpoint del contrato REST.
+// Alineada EXACTAMENTE a los routers del backend (backend/app/api/routers).
 
 import { request } from "./client";
 import type {
@@ -10,21 +9,20 @@ import type {
   EditarBitacoraBody,
   FichaNino,
   GenerarBitacoraBody,
+  GenerarRecomendacionBody,
   HealthStatus,
-  NivelRuta,
   Nino,
   Observacion,
   PeriodoReporte,
   Recomendacion,
+  RecomendacionDecision,
   ReporteDireccion,
+  RutaNiveles,
 } from "./types";
 
 // --- Observaciones ---
 
-/**
- * POST /ninos/{id}/observaciones
- * Crea una observación (multipart: medio o texto) y devuelve la clasificación propuesta.
- */
+/** POST /ninos/{id}/observaciones (multipart: medio o texto). */
 export function crearObservacion(
   idNino: string,
   formData: FormData,
@@ -35,7 +33,12 @@ export function crearObservacion(
   });
 }
 
-/** PATCH /observaciones/{id}/clasificacion — confirmar/corregir clasificación. */
+/** GET /ninos/{id}/observaciones - listar observaciones de un nino/a. */
+export function listarObservaciones(idNino: string): Promise<Observacion[]> {
+  return request<Observacion[]>(`/ninos/${encodeURIComponent(idNino)}/observaciones`);
+}
+
+/** PATCH /observaciones/{id}/clasificacion - confirmar/corregir. */
 export function confirmarClasificacion(
   idObservacion: string,
   body: ConfirmarClasificacionBody,
@@ -46,28 +49,21 @@ export function confirmarClasificacion(
   );
 }
 
-/** GET /ninos/{id}/observaciones — listar observaciones de un niño/a. */
-export function listarObservaciones(idNino: string): Promise<Observacion[]> {
-  return request<Observacion[]>(
-    `/ninos/${encodeURIComponent(idNino)}/observaciones`,
-  );
-}
+// --- Ninos ---
 
-// --- Niños ---
-
-/** GET /ninos/{id} — ficha + trayectoria. */
+/** GET /ninos/{id} - ficha + trayectoria. */
 export function obtenerFichaNino(idNino: string): Promise<FichaNino> {
   return request<FichaNino>(`/ninos/${encodeURIComponent(idNino)}`);
 }
 
-/** GET /ninos?sala=... — "Mi sala". */
-export function listarNinosPorSala(sala: string): Promise<Nino[]> {
-  return request<Nino[]>("/ninos", { query: { sala } });
+/** GET /ninos?jardin=...&sala=... - "Mi sala" (requiere ambos). */
+export function listarNinosPorSala(jardin: string, sala: string): Promise<Nino[]> {
+  return request<Nino[]>("/ninos", { query: { jardin, sala } });
 }
 
-// --- Bitácoras ---
+// --- Bitacoras ---
 
-/** POST /ninos/{id}/bitacoras — generar bitácora quincenal. */
+/** POST /ninos/{id}/bitacoras - generar bitacora quincenal. */
 export function generarBitacora(
   idNino: string,
   body: GenerarBitacoraBody,
@@ -78,12 +74,12 @@ export function generarBitacora(
   });
 }
 
-/** GET /ninos/{id}/bitacoras — listar bitácoras. */
+/** GET /ninos/{id}/bitacoras - listar bitacoras. */
 export function listarBitacoras(idNino: string): Promise<Bitacora[]> {
   return request<Bitacora[]>(`/ninos/${encodeURIComponent(idNino)}/bitacoras`);
 }
 
-/** PATCH /bitacoras/{id} — editar / aprobar. */
+/** PATCH /bitacoras/{id} - editar / aprobar. */
 export function editarBitacora(
   idBitacora: string,
   body: EditarBitacoraBody,
@@ -96,28 +92,31 @@ export function editarBitacora(
 
 // --- Recomendaciones ---
 
-/** POST /ninos/{id}/recomendaciones — generar recomendación de nivel. */
-export function generarRecomendacion(idNino: string): Promise<Recomendacion> {
+/** POST /ninos/{id}/recomendaciones - generar recomendacion de nivel. */
+export function generarRecomendacion(
+  idNino: string,
+  body: GenerarRecomendacionBody,
+): Promise<Recomendacion> {
   return request<Recomendacion>(
     `/ninos/${encodeURIComponent(idNino)}/recomendaciones`,
-    { method: "POST" },
+    { method: "POST", body },
   );
 }
 
-/** POST /recomendaciones/{id}/decision — registrar decisión de la educadora. */
+/** POST /recomendaciones/{id}/decision - registrar decision de la educadora. */
 export function registrarDecisionRecomendacion(
   idRecomendacion: string,
   body: DecisionRecomendacionBody,
-): Promise<Recomendacion> {
-  return request<Recomendacion>(
+): Promise<RecomendacionDecision> {
+  return request<RecomendacionDecision>(
     `/recomendaciones/${encodeURIComponent(idRecomendacion)}/decision`,
     { method: "POST", body },
   );
 }
 
-// --- Reportes de dirección ---
+// --- Reportes de direccion ---
 
-/** GET /jardines/{id}/reportes — generar/obtener reporte de dirección. */
+/** GET /jardines/{id}/reportes - generar/obtener reporte. */
 export function obtenerReporteDireccion(
   idJardin: string,
   periodo: PeriodoReporte,
@@ -128,16 +127,16 @@ export function obtenerReporteDireccion(
   );
 }
 
-// --- Rúbrica / ruta de referencia ---
+// --- Ruta de referencia ---
 
-/** GET /ruta-niveles — rúbrica/ruta de referencia. */
-export function obtenerRutaNiveles(): Promise<NivelRuta[]> {
-  return request<NivelRuta[]>("/ruta-niveles");
+/** GET /ruta-niveles - devuelve { niveles, version_rubrica }. */
+export function obtenerRutaNiveles(): Promise<RutaNiveles> {
+  return request<RutaNiveles>("/ruta-niveles");
 }
 
 // --- Salud ---
 
-/** GET /health — salud para API Gateway / demo. */
+/** GET /health. */
 export function obtenerSalud(): Promise<HealthStatus> {
   return request<HealthStatus>("/health");
 }

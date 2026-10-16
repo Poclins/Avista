@@ -461,6 +461,16 @@
         "executionId": "d4c9fb39-4122-4ccd-bf70-bbf96bf8429c",
         "chatSessionId": "sess_bd6ceefd-2bff-436f-b71e-9c005aff0248",
         "timestamp": 1792111125253
+      },
+      {
+        "executionId": "3b78e26e-860b-45f2-b1de-7ab338e83025",
+        "chatSessionId": "sess_bd6ceefd-2bff-436f-b71e-9c005aff0248",
+        "timestamp": 1792114381815
+      },
+      {
+        "executionId": "1a4ac6c1-104d-4efe-8cc1-231600931c55",
+        "chatSessionId": "sess_bd6ceefd-2bff-436f-b71e-9c005aff0248",
+        "timestamp": 1792117267445
       }
     ],
     "12. Frontend PWA — base y capa de servicios API (posterior) **[integración]** (consume la API REST que expone G)": [
@@ -846,7 +856,7 @@
       {
         "executionId": "64bdf92b-7b54-43ec-b10d-82fec046f09a",
         "chatSessionId": "sess_70bdc6ab-5fbd-4ab4-9012-d3b64c4f6a1e",
-        "timestamp": 1792109488014 
+        "timestamp": 1792109488014
       }
     ],
     "9. Módulo G — Reporte de dirección, API REST y contenedor DI **[integración]** (cablea B/D/E/F vía DI; integración real requiere esos módulos funcionales)": [

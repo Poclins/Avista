@@ -365,7 +365,11 @@ class DatasetLoader:
         try:
             parsed = json.loads(texto)
         except json.JSONDecodeError:
-            return [parte.strip() for parte in texto.split(",") if parte.strip()]
+            # El Dataset E-1 oficial serializa listas en una celda con el
+            # separador "|" (p. ej. dominios de ``ruta_niveles``). Se acepta
+            # tambien "," como respaldo del dataset reducido/casero.
+            separador = "|" if "|" in texto else ","
+            return [p.strip() for p in texto.split(separador) if p.strip()]
         if isinstance(parsed, list):
             return parsed
         return [parsed]
