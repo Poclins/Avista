@@ -1,0 +1,7 @@
+{
+  "task_id": "task-jaimes-aws-mvp",
+  "task_description": "Desplegar jAImes como MVP en una única AWS Lambda de imagen que sirve React/FastAPI, usa SQLite y storage efímeros, e invoca Claude Sonnet 5 y Nova Sonic mediante el rol IAM.",
+  "status": "pending",
+  "feature_order": ["FEAT-001", "FEAT-002"],
+  "blocked_reason": null
+}

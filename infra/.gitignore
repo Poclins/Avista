@@ -1,0 +1,6 @@
+.venv/
+cdk.out/
+cdk-outputs.json
+__pycache__/
+.pytest_cache/
+*.pyc
