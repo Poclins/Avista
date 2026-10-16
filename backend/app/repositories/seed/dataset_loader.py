@@ -42,6 +42,8 @@ from datetime import date
 from pathlib import Path
 from typing import Any
 
+from app.core.nombres_sinteticos import nombres_para_nino
+
 from app.repositories.schema import (
     Base,
     Educadora,
@@ -314,6 +316,12 @@ class DatasetLoader:
     def _castear_fila(self, tabla: str, fila: Row) -> dict[str, Any]:
         """Convierte los valores de texto de una fila a los tipos del esquema."""
         datos: dict[str, Any] = dict(fila)
+
+        if tabla == "ninos" and datos.get("id_nino"):
+            nombre, paterno, materno = nombres_para_nino(datos["id_nino"])
+            datos.setdefault("nombre", nombre)
+            datos.setdefault("apellido_paterno", paterno)
+            datos.setdefault("apellido_materno", materno)
 
         for campo in _INT_FIELDS.get(tabla, ()):
             if campo in datos:

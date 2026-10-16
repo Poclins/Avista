@@ -27,6 +27,8 @@ from __future__ import annotations
 
 import json
 from typing import Any
+from urllib.parse import quote
+from urllib.request import Request, urlopen
 
 from app.core.config import get_settings
 from app.providers.errors import LlmError
@@ -37,7 +39,7 @@ _ANTHROPIC_VERSION = "bedrock-2023-05-31"
 
 # Tope de tokens de la respuesta y temperatura por defecto (redacción sobria,
 # fundamentada en la evidencia, no creativa).
-_MAX_TOKENS = 1024
+_MAX_TOKENS = 4096
 _TEMPERATURA = 0.2
 
 # Instrucción de sistema: fuerza que el modelo responda en español (es-CL) y se
@@ -65,6 +67,8 @@ class BedrockLlmProvider(LlmProvider):
         max_tokens: int = _MAX_TOKENS,
         temperatura: float = _TEMPERATURA,
         bedrock_runtime_client: Any | None = None,
+        api_key: str | None = None,
+        urlopen_func: Any | None = None,
     ) -> None:
         settings = get_settings()
         self._region = region or settings.aws_region
@@ -79,6 +83,8 @@ class BedrockLlmProvider(LlmProvider):
         self._max_tokens = max_tokens
         self._temperatura = temperatura
         self._client = bedrock_runtime_client
+        self._api_key = (api_key or "").strip() or None
+        self._urlopen = urlopen_func or urlopen
 
     # -- Fábrica perezosa del cliente (solo en el camino real) ---------------
     def _runtime(self) -> Any:
@@ -106,6 +112,9 @@ class BedrockLlmProvider(LlmProvider):
             LlmError: si la invocación falla o excede el plazo máximo
                 (Requirements 5.4, 6.11), con mensaje en español.
         """
+        if self._api_key:
+            return self._generar_con_api_key(prompt, context)
+
         cuerpo = self._construir_cuerpo(prompt, context)
         try:
             respuesta = self._runtime().invoke_model(
@@ -124,6 +133,71 @@ class BedrockLlmProvider(LlmProvider):
                 "(fallo o tiempo de espera agotado del proveedor)."
             ) from exc
 
+    def _generar_con_api_key(self, prompt: str, context: str) -> str:
+        """Invoca Converse por HTTPS usando una API key Bearer de Bedrock."""
+        model_id = quote(self._model_id, safe=".:_-")
+        endpoint = (
+            f"https://bedrock-runtime.{self._region}.amazonaws.com/"
+            f"model/{model_id}/converse"
+        )
+        cuerpo = self._construir_converse(prompt, context)
+        solicitud = Request(
+            endpoint,
+            data=json.dumps(cuerpo).encode("utf-8"),
+            headers={
+                "Authorization": f"Bearer {self._api_key}",
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+            },
+            method="POST",
+        )
+        try:
+            with self._urlopen(solicitud, timeout=self._timeout) as respuesta:
+                return self._extraer_texto_converse(respuesta.read())
+        except LlmError:
+            raise
+        except Exception as exc:
+            raise LlmError(
+                "No se pudo generar el texto con Amazon Bedrock. Verifique "
+                "la API key, el acceso al modelo y la región configurada."
+            ) from exc
+
+    def _construir_converse(self, prompt: str, context: str) -> dict[str, Any]:
+        """Cuerpo estándar de Converse, compatible con Claude Sonnet 5."""
+        contenido = (
+            f"Contexto fundamentante:\n{context}\n\n"
+            f"Instrucción:\n{prompt}"
+        )
+        return {
+            "system": [{"text": _SISTEMA_ES}],
+            "messages": [
+                {"role": "user", "content": [{"text": contenido}]}
+            ],
+            "inferenceConfig": {"maxTokens": self._max_tokens},
+            # Sonnet 5 activa razonamiento adaptativo por defecto. Se desactiva
+            # para reservar la salida a la bitácora breve solicitada.
+            "additionalModelRequestFields": {
+                "thinking": {"type": "disabled"}
+            },
+        }
+
+    @staticmethod
+    def _extraer_texto_converse(crudo: bytes | str) -> str:
+        """Extrae el texto de una respuesta estándar de Converse."""
+        if isinstance(crudo, bytes):
+            crudo = crudo.decode("utf-8")
+        datos = json.loads(crudo)
+        bloques = datos.get("output", {}).get("message", {}).get("content", [])
+        texto = "".join(
+            bloque.get("text", "")
+            for bloque in bloques
+            if isinstance(bloque, dict)
+        ).strip()
+        if not texto:
+            raise LlmError(
+                "El modelo de lenguaje devolvió una respuesta vacía o inválida."
+            )
+        return texto
     # -- Formato de la petición (Messages API de Anthropic) ------------------
     def _construir_cuerpo(self, prompt: str, context: str) -> dict[str, Any]:
         """Arma el cuerpo JSON que espera un modelo Claude 3 en Bedrock."""

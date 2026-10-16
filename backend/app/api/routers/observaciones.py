@@ -22,6 +22,7 @@ from __future__ import annotations
 from datetime import date
 
 from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile, status
+from starlette.concurrency import run_in_threadpool
 
 from app.api import mappers
 from app.api.schemas import (
@@ -109,7 +110,8 @@ async def crear_observacion(
     # ``IngestionValidationError`` (entrada inválida, Requirement 1.3 → 400) se
     # traduce en el manejador global de errores (tarea 9.4); el router solo
     # delega y da forma a la respuesta.
-    resultado = ingestion.ingest(
+    resultado = await run_in_threadpool(
+        ingestion.ingest,
         id_nino=id_nino,
         id_educadora=id_educadora_val,
         formato=formato_val,

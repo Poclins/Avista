@@ -94,7 +94,15 @@ class LlmClassifier(Classifier):
             return self._pendiente(confianza=confianza)
 
         if confianza < self._umbral_confianza:
-            return self._pendiente(confianza=confianza)
+            # Conservar la propuesta para que la educadora pueda revisarla;
+            # baja confianza no debe borrar nivel, dominios ni vínculos E-1.
+            return ClasificacionPropuesta(
+                nivel_estimado=nivel,
+                dominios=dominios,
+                manifestaciones=manifestaciones,
+                confianza=round(confianza, 2),
+                pendiente_clasificacion_manual=True,
+            )
 
         return ClasificacionPropuesta(
             nivel_estimado=nivel,

@@ -1,4 +1,4 @@
-﻿// MiSala - lista los ninos/as de una sala (Requirement 8.2).
+// MiSala - lista los ninos/as de una sala (Requirement 8.2).
 // Consume GET /ninos?jardin=...&sala=... (ambos requeridos por el backend).
 
 import { useState, type FormEvent } from "react";
@@ -8,6 +8,7 @@ import type { Nino } from "../../api/types";
 import { useAccionApi } from "../../hooks/useAccionApi";
 import { IndicadorCarga } from "../../components/IndicadorCarga";
 import { MensajeError } from "../../components/MensajeError";
+import { nombreCompletoNino } from "../etiquetas";
 
 export function MiSala() {
   const [jardin, setJardin] = useState("");
@@ -30,12 +31,12 @@ export function MiSala() {
     <section className="pantalla">
       <h1 className="pantalla__titulo">Mi sala</h1>
       <p className="pantalla__descripcion">
-        Ingresa el jardin y la sala para ver a los ninos y ninas y abrir su ficha.
+        Ingresa el jardin y la sala para ver a los niños y niñas y abrir su ficha.
       </p>
 
       <form className="formulario" onSubmit={consultar}>
         <div className="campo">
-          <label className="campo__etiqueta" htmlFor="jardin">Jardin</label>
+          <label className="campo__etiqueta" htmlFor="jardin">Jardín</label>
           <input id="jardin" name="jardin" value={jardin}
             onChange={(e) => setJardin(e.target.value)}
             placeholder="Ej.: JAR-0013" autoComplete="off" />
@@ -54,7 +55,7 @@ export function MiSala() {
         </div>
       </form>
 
-      {cargando ? <IndicadorCarga mensaje="Cargando ninos y ninas..." /> : null}
+      {cargando ? <IndicadorCarga mensaje="Cargando niños y niñas…" /> : null}
 
       {error ? (
         <MensajeError mensaje={error}
@@ -68,10 +69,10 @@ export function MiSala() {
               <li key={nino.id_nino}>
                 <Link to={`/educadora/ninos/${encodeURIComponent(nino.id_nino)}`}
                   className="tarjeta tarjeta--enlace touch-target">
-                  <span className="tarjeta__titulo">{nino.id_nino}</span>
+                  <span className="tarjeta__titulo">{nombreCompletoNino(nino)}</span>
                   <span className="tarjeta__meta">
                     <span>Sala: {nino.sala_grupo}</span>
-                    <span>Jardin: {nino.id_jardin}</span>
+                    <span>Jardín: {nino.id_jardin}</span>
                   </span>
                 </Link>
               </li>
@@ -79,7 +80,7 @@ export function MiSala() {
           </ul>
         ) : (
           <p className="texto-vacio">
-            No se encontraron ninos ni ninas para la sala "{consultado.sala}" del jardin "{consultado.jardin}".
+            No se encontraron niños ni niñas para la sala "{consultado.sala}" del jardín "{consultado.jardin}".
           </p>
         )
       ) : null}

@@ -11,9 +11,12 @@ from __future__ import annotations
 
 from typing import Any
 
+from app.core.nombres_sinteticos import nombres_para_nino
+
 from app.api.schemas import (
     BitacoraOut,
     ClasificacionOut,
+    EducadoraOut,
     FichaNinoOut,
     NinoOut,
     NivelRutaOut,
@@ -85,10 +88,26 @@ def observacion_clasificada_de_orm(obs: Any) -> ObservacionClasificadaOut:
     )
 
 
+def educadora_out(educadora: Any) -> EducadoraOut:
+    """Mapea una educadora ORM a la respuesta de selección."""
+    return EducadoraOut(
+        id_educadora=educadora.id_educadora,
+        id_jardin=educadora.id_jardin,
+        rol=educadora.rol,
+        anios_experiencia=educadora.anios_experiencia,
+    )
+
 def nino_out(nino: Any) -> NinoOut:
     """Mapea un ``Nino`` ORM a su ficha básica de salida."""
+    generado = nombres_para_nino(nino.id_nino)
+    nombre = getattr(nino, "nombre", None) or generado[0]
+    paterno = getattr(nino, "apellido_paterno", None) or generado[1]
+    materno = getattr(nino, "apellido_materno", None) or generado[2]
     return NinoOut(
         id_nino=nino.id_nino,
+        nombre=nombre,
+        apellido_paterno=paterno,
+        apellido_materno=materno,
         id_jardin=nino.id_jardin,
         fecha_nacimiento=nino.fecha_nacimiento,
         sexo_registrado=nino.sexo_registrado,

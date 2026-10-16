@@ -51,6 +51,7 @@ from app.providers.llm.mock_llm import MockLlmProvider
 from app.providers.transcription.aws_transcription import AwsTranscriptionProvider
 from app.providers.transcription.base import TranscriptionProvider
 from app.providers.transcription.mock_transcription import MockTranscriptionProvider
+from app.providers.transcription.nova_sonic import NovaSonicTranscriptionProvider
 from app.repositories.db import create_db_engine, create_session_factory
 from app.repositories.relational.base import RelationalRepo
 from app.repositories.relational.sqlalchemy_repo import SqlAlchemyRelationalRepo
@@ -92,24 +93,32 @@ class _IngestionEmbeddingAdapter:
         obs_orm = self._repo.get(ObservacionORM, id_observacion)
         if obs_orm is None:  # pragma: no cover - inconsistencia improbable
             return
-        observacion = _orm_a_observacion_dominio(obs_orm)
+        try:
+            manifestaciones = self._repo.manifestaciones_de_observacion(
+                id_observacion
+            )
+        except (AttributeError, NotImplementedError):
+            manifestaciones = []
+        observacion = _orm_a_observacion_dominio(obs_orm, manifestaciones)
         self._embeddings.embed_and_index(observacion, texto)
 
 
-def _orm_a_observacion_dominio(obs: ObservacionORM) -> Any:
-    """Convierte una ``Observacion`` ORM a la entidad de dominio del Módulo A.
+def _orm_a_observacion_dominio(
+    obs: ObservacionORM,
+    manifestaciones: list[Any] | None = None,
+) -> Any:
+    """Convierte una observación ORM separada de la sesión al dominio.
 
-    El ``EmbeddingService`` deriva los seis metadatos de contrato de la entidad
-    de dominio; aquí se mapean los dominios a partir de las manifestaciones
-    vinculadas a la observación (tabla puente → ``manifestaciones.dominio``).
+    Las manifestaciones se reciben desde una consulta explícita del repositorio;
+    nunca se activa la relación lazy de una entidad detached.
     """
     from app.domain.models import Observacion as ObservacionDominio
 
     dominios: list[DominioDominio] = []
-    for vinculo in getattr(obs, "manifestaciones", []) or []:
-        manifestacion = getattr(vinculo, "manifestacion", None)
-        if manifestacion is not None and manifestacion.dominio not in dominios:
-            dominios.append(manifestacion.dominio)
+    for manifestacion in manifestaciones or []:
+        dominio = getattr(manifestacion, "dominio", None)
+        if dominio is not None and dominio not in dominios:
+            dominios.append(dominio)
 
     return ObservacionDominio(
         id_observacion=obs.id_observacion,
@@ -204,7 +213,16 @@ class Container:
     # ------------------------------------------------------------------
     @cached_property
     def transcription_provider(self) -> TranscriptionProvider:
-        """Transcripción: mock (local) o AWS Transcribe/Textract/Rekognition."""
+        """Audio usa Nova Sonic cuando existe una API key Bedrock."""
+        sonic_key = self._settings.nova_sonic_api_key_value
+        if sonic_key:
+            return NovaSonicTranscriptionProvider(
+                api_key=sonic_key,
+                region=self._settings.aws_region,
+                model_id=self._settings.nova_sonic_model_id,
+                storage_dir=self._settings.local_storage_dir,
+                max_seconds=self._settings.nova_sonic_max_seconds,
+            )
         if self.use_mocks:
             return MockTranscriptionProvider()
         return AwsTranscriptionProvider(region=self._settings.aws_region)
@@ -229,13 +247,14 @@ class Container:
         (bitácora, recomendación, reporte) quedan protegidos sin duplicar la
         validación (Requirements 11.2, 11.3).
         """
-        if self.use_mocks:
-            inner: LlmProvider = MockLlmProvider()
-        else:
-            inner = BedrockLlmProvider(
+        if self._settings.use_bedrock:
+            inner: LlmProvider = BedrockLlmProvider(
                 region=self._settings.aws_region,
                 model_id=self._settings.bedrock_model_id,
+                api_key=self._settings.bedrock_api_key_value,
             )
+        else:
+            inner = MockLlmProvider()
         return GuardedLlmProvider(inner)
 
     @cached_property
@@ -246,10 +265,11 @@ class Container:
         (dataset E-1 sembrado) y se mapea al dominio del Módulo A; el camino
         primario reutiliza el ``LlmProvider`` activo.
         """
+        usar_llm = self._settings.use_bedrock
         return build_classifier(
             self._catalogo_manifestaciones(),
-            use_mocks=self.use_mocks,
-            llm=None if self.use_mocks else self.llm_provider,
+            use_mocks=not usar_llm,
+            llm=self.llm_provider if usar_llm else None,
         )
 
     # ------------------------------------------------------------------

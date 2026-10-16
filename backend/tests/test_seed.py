@@ -528,18 +528,18 @@ def test_seed_oficial_oficial_sin_conteos_valida_y_detecta_mismatch(
 # ``rubrica_versiones`` vía la interfaz ``RelationalRepo`` (Req 6.6, 21.1, 21.5)
 # ===========================================================================
 
-# Los 3 tramos de sala y el orden fijo de los 8 niveles de progresión que la
-# rúbrica oficial debe traer para el núcleo "identidad_y_autonomia".
+# Los 3 tramos conservados por compatibilidad y los 9 niveles reales de E-1.
 _TRAMOS = ("sala_cuna", "nivel_medio", "transicion")
 _NIVELES_ESPERADOS = [
-    (1, "Comenzando"),
-    (2, "Explorando"),
-    (3, "Desarrollando"),
-    (4, "Afianzando"),
-    (5, "Integrando"),
-    (6, "Ampliando"),
-    (7, "Consolidando"),
-    (8, "Profundizando"),
+    (1, "Atención y regulación inicial"),
+    (2, "Interacción y control emergente"),
+    (3, "Alcance y exploración corporal"),
+    (4, "Sedestación y comunicación intencional"),
+    (5, "Movilidad y propósito"),
+    (6, "Autonomía funcional inicial"),
+    (7, "Representación y combinación inicial"),
+    (8, "Combinación y participación"),
+    (9, "Secuencias y autonomía creciente"),
 ]
 # Rangos etarios (en meses) por tramo, según el diseño.
 _RANGOS_ETARIOS = {
@@ -582,15 +582,15 @@ def test_rubrica_contiene_nucleo_identidad_en_los_3_tramos(repo) -> None:
         )
 
 
-def test_cada_tramo_tiene_8_niveles_en_orden_correcto(repo) -> None:
-    """Cada tramo×núcleo trae exactamente los 8 niveles de progresión en orden."""
+def test_cada_tramo_tiene_9_niveles_e1_en_orden_correcto(repo) -> None:
+    """Cada tramo×núcleo trae exactamente los 9 niveles E-1 en orden."""
     seed_rubrica_oficial(repo)
     criterios = _rubrica_vigente_criterios(repo)
     for tramo in _TRAMOS:
         niveles = criterios["tramos"][tramo]["nucleos"]["identidad_y_autonomia"][
             "niveles"
         ]
-        assert len(niveles) == 8, f"El tramo '{tramo}' no tiene 8 niveles."
+        assert len(niveles) == 9, f"El tramo '{tramo}' no tiene 9 niveles E-1."
         pares = [(int(nv["n"]), nv["nombre"]) for nv in niveles]
         assert pares == _NIVELES_ESPERADOS, (
             f"Los niveles del tramo '{tramo}' no están en el orden esperado."

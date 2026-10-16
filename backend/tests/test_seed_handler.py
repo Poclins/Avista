@@ -27,7 +27,7 @@ def sqlite_settings(tmp_path: Path) -> Settings:
     """Settings de demo: SQLite en archivo temporal y zip oficial inexistente."""
     db = tmp_path / "jaimes.db"
     return Settings(
-        use_mocks=True,
+        environment="development",
         database_url=f"sqlite:///{db.as_posix()}",
         dataset_zip_path=str(tmp_path / "no_existe.zip"),
     )

@@ -1,4 +1,4 @@
-﻿// Tipos del contrato REST - ESPEJO EXACTO de los schemas del backend
+// Tipos del contrato REST - ESPEJO EXACTO de los schemas del backend
 // (backend/app/api/schemas.py) y los enums de dominio (domain/models.py).
 
 // Roles de navegacion del frontend (UI); no es el enum Rol del dataset.
@@ -17,8 +17,22 @@ export type DecisionNivel = "AVANZAR" | "MANTENER" | "RETROCEDER";
 
 export type EstadoBitacora = "borrador" | "aprobada";
 
+export type RolEducadora =
+  | "educadora_parvulos"
+  | "tecnico_parvulos"
+  | "directora";
+
+export interface Educadora {
+  id_educadora: string;
+  id_jardin: string;
+  rol: RolEducadora;
+  anios_experiencia: number;
+}
 export interface Nino {
   id_nino: string;
+  nombre: string;
+  apellido_paterno: string;
+  apellido_materno: string;
   id_jardin: string;
   fecha_nacimiento: string;
   sexo_registrado: string;

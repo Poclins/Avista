@@ -20,3 +20,8 @@ pgvector==0.3.6
 
 # --- AWS SDK (camino USE_MOCKS=false) ---
 boto3==1.35.90
+
+# --- Audio IA en tiempo real (Amazon Nova 2 Sonic) ---
+aws-sdk-bedrock-runtime==0.9.0
+awscrt==0.32.2
+soundfile==0.14.0

@@ -173,3 +173,51 @@ def test_bedrock_respuesta_vacia_lanza_llm_error() -> None:
 def test_llm_error_es_provider_error() -> None:
     """``LlmError`` comparte la raíz tipada del Módulo A (Requirement 13.2)."""
     assert issubclass(LlmError, ProviderError)
+
+
+class _FakeBearerResponse:
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *_args):
+        return False
+
+    def read(self) -> bytes:
+        payload = {
+            "output": {
+                "message": {
+                    "content": [{"text": "Bitácora fundamentada por Claude."}]
+                }
+            }
+        }
+        return json.dumps(payload).encode("utf-8")
+
+
+def test_bedrock_api_key_usa_converse_sin_exponer_clave() -> None:
+    llamadas: list[tuple[object, float]] = []
+
+    def fake_urlopen(request, timeout):
+        llamadas.append((request, timeout))
+        return _FakeBearerResponse()
+
+    provider = BedrockLlmProvider(
+        region="us-east-1",
+        model_id="global.anthropic.claude-sonnet-5",
+        api_key="clave-de-prueba",
+        urlopen_func=fake_urlopen,
+    )
+    texto = provider.generate("INSTRUCCION", "REGLAS Y EVIDENCIA")
+
+    assert texto == "Bitácora fundamentada por Claude."
+    request, timeout = llamadas[0]
+    assert "/model/global.anthropic.claude-sonnet-5/converse" in request.full_url
+    assert request.get_header("Authorization") == "Bearer clave-de-prueba"
+    assert timeout == 60.0
+    body = json.loads(request.data)
+    enviado = body["messages"][0]["content"][0]["text"]
+    assert "INSTRUCCION" in enviado
+    assert "REGLAS Y EVIDENCIA" in enviado
+    assert body["inferenceConfig"]["maxTokens"] == 4096
+    assert body["additionalModelRequestFields"]["thinking"] == {
+        "type": "disabled"
+    }

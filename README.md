@@ -24,9 +24,7 @@ Infra externa              → AWS (Transcribe/Textract/Rekognition/Bedrock/Tita
 
 La IA se integra con **puertos y adaptadores**: cada capacidad
 (`TranscriptionProvider`, `EmbeddingProvider`, `LlmProvider`) y cada repositorio
-tiene una interfaz con implementaciones AWS y mock intercambiables. El flag
-`USE_MOCKS` decide cuál se usa, de modo que la demo corre **sin credenciales
-AWS**.
+tiene una interfaz con implementaciones AWS y mock intercambiables. El entorno de desarrollo selecciona automáticamente los adaptadores locales, de modo que la demo corre **sin credenciales AWS**. AWS solo se activa con `ENVIRONMENT=production`.
 
 ### Estructura del repositorio
 
@@ -59,7 +57,7 @@ Esto levanta:
 - **backend** en http://localhost:8000 (health check en `/health`, docs en `/docs`),
 - **db**: Postgres 16 con la extensión `pgvector`.
 
-El backend arranca en **modo mock** (`USE_MOCKS=true`) por defecto, así la demo
+El backend arranca con proveedores locales deterministas por defecto, así la demo
 funciona aunque no haya red ni credenciales AWS.
 
 ## Desarrollo local (sin Docker)
@@ -87,18 +85,9 @@ cd backend
 pytest
 ```
 
-## Modo mock vs AWS
+## Entornos local y producción
 
-| `USE_MOCKS` | Providers de IA     | Base relacional   | Base vectorial         | Storage          |
-| ----------- | ------------------- | ----------------- | ---------------------- | ---------------- |
-| `true`      | respuestas mock     | SQLite local      | índice en memoria      | disco local      |
-| `false`     | AWS (Transcribe, Textract, Rekognition, Bedrock, Titan) | Postgres/RDS | pgvector | S3 |
-
-Para usar AWS real, en `backend/.env` define `USE_MOCKS=false` y completa
-`AWS_REGION`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` y `DATABASE_URL`
-(Postgres, dialecto `postgresql+psycopg://`). Las mismas interfaces se
-mantienen; solo cambia el adaptador que el
-contenedor de DI construye (Requirement 10.4).
+Desarrollo usa SQLite, índice vectorial en memoria, almacenamiento local y proveedores deterministas sin red. No requiere una variable de modo. Solo un despliegue con `ENVIRONMENT=production` selecciona los adaptadores AWS.
 
 ## Estado
 

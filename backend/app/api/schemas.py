@@ -111,12 +111,26 @@ class ObservacionClasificadaOut(_ApiModel):
 
 
 # ---------------------------------------------------------------------------
+# Educadoras y sus niños/as por jardín
+# ---------------------------------------------------------------------------
+class EducadoraOut(_ApiModel):
+    """Educadora del dataset E-1 disponible para selección en la UI."""
+
+    id_educadora: str
+    id_jardin: str
+    rol: Rol
+    anios_experiencia: int = Field(ge=0)
+
+# ---------------------------------------------------------------------------
 # Niños/as (ficha + trayectoria, "Mi sala")
 # ---------------------------------------------------------------------------
 class NinoOut(_ApiModel):
     """Ficha básica de un niño/a (solo seudónimo, sin nombre real ni RUT)."""
 
     id_nino: str
+    nombre: str
+    apellido_paterno: str
+    apellido_materno: str
     id_jardin: str
     fecha_nacimiento: date
     sexo_registrado: str
@@ -275,6 +289,7 @@ __all__ = [
     "ObservacionOut",
     "ClasificacionConfirmarIn",
     "ObservacionClasificadaOut",
+    "EducadoraOut",
     "NinoOut",
     "FichaNinoOut",
     "BitacoraGenerarIn",

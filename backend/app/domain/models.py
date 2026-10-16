@@ -116,6 +116,9 @@ class Nino(_Base):
     """
 
     id_nino: str
+    nombre: str = ""
+    apellido_paterno: str = ""
+    apellido_materno: str = ""
     id_jardin: str
     fecha_nacimiento: date
     sexo_registrado: str

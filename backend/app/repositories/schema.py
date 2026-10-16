@@ -36,6 +36,7 @@ from sqlalchemy import (
     Integer,
     String,
     Text,
+    UniqueConstraint,
 )
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from sqlalchemy.types import JSON
@@ -103,7 +104,17 @@ class Nino(Base):
 
     __tablename__ = "ninos"
 
+    __table_args__ = (
+        UniqueConstraint(
+            "nombre", "apellido_paterno", "apellido_materno",
+            name="uq_ninos_nombre_completo",
+        ),
+    )
+
     id_nino: Mapped[str] = mapped_column(String, primary_key=True)
+    nombre: Mapped[str | None] = mapped_column(String, nullable=True)
+    apellido_paterno: Mapped[str | None] = mapped_column(String, nullable=True)
+    apellido_materno: Mapped[str | None] = mapped_column(String, nullable=True)
     id_jardin: Mapped[str] = mapped_column(
         ForeignKey("jardines.id_jardin"), nullable=False
     )

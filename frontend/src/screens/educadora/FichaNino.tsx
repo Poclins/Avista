@@ -1,5 +1,5 @@
-﻿// FichaNino - ficha y trayectoria de un nino/a (Requirement 8.2) con el flujo
-// "Puede subir de nivel?" (recomendacion de nivel: la rubrica decide, la IA
+// FichaNino - ficha y trayectoria de un nino/a (Requirement 8.2) con el flujo
+// "¿Puede subir de nivel?" (recomendacion de nivel: la rubrica decide, la IA
 // argumenta). Sin logica de negocio en el cliente (Requirement 9.6).
 
 import { useEffect, useState } from "react";
@@ -18,6 +18,7 @@ import {
   ETIQUETA_DOMINIO,
   claseEstadoDecision,
   formatearFecha,
+  nombreCompletoNino,
 } from "../etiquetas";
 
 // Decision humana final: texto libre en el backend (DecisionEducadoraIn).
@@ -56,11 +57,12 @@ export function FichaNino() {
 
   return (
     <section className="pantalla">
-      <h1 className="pantalla__titulo">Ficha del nino/a</h1>
+      <h1 className="pantalla__titulo">
+        {datosFicha ? `Ficha de ${nombreCompletoNino(datosFicha.nino)}` : "Ficha del niño/a"}
+      </h1>
       <p className="pantalla__descripcion">
-        Identificador <code>{idNino}</code>
+        Trayectoria de desarrollo y recomendaciones pedagógicas.
       </p>
-
       {ficha.cargando ? (
         <IndicadorCarga mensaje="Cargando ficha..." />
       ) : ficha.error ? (
@@ -73,13 +75,13 @@ export function FichaNino() {
           <div className="tarjeta">
             <span className="tarjeta__meta">
               <span>Sala: {datosFicha.nino.sala_grupo}</span>
-              <span>Jardin: {datosFicha.nino.id_jardin}</span>
+              <span>Jardín: {datosFicha.nino.id_jardin}</span>
               <span>Ingreso: {formatearFecha(datosFicha.nino.fecha_ingreso)}</span>
             </span>
           </div>
 
           <section className="seccion">
-            <h2 className="seccion__titulo">Puede subir de nivel?</h2>
+            <h2 className="seccion__titulo">¿Puede subir de nivel?</h2>
             <div className="campo">
               <label className="campo__etiqueta" htmlFor="nivel">
                 Nivel actual (1-9)
@@ -100,12 +102,12 @@ export function FichaNino() {
                 disabled={recomendacion.cargando}
                 onClick={() => void recomendacion.ejecutar(idNino, nivelActual)}
               >
-                Evaluar recomendacion
+                Evaluar recomendación
               </button>
             </div>
 
             {recomendacion.cargando ? (
-              <IndicadorCarga mensaje="Evaluando la trayectoria..." />
+              <IndicadorCarga mensaje="Evaluando la trayectoria…" />
             ) : null}
             {recomendacion.error ? (
               <MensajeError mensaje={recomendacion.error} />
@@ -203,10 +205,10 @@ function PanelRecomendacion({
       {rec.argumento_ia ? <p className="texto-pre">{rec.argumento_ia}</p> : null}
 
       <div className="seccion">
-        <h3 className="seccion__titulo">Decision de la educadora</h3>
+        <h3 className="seccion__titulo">Decisión de la educadora</h3>
         {decisionRegistrada ? (
           <p className="texto-exito" role="status">
-            Decision registrada: {decisionRegistrada}.
+            Decisión registrada: {decisionRegistrada}.
           </p>
         ) : (
           <div className="barra-acciones">

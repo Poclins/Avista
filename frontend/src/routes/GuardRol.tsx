@@ -1,9 +1,4 @@
-﻿// GuardRol â€” restringe el acceso a las secciones segÃºn el RolUI activo.
-//  - Si no hay RolUI seleccionado, redirige a la pantalla de selecciÃ³n
-//    (Requirement 8.5).
-//  - Si el RolUI activo no coincide con el requerido por la secciÃ³n, redirige a
-//    la raÃ­z, garantizando exclusividad entre educadora y directora
-//    (Requirements 8.2, 8.3).
+﻿// Restringe cada sección al rol de UI seleccionado.
 
 import { Navigate, Outlet } from "react-router-dom";
 import type { RolUI } from "../api/types";
@@ -20,5 +15,3 @@ export function GuardRol({ rolRequerido }: { rolRequerido: RolUI }) {
   }
   return <Outlet />;
 }
-
-
