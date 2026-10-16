@@ -401,6 +401,78 @@ def test_fecha_referencia_derivada_de_observaciones() -> None:
     assert res.tramo == "sala_cuna"
 
 
+# ---------------------------------------------------------------------------
+# "Pasos a seguir" por nivel — alcance futuro (Requirement 29, amplía 21.1)
+# ---------------------------------------------------------------------------
+def test_pasos_a_seguir_ausentes_opera_normalmente() -> None:
+    """Req 29.2: una rúbrica SIN ``pasos_a_seguir`` opera normalmente.
+
+    El esquema vigente (conductas observables, sin pasos) sigue parseando y
+    evaluando sin error, y los pasos del nivel se tratan como ausentes
+    (lista vacía).
+    """
+    rubrica = RubricaDecision(_criterios())
+    nino = _nino(date(2025, 10, 13))
+    # La evaluación determinista no se ve afectada por la ausencia del campo.
+    res = rubrica.evaluar(nino, [], 3, fecha_referencia=FECHA_REF)
+    assert res.tramo == "sala_cuna"
+    assert res.decision is DecisionNivel.MANTENER
+    # El campo opcional ausente se expone como lista vacía, sin error.
+    assert rubrica.pasos_a_seguir_del_nivel("sala_cuna", NUCLEO_POR_DEFECTO, 3) == []
+
+
+def test_pasos_a_seguir_presentes_se_preservan() -> None:
+    """Req 29.1/29.3: una rúbrica CON ``pasos_a_seguir`` preserva el valor.
+
+    El campo opcional por nivel se admite y se expone como parte de los
+    criterios del nivel, sin alterar la decisión determinista.
+    """
+    criterios = _criterios()
+    pasos = [
+        "ofrecer actividades de marcha asistida en recorridos cortos",
+        "proponer exploracion guiada de objetos nuevos",
+    ]
+    criterios["tramos"]["sala_cuna"]["nucleos"][NUCLEO_POR_DEFECTO]["niveles"][0][
+        "pasos_a_seguir"
+    ] = pasos
+    rubrica = RubricaDecision(criterios)
+
+    # El valor se preserva verbatim al exponerlo.
+    assert rubrica.pasos_a_seguir_del_nivel("sala_cuna", NUCLEO_POR_DEFECTO, 3) == pasos
+
+
+def test_pasos_a_seguir_no_alteran_la_decision_determinista() -> None:
+    """Req 29.3 + 6.2: agregar ``pasos_a_seguir`` no cambia la decisión.
+
+    La misma entrada produce el mismo ``ResultadoRubrica`` con y sin el campo
+    opcional presente (los pasos son informativos, no entran en la decisión).
+    """
+    nino = _nino(date(2025, 10, 13))
+    obs = [
+        _obs("O-1", nota="camina sostenida sola distancias cortas", nivel=3),
+        _obs("O-2", nota="explora objetos nuevos manipula curiosidad", nivel=3),
+    ]
+
+    sin_pasos = RubricaDecision(_criterios())
+    res_sin = sin_pasos.evaluar(nino, obs, 3, fecha_referencia=FECHA_REF)
+
+    criterios_con = _criterios()
+    criterios_con["tramos"]["sala_cuna"]["nucleos"][NUCLEO_POR_DEFECTO]["niveles"][
+        0
+    ]["pasos_a_seguir"] = ["cualquier paso a observar en la proxima actividad"]
+    con_pasos = RubricaDecision(criterios_con)
+    res_con = con_pasos.evaluar(nino, obs, 3, fecha_referencia=FECHA_REF)
+
+    # La decisión determinista es idéntica con y sin pasos a seguir.
+    assert res_sin.model_dump() == res_con.model_dump()
+
+
+def test_pasos_a_seguir_nivel_inexistente_da_lista_vacia() -> None:
+    """Un nivel sin entrada en la rúbrica devuelve pasos vacíos, sin error."""
+    rubrica = RubricaDecision(_criterios())
+    assert rubrica.pasos_a_seguir_del_nivel("sala_cuna", NUCLEO_POR_DEFECTO, 7) == []
+
+
 def test_umbrales_por_defecto_cuando_faltan() -> None:
     """Si la rúbrica no define umbrales, se usan los valores por defecto."""
     criterios = _criterios()

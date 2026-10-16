@@ -13,7 +13,7 @@ Principios de ejecución:
 - **Frontend es una tarea posterior**, construida desde los mockups de Figma; no bloquea los módulos de backend.
 - **Integración final (E2E)** va al final: solo cablea implementaciones reales vía el contenedor DI y prueba el cruce entre módulos, sin romper la independencia de los módulos previos.
 
-Estado actual: los **módulos A–F** tienen sus tareas de núcleo implementadas y sus tests requeridos en verde — la **suite completa del backend pasa (391 tests en modo mock)** — y el **checkpoint 8 está superado**. Esto incluye 1 (bootstrap), 2/2.1 (Módulo A congelado), 3.1–3.5 y 3.7–3.9 (Módulo B: esquema + `RelationalRepo` + consultas agregadas + `DatasetLoader` del Dataset E-1 oficial), 4.1–4.3 (Módulo C), 5.1–5.4 (Módulo D), 6.1–6.2 (Módulo E) y 7.1–7.3/7.6/7.7/7.9 (Módulo F: rúbrica oficial + bitácoras + recomendación). La tarea **3.4a está hecha**: los dos fakes de `RelationalRepo` en tests (`_FakeRelationalRepo` en `tests/test_classification_service.py` y `FakeRelationalRepo` en `tests/test_ingestion_service.py`) ya implementan las 7 consultas agregadas de 3.4, por lo que la suite instancia y pasa. Quedan **sin iniciar**: el **Módulo G** (reporte de dirección + API REST + contenedor DI), el **Módulo H** (infraestructura AWS CDK + despliegue), la **tarea transversal 10** (resguardo de datos sensibles/despersonalización), el **Frontend** (12–13) y el **disparador de Figma** (14, a la espera del PDF), además de la integración E2E (15) y los atributos de calidad del sistema (17). Al final del plan se añade un bloque transversal de **atributos de calidad** (tarea 17, pilares de evaluación) y una **matriz legible de dependencias entre módulos** (independiente vs integración) en la sección *Task Dependency Graph*.
+Estado actual: los **módulos A–F** tienen sus tareas de núcleo implementadas y sus tests requeridos en verde — la **suite completa del backend pasa (408 tests en modo mock)** — y el **checkpoint 8 está superado**. Esto incluye 1 (bootstrap), 2/2.1 (Módulo A congelado), 3.1–3.5 y 3.7–3.9 (Módulo B: esquema + `RelationalRepo` + consultas agregadas + `DatasetLoader` del Dataset E-1 oficial), 4.1–4.3 (Módulo C), 5.1–5.4 (Módulo D), 6.1–6.2 (Módulo E) y 7.1–7.3/7.6/7.7/7.9 (Módulo F: rúbrica oficial + bitácoras + recomendación). La tarea **3.4a está hecha**: los dos fakes de `RelationalRepo` en tests (`_FakeRelationalRepo` en `tests/test_classification_service.py` y `FakeRelationalRepo` en `tests/test_ingestion_service.py`) ya implementan las 7 consultas agregadas de 3.4, por lo que la suite instancia y pasa. Quedan **sin iniciar**: el **Módulo G** (reporte de dirección + API REST + contenedor DI), el **Módulo H** (infraestructura AWS CDK + despliegue), la **tarea transversal 10** (resguardo de datos sensibles/despersonalización), el **Frontend** (12–13) y el **disparador de Figma** (14, a la espera del PDF), además de la integración E2E (15) y los atributos de calidad del sistema (17). Del **Módulo I** (brechas del Reto E1 según la FAQ de Integra, tarea 18) ya están hechas **18.4** (nivel general = promedio de niveles por núcleo, Req 25) y **18.8** (esquema listo para "pasos a seguir", Req 29); las subtareas de integración 18.1–18.3/18.5/18.7 quedan a la espera del Módulo G, y 18.6 a la espera de resolver el conflicto con Req 1.2. Al final del plan se añade un bloque transversal de **atributos de calidad** (tarea 17, pilares de evaluación) y una **matriz legible de dependencias entre módulos** (independiente vs integración) en la sección *Task Dependency Graph*.
 
 ## Tasks
 
@@ -218,16 +218,16 @@ Estado actual: los **módulos A–F** tienen sus tareas de núcleo implementadas
 <!-- ============================================================= -->
 
 - [ ] 9. Módulo G — Reporte de dirección, API REST y contenedor DI **[integración]** (cablea B/D/E/F vía DI; integración real requiere esos módulos funcionales)
-- [~] 9.1 Implementar `DirectorReportService` (Modelo 4): agrega métricas vía `RelationalRepo` + resumen ejecutivo vía `LlmProvider`
+- [ ] 9.1 Implementar `DirectorReportService` (Modelo 4): agrega métricas vía `RelationalRepo` + resumen ejecutivo vía `LlmProvider`
   - Conteos subieron/mantuvieron/bajaron (cada niño en exactamente una categoría), distribución por sala/dominio, conteos de observaciones/bitácoras, alertas, KPI de tiempo ahorrado determinista; validar rango de fechas (inicio ≤ fin); cero sin datos; métricas desde SQL (no inferidas por LLM); resumen opcional si el LLM falla.
   - _Requirements: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.7, 7.8_
-- [~] 9.2 Implementar el contenedor de DI en `core/` que selecciona adaptadores/repos según `USE_MOCKS`
+- [ ] 9.2 Implementar el contenedor de DI en `core/` que selecciona adaptadores/repos según `USE_MOCKS`
   - Mismo contenedor sirve en Lambda (producción) y `uvicorn` local; inyección por `Depends()`.
   - _Requirements: 10.3, 10.7, 13.5_
-- [~] 9.3 Implementar routers FastAPI (ninos, observaciones, bitacoras, recomendaciones, reportes, ruta-niveles, health) con validación Pydantic
+- [ ] 9.3 Implementar routers FastAPI (ninos, observaciones, bitacoras, recomendaciones, reportes, ruta-niveles, health) con validación Pydantic
   - Contratos REST del diseño; envolver la app con **Mangum** (`handler = Mangum(app)`) para Lambda sin cambiar routers.
   - _Requirements: 1.1, 3.3, 3.4, 5.7, 5.8, 6.1, 6.7, 7.1, 8.1_
-- [~] 9.4 Manejo de errores en español (400 formato, 404 no encontrado, 422 validación, 409 conflicto, 503 LLM)
+- [ ] 9.4 Manejo de errores en español (400 formato, 404 no encontrado, 422 validación, 409 conflicto, 503 LLM)
   - Traducir excepciones tipadas de providers a respuestas HTTP sin filtrar detalles sensibles.
   - _Requirements: 1.3, 2.6, 5.2, 5.4, 5.9, 10.6_
 - [ ]* 9.5 Módulo G — Tests de contrato con `TestClient` y servicios fake
@@ -257,13 +257,13 @@ Estado actual: los **módulos A–F** tienen sus tareas de núcleo implementadas
 <!-- ============================================================= -->
 
 - [ ] 11. Módulo H — Infraestructura AWS CDK, despliegue e integración cloud real **[independiente]** (implementación/synth aislados; despliegue real requiere credenciales)
-- [~] 11.1 Instalar y configurar el tooling AWS (AWS CLI + CDK en Python)
+- [ ] 11.1 Instalar y configurar el tooling AWS (AWS CLI + CDK en Python)
   - Instalar AWS CLI v2 y AWS CDK; `cdk bootstrap`. **Prerrequisito del usuario:** configurar credenciales con `aws configure` usando la cuenta de la hackathon antes de desplegar o correr integración cloud.
   - _Requirements: 10.1_
-- [~] 11.2 Escribir los stacks CDK (Python): `NetworkStack`, `DataStack`, `ComputeStack`, `AiIamStack`
+- [ ] 11.2 Escribir los stacks CDK (Python): `NetworkStack`, `DataStack`, `ComputeStack`, `AiIamStack`
   - Network: VPC mínima + endpoints. Data: Aurora Serverless v2 (Postgres + pgvector), bucket S3 cifrado, Secrets Manager. Compute: Lambda (FastAPI+Mangum) + HTTP API en API Gateway + env vars (`USE_MOCKS=false`). AiIam: permisos mínimos para Bedrock/Transcribe/Textract/Rekognition.
   - _Requirements: 10.1, 11.4, 11.6_
-- [~] 11.3 Desplegar (`cdk synth` → `cdk deploy`), sembrar E-1 en Aurora y verificar `/health`
+- [ ] 11.3 Desplegar (`cdk synth` → `cdk deploy`), sembrar E-1 en Aurora y verificar `/health`
   - `/health` responde HTTP 200 en ≤5 s vía API Gateway; reporte de stack/recurso ante fallo de deploy dejando el entorno reintentar-able; registrar errores AWS en CloudWatch.
   - _Requirements: 10.2, 10.5, 10.6, 10.8_
 - [ ]* 11.4 Módulo H — Pruebas de integración cloud REAL (bajo demanda)
@@ -295,14 +295,14 @@ Estado actual: los **módulos A–F** tienen sus tareas de núcleo implementadas
 
 - [ ] 14. ⏳ DISPARADOR (esperando PDF) — Ingesta de mockups de Figma al frontend **[integración]**
   - **Tarea-disparador: NO ejecutar hasta recibir el PDF de mockups refinados de Figma.** Al activarse, convierte el diseño visual en tareas concretas de frontend sin tocar el backend.
-  - [~] 14.1 Ingestar el PDF de Figma y extraer las pantallas y flujos representados en los mockups
+  - [ ] 14.1 Ingestar el PDF de Figma y extraer las pantallas y flujos representados en los mockups
     - _Requirements: 20.1_
-  - [~] 14.2 Gap-analysis de pantallas/flujos contra el **contrato REST existente**, identificando los endpoints que consume cada pantalla y las brechas detectadas
+  - [ ] 14.2 Gap-analysis de pantallas/flujos contra el **contrato REST existente**, identificando los endpoints que consume cada pantalla y las brechas detectadas
     - _Requirements: 20.2_
-  - [~] 14.3 Producir tareas de **componentes concretos** mapeados a las pantallas existentes
+  - [ ] 14.3 Producir tareas de **componentes concretos** mapeados a las pantallas existentes
     - `MiSala`, `Capturar`, `ConfirmarClasificacion`, `FichaNino`, `Bitacoras`, `DashboardDireccion`.
     - _Requirements: 20.3_
-  - [~] 14.4 Implementar aplicando **estilos y tokens de diseño sobre la estructura existente**, sin alterar la lógica de negocio
+  - [ ] 14.4 Implementar aplicando **estilos y tokens de diseño sobre la estructura existente**, sin alterar la lógica de negocio
     - **Invariante clave:** el **contrato de la API REST del Backend permanece sin cambios** como resultado de la ingesta de los mockups.
     - _Requirements: 20.4, 20.5_
 
@@ -354,35 +354,36 @@ Estado actual: los **módulos A–F** tienen sus tareas de núcleo implementadas
 <!-- ================================================================= -->
 <!-- MÓDULO I · Brechas del Reto E1 (trayectoria de aprendizaje)    -->
 <!-- Derivado de la FAQ de Fundación Integra. Depende de: A, B, F.  -->
-<!-- NOTA: varias subtareas requieren formalizar nuevos requisitos  -->
-<!--       en requirements.md antes de implementarse.               -->
+<!-- NOTA: 18.4 (Req 25) y 18.8 (Req 29) ya formalizadas e        -->
+<!--       implementadas. Integración 18.1-18.3/18.5/18.7 esperan  -->
+<!--       al Módulo G; 18.6 espera resolver conflicto con Req 1.2. -->
 <!-- ================================================================= -->
 
-- [x] 18. Módulo I — Brechas del Reto E1 según FAQ de Integra **[integración]**
+- [~] 18. Módulo I — Brechas del Reto E1 según FAQ de Integra **[integración]**
   - Cierra las brechas detectadas al contrastar la FAQ oficial de Fundación Integra con el spec: vistas de grupo-curso y jardín, rezago relativo a la sala, nivel general por promedio de núcleos, evolución temporal, privacidad de grabaciones y vínculo del post-it al `id_nino`.
-- [~] 18.1 Rezago relativo a la composición de la sala (alerta automática a la educadora) **[integración]**
+- [ ] 18.1 Rezago relativo a la composición de la sala (alerta automática a la educadora) **[integración]**
   - Añadir a `RelationalRepo` + servicio una métrica de **rezago relativo**: comparar el nivel de cada niño/a contra la distribución de su propia sala (p. ej. mayoría en nivel N; marcar como rezagados a quienes están varios niveles por debajo del grupo-curso) y levantar **alerta automática** a la educadora, además del rezago individual por racha ya existente (Req 6.4).
   - _Requisito: ampliar Req 7.3 / nuevo criterio de "rezago relativo a la sala" (requiere nuevo requirement)_
-- [~] 18.2 Vista de grupo-curso: nivel predominante de la sala **[integración]**
+- [ ] 18.2 Vista de grupo-curso: nivel predominante de la sala **[integración]**
   - Exponer vía API y agregación en `RelationalRepo` el **nivel en que está la mayoría** de los niños/as de una sala, por núcleo, para la vista de la educadora.
   - _Requisito: ampliar Req 7.3 (requiere nuevo requirement de vista grupo-curso)_
-- [~] 18.3 Vista de jardín: comparar salas equivalentes y alertar a la directora **[integración]**
+- [ ] 18.3 Vista de jardín: comparar salas equivalentes y alertar a la directora **[integración]**
   - Agregar al `DirectorReportService` la **comparación entre salas del mismo tramo** (p. ej. varias "Nivel Medio") para detectar un grupo-curso más rezagado que sus equivalentes y **levantar alerta a la directora**.
   - _Requisito: ampliar Req 7 (requiere nuevo requirement de comparación entre salas equivalentes)_
-- [~] 18.4 Nivel general del niño/a = promedio de los niveles por núcleo **[independiente]**
+- [x] 18.4 Nivel general del niño/a = promedio de los niveles por núcleo **[independiente]**
   - En `domain`/`RubricaDecision`, derivar un **nivel general** del niño/a como el **promedio de los niveles de los distintos núcleos** (el nivel sigue siendo por núcleo; el general es derivado), exponiéndolo en la ficha.
   - _Requisito: ampliar Req 21 (el nivel es por núcleo; agregar derivación de nivel general; requiere nuevo requirement)_
-- [~] 18.5 Evolución individual en el tiempo (serie temporal del nivel por núcleo) **[integración]**
+- [ ] 18.5 Evolución individual en el tiempo (serie temporal del nivel por núcleo) **[integración]**
   - Exponer vía API la **trayectoria temporal** del nivel por núcleo de un niño/a (histórico de recomendaciones/observaciones) para graficar su evolución en `FichaNino`.
   - _Requisito: ampliar Req 6 / ficha del niño/a (requiere nuevo requirement de evolución temporal)_
-- [~] 18.6 Privacidad de grabaciones: consentimiento + extraer-y-borrar **[independiente]**
+- [ ] 18.6 Privacidad de grabaciones: consentimiento + extraer-y-borrar **[independiente]**
   - Ajustar el flujo de ingesta de audio/video para: (a) requerir una marca de **consentimiento de apoderado** antes de procesar, y (b) **eliminar la grabación original tras extraer** el texto/metadatos, conservando solo el texto despersonalizado (no retener el medio en el tiempo).
   - **Conflicto a resolver con Req 1.2** (que exige almacenar el archivo original): decidir si el borrado aplica solo a audio/video de niños/as.
   - _Requisito: nuevo requirement de retención/eliminación de medios + consentimiento (requiere nuevo requirement; revisar Req 1.2 y Req 11.4)_
-- [~] 18.7 Vínculo del post-it (foto manuscrita) al `id_nino` por nombre **[integración]**
+- [ ] 18.7 Vínculo del post-it (foto manuscrita) al `id_nino` por nombre **[integración]**
   - Tras el OCR de un post-it individual, resolver el **nombre escrito → `id_nino`** dentro de la sala (desambiguar por apellido si hay nombres repetidos), manteniendo el resguardo de datos (el nombre no se persiste ni viaja al LLM; solo se usa para resolver el `id_nino`).
   - _Requisito: ampliar Req 2.2 / Req 11 (requiere nuevo requirement de resolución nombre→id_nino con resguardo)_
-- [~] 18.8 (Alcance futuro) Cargar "pasos a seguir" por nivel/núcleo
+- [x] 18.8 (Alcance futuro) Cargar "pasos a seguir" por nivel/núcleo
   - Dejar el esquema de `rubrica_versiones.criterios` **listo para incorporar los "pasos a seguir"** (conductas a observar en próximas actividades) cuando Integra entregue la rúbrica completa. Marcado como **alcance futuro** según la FAQ.
   - _Requisito: ampliar Req 21.1 (campo opcional de pasos a seguir; futuro)_
 - [ ]* 18.9 Conflicto de parametrización de niveles (8 fijos vs. ajustables / 9 del dataset)

@@ -24,7 +24,7 @@ import unicodedata
 from datetime import date
 from typing import Any, Iterable
 
-from app.domain.contracts import ResultadoRubrica
+from app.domain.contracts import NivelGeneral, ResultadoRubrica
 from app.domain.models import DecisionNivel, Nino, Observacion
 
 # Núcleo por defecto cuando no se especifica (el primero de la rúbrica oficial).
@@ -87,6 +87,13 @@ class RubricaDecision:
 
         ``criterios`` sigue el esquema de ``rubrica_versiones.criterios``:
         ``{"version": str, "tramos": {...}, "umbrales": {...}}``.
+
+        Cada nivel dentro de ``tramos[...]→nucleos[...]→niveles`` puede incluir,
+        de forma **opcional**, una lista ``pasos_a_seguir`` (conductas a observar
+        en próximas actividades) — **alcance futuro** (Requirement 29, amplía
+        21.1). El esquema la tolera y preserva (ver
+        :meth:`pasos_a_seguir_del_nivel`) sin requerir cambios de código y sin
+        afectar la decisión determinista.
         """
         if not isinstance(criterios, dict):
             raise ValueError("Los criterios de la rúbrica deben ser un dict.")
@@ -157,6 +164,71 @@ class RubricaDecision:
         )
 
     # ------------------------------------------------------------------
+    # Nivel general derivado (Requirement 25)
+    # ------------------------------------------------------------------
+    @staticmethod
+    def derivar_nivel_general(
+        niveles_por_nucleo: dict[str, int],
+    ) -> NivelGeneral:
+        """Deriva el **nivel general** como el promedio de los niveles por núcleo.
+
+        El nivel de progresión sigue siendo **por núcleo** (fuente de verdad,
+        Requirement 21); este método produce un valor **derivado** y de solo
+        lectura para la ficha del niño/a (Requirement 25) sin reemplazar a los
+        niveles por núcleo.
+
+        Regla de derivación (Requirement 25.2): promedio aritmético de los
+        niveles de progresión de los **distintos núcleos con nivel asignado**. Se
+        descartan las entradas sin nivel (``None``) para no contaminar el
+        promedio; el resultado se redondea a **2 decimales** (representación
+        ``float``, coherente con ``ResultadoRubrica.score``).
+
+        Si ningún núcleo tiene nivel asignado (Requirement 25.4), devuelve
+        ``NivelGeneral(disponible=False, nivel_general=None)`` sin lanzar error.
+
+        Es **determinista**: el mismo mapa produce siempre el mismo resultado
+        (no usa reloj ni aleatoriedad; el orden de las claves es irrelevante).
+        """
+        asignados = {
+            str(nucleo): int(nivel)
+            for nucleo, nivel in niveles_por_nucleo.items()
+            if nivel is not None
+        }
+
+        if not asignados:
+            return NivelGeneral(
+                nivel_general=None,
+                disponible=False,
+                nucleos_considerados=0,
+                niveles_por_nucleo={},
+            )
+
+        promedio = round(sum(asignados.values()) / len(asignados), 2)
+        return NivelGeneral(
+            nivel_general=promedio,
+            disponible=True,
+            nucleos_considerados=len(asignados),
+            niveles_por_nucleo=dict(asignados),
+        )
+
+    @classmethod
+    def nivel_general_desde_resultados(
+        cls, resultados: Iterable[ResultadoRubrica]
+    ) -> NivelGeneral:
+        """Deriva el nivel general a partir de ``ResultadoRubrica`` por núcleo.
+
+        Conveniencia para la ficha del niño/a: toma los resultados de evaluar la
+        rúbrica en varios núcleos y deriva el nivel general promediando el
+        ``nivel_actual`` de cada uno (Requirement 25.3). Si un mismo núcleo
+        aparece más de una vez, prevalece el **último** resultado (orden de
+        entrada), de modo que el método sea total y determinista.
+        """
+        niveles_por_nucleo: dict[str, int] = {}
+        for resultado in resultados:
+            niveles_por_nucleo[resultado.nucleo] = int(resultado.nivel_actual)
+        return cls.derivar_nivel_general(niveles_por_nucleo)
+
+    # ------------------------------------------------------------------
     # Derivación del tramo por edad
     # ------------------------------------------------------------------
     @staticmethod
@@ -218,6 +290,37 @@ class RubricaDecision:
             if int(nivel.get("n", -1)) == int(nivel_actual):
                 conductas = nivel.get("conductas_observables", []) or []
                 return [str(c) for c in conductas]
+        return []
+
+    # ------------------------------------------------------------------
+    # "Pasos a seguir" por nivel — alcance futuro (Requirement 29 / 21.1)
+    # ------------------------------------------------------------------
+    def pasos_a_seguir_del_nivel(
+        self, tramo: str, nucleo: str, nivel_actual: int
+    ) -> list[str]:
+        """Devuelve los **"pasos a seguir"** del ``tramo × núcleo × nivel``.
+
+        **Alcance futuro (Requirement 29, amplía 21.1).** Cada nivel de la rúbrica
+        versionada puede incluir, de forma **opcional**, una lista
+        ``pasos_a_seguir`` (conductas a observar en próximas actividades) que
+        Fundación Integra entregará cuando la rúbrica oficial esté completa.
+
+        El campo es puramente **informativo**: se tolera y preserva, pero **no
+        altera la decisión determinista** de :meth:`evaluar` (Requirement 29.3,
+        6.2). Cuando el nivel no define ``pasos_a_seguir`` (o la rúbrica aún no los
+        incorpora), se devuelve una **lista vacía** sin producir error
+        (Requirement 29.2) — por eso agregar los pasos a futuro es cuestión de
+        **datos versionados, sin cambios de código** (Requirement 29.1, 21.1).
+        """
+        tramo_datos = self._tramos.get(tramo, {})
+        nucleos = tramo_datos.get("nucleos", {}) or {}
+        nucleo_datos = nucleos.get(nucleo, {})
+        niveles = nucleo_datos.get("niveles", []) or []
+
+        for nivel in niveles:
+            if int(nivel.get("n", -1)) == int(nivel_actual):
+                pasos = nivel.get("pasos_a_seguir", []) or []
+                return [str(p) for p in pasos]
         return []
 
     # ------------------------------------------------------------------

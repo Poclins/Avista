@@ -881,6 +881,16 @@
         "executionId": "25911411-53e2-41f5-9e45-ff1586e4b4a6",
         "chatSessionId": "sess_7774928e-58f1-4d32-9843-c6fd48925ce3",
         "timestamp": 1792116368863
+      },
+      {
+        "executionId": "bd7381ca-ef41-4520-ac0a-b70c7723ef37",
+        "chatSessionId": "sess_aaa8084e-1178-4635-bec9-faa4121e76d6",
+        "timestamp": 1792117652575
+      },
+      {
+        "executionId": "bd7381ca-ef41-4520-ac0a-b70c7723ef37",
+        "chatSessionId": "sess_aaa8084e-1178-4635-bec9-faa4121e76d6",
+        "timestamp": 1792118152011
       }
     ],
     "18.5 Evolución individual en el tiempo (serie temporal del nivel por núcleo) **[integración]**": [
@@ -949,6 +959,16 @@
         "executionId": "25911411-53e2-41f5-9e45-ff1586e4b4a6",
         "chatSessionId": "sess_7774928e-58f1-4d32-9843-c6fd48925ce3",
         "timestamp": 1792116369882
+      },
+      {
+        "executionId": "bd7381ca-ef41-4520-ac0a-b70c7723ef37",
+        "chatSessionId": "sess_aaa8084e-1178-4635-bec9-faa4121e76d6",
+        "timestamp": 1792117653488
+      },
+      {
+        "executionId": "bd7381ca-ef41-4520-ac0a-b70c7723ef37",
+        "chatSessionId": "sess_aaa8084e-1178-4635-bec9-faa4121e76d6",
+        "timestamp": 1792118152840
       }
     ]
   }
