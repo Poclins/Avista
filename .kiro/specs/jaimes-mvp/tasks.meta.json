@@ -309,6 +309,16 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792077891336
+      },
+      {
+        "executionId": "e86f5de2-b093-4af8-87ce-6537890f172a",
+        "chatSessionId": "sess_fe537cd3-1c8c-4b9d-8b21-9f1cad68becf",
+        "timestamp": 1792103162779
+      },
+      {
+        "executionId": "e86f5de2-b093-4af8-87ce-6537890f172a",
+        "chatSessionId": "sess_fe537cd3-1c8c-4b9d-8b21-9f1cad68becf",
+        "timestamp": 1792103451064
       }
     ],
     "9.2 Implementar el contenedor de DI en `core/` que selecciona adaptadores/repos según `USE_MOCKS`": [
@@ -316,6 +326,16 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792077891412
+      },
+      {
+        "executionId": "e86f5de2-b093-4af8-87ce-6537890f172a",
+        "chatSessionId": "sess_fe537cd3-1c8c-4b9d-8b21-9f1cad68becf",
+        "timestamp": 1792103454909
+      },
+      {
+        "executionId": "e86f5de2-b093-4af8-87ce-6537890f172a",
+        "chatSessionId": "sess_fe537cd3-1c8c-4b9d-8b21-9f1cad68becf",
+        "timestamp": 1792103797106
       }
     ],
     "9.3 Implementar routers FastAPI (ninos, observaciones, bitacoras, recomendaciones, reportes, ruta-niveles, health) con validación Pydantic": [
@@ -323,6 +343,16 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792077891564
+      },
+      {
+        "executionId": "e86f5de2-b093-4af8-87ce-6537890f172a",
+        "chatSessionId": "sess_fe537cd3-1c8c-4b9d-8b21-9f1cad68becf",
+        "timestamp": 1792103802020
+      },
+      {
+        "executionId": "e86f5de2-b093-4af8-87ce-6537890f172a",
+        "chatSessionId": "sess_fe537cd3-1c8c-4b9d-8b21-9f1cad68becf",
+        "timestamp": 1792104319605
       }
     ],
     "9.4 Manejo de errores en español (400 formato, 404 no encontrado, 422 validación, 409 conflicto, 503 LLM)": [
@@ -330,6 +360,16 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792077891640
+      },
+      {
+        "executionId": "e86f5de2-b093-4af8-87ce-6537890f172a",
+        "chatSessionId": "sess_fe537cd3-1c8c-4b9d-8b21-9f1cad68becf",
+        "timestamp": 1792104323731
+      },
+      {
+        "executionId": "e86f5de2-b093-4af8-87ce-6537890f172a",
+        "chatSessionId": "sess_fe537cd3-1c8c-4b9d-8b21-9f1cad68becf",
+        "timestamp": 1792104626956
       }
     ],
     "11.1 Instalar y configurar el tooling AWS (AWS CLI + CDK en Python)": [
@@ -586,7 +626,14 @@
       {
         "executionId": "64bdf92b-7b54-43ec-b10d-82fec046f09a",
         "chatSessionId": "sess_70bdc6ab-5fbd-4ab4-9012-d3b64c4f6a1e",
-        "timestamp": 1792109488014
+        "timestamp": 1792109488014 
+      }
+    ],
+    "9. Módulo G — Reporte de dirección, API REST y contenedor DI **[integración]** (cablea B/D/E/F vía DI; integración real requiere esos módulos funcionales)": [
+      {
+        "executionId": "e86f5de2-b093-4af8-87ce-6537890f172a",
+        "chatSessionId": "sess_fe537cd3-1c8c-4b9d-8b21-9f1cad68becf",
+        "timestamp": 1792104627116
       }
     ]
   }
