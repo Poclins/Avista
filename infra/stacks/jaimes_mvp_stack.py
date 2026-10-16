@@ -51,15 +51,15 @@ class JaimesMvpStack(cdk.Stack):
         function_url = function.add_function_url(
             auth_type=lambda_.FunctionUrlAuthType.NONE,
         )
-        lambda_.CfnPermission(
+        public_invoke = lambda_.CfnPermission(
             self,
             "PublicInvokeViaFunctionUrl",
             action="lambda:InvokeFunction",
             function_name=function.function_name,
             principal="*",
             function_url_auth_type="NONE",
-            invoked_via_function_url=True,
         )
+        public_invoke.add_override("Properties.InvokedViaFunctionUrl", True)
 
         cdk.CfnOutput(
             self,
