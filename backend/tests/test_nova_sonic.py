@@ -11,6 +11,7 @@ from types import SimpleNamespace
 
 import pytest
 
+from app.domain.models import FormatoCaptura
 from app.providers.errors import TranscriptionError
 from app.providers.transcription.nova_sonic import NovaSonicTranscriptionProvider
 
@@ -88,3 +89,58 @@ def test_extrae_solo_transcript_del_usuario(tmp_path: Path) -> None:
 
     assert transcript == "El niño compartió."
     assert done.is_set()
+
+
+def test_sin_api_key_usa_sigv4_desde_el_primer_intento(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    path = tmp_path / "audio.mp3"
+    path.write_bytes(b"audio-de-prueba")
+    provider = NovaSonicTranscriptionProvider(
+        api_key=None,
+        storage_dir=tmp_path,
+        max_seconds=5,
+    )
+    modos: list[bool] = []
+
+    monkeypatch.setattr(provider, "_leer_y_normalizar_audio", lambda _path: b"pcm")
+
+    async def fake_transcribir(pcm: bytes, *, use_bearer: bool) -> str:
+        assert pcm == b"pcm"
+        modos.append(use_bearer)
+        return "Transcripción SigV4"
+
+    monkeypatch.setattr(provider, "_transcribir_pcm", fake_transcribir)
+
+    assert provider.transcribe(path.name, FormatoCaptura.audio) == "Transcripción SigV4"
+    assert modos == [False]
+
+
+def test_credenciales_sigv4_provienen_de_boto3_session(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    import boto3
+
+    frozen = SimpleNamespace(
+        access_key="access",
+        secret_key="secret",
+        token="session",
+    )
+    credentials = SimpleNamespace(get_frozen_credentials=lambda: frozen)
+    regiones: list[str] = []
+
+    def fake_session(*, region_name: str):
+        regiones.append(region_name)
+        return SimpleNamespace(get_credentials=lambda: credentials)
+
+    monkeypatch.setattr(boto3, "Session", fake_session)
+    provider = NovaSonicTranscriptionProvider(
+        api_key="",
+        region="us-east-1",
+        storage_dir=tmp_path,
+    )
+
+    assert provider._credenciales_sesion() == ("access", "secret", "session")
+    assert regiones == ["us-east-1"]

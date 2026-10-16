@@ -213,11 +213,10 @@ class Container:
     # ------------------------------------------------------------------
     @cached_property
     def transcription_provider(self) -> TranscriptionProvider:
-        """Audio usa Nova Sonic cuando existe una API key Bedrock."""
-        sonic_key = self._settings.nova_sonic_api_key_value
-        if sonic_key:
+        """Audio usa Nova Sonic cuando la IA real está habilitada."""
+        if self._settings.use_bedrock:
             return NovaSonicTranscriptionProvider(
-                api_key=sonic_key,
+                api_key=self._settings.nova_sonic_api_key_value,
                 region=self._settings.aws_region,
                 model_id=self._settings.nova_sonic_model_id,
                 storage_dir=self._settings.local_storage_dir,

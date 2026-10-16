@@ -173,3 +173,14 @@ def test_aws_region_desde_alias_de_entorno(
     monkeypatch.delenv("AWS_REGION", raising=False)
     settings = Settings(_env_file=None)
     assert settings.aws_region == "sa-east-1"
+
+
+def test_ai_enabled_se_carga_del_entorno(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv("AI_ENABLED", "true")
+    settings = Settings(_env_file=None)
+
+    assert settings.ai_enabled is True
+    assert settings.use_bedrock is True
+    assert settings.use_mocks is True

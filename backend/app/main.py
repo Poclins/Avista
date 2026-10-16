@@ -19,14 +19,19 @@ tocar los routers. En local, ``uvicorn app.main:app`` sirve la misma instancia.
 
 from __future__ import annotations
 
+from pathlib import Path
+
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 from mangum import Mangum
 
 from app.api.errors import registrar_manejadores_errores
 from app.api.routers import all_routers
+from app.core.bootstrap import bootstrap_runtime
+from app.core.config import Settings, get_settings
 
 
-def create_app() -> FastAPI:
+def create_app(settings: Settings | None = None) -> FastAPI:
     """Construye y configura la instancia de la aplicación FastAPI.
 
     Incluye todos los routers del contrato REST. El contenedor de DI resuelve
@@ -34,6 +39,9 @@ def create_app() -> FastAPI:
     app no exige red ni credenciales (clave para el arranque de Lambda y para
     los tests con servicios fake que sobrescriben los ``Depends``).
     """
+    active_settings = settings or get_settings()
+    bootstrap_runtime(active_settings)
+
     app = FastAPI(
         title="jAImes API",
         description=(
@@ -51,6 +59,14 @@ def create_app() -> FastAPI:
     # excepciones tipadas de servicios y proveedores de IA a respuestas HTTP
     # uniformes sin filtrar detalles sensibles (Requirement 10.6).
     registrar_manejadores_errores(app)
+
+    if active_settings.frontend_dist_path:
+        frontend_dist = Path(active_settings.frontend_dist_path)
+        app.mount(
+            "/",
+            StaticFiles(directory=frontend_dist, html=True),
+            name="frontend",
+        )
 
     return app
 

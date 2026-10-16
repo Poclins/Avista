@@ -27,35 +27,35 @@ from app.providers.llm.mock_llm import FAIL_MARKER, MockLlmProvider
 # Doble de prueba del cliente boto3 ``bedrock-runtime`` (sin red ni credenciales)
 # ===========================================================================
 class _FakeBedrockRuntime:
-    """Bedrock Runtime falso: devuelve un texto fijo con el formato de Claude 3."""
+    """Bedrock Runtime falso que implementa Converse."""
 
     def __init__(self, texto: str = "Texto generado de prueba en español.") -> None:
         self._texto = texto
         self.llamadas: list[dict] = []
 
-    def invoke_model(self, **kwargs: object) -> dict:
+    def converse(self, **kwargs: object) -> dict:
         self.llamadas.append(dict(kwargs))
-        payload = {
-            "content": [{"type": "text", "text": self._texto}],
-            "stop_reason": "end_turn",
+        return {
+            "output": {
+                "message": {"content": [{"text": self._texto}]}
+            }
         }
-        return {"body": io.BytesIO(json.dumps(payload).encode("utf-8"))}
 
 
 class _FakeBedrockVacio:
     """Bedrock Runtime falso que devuelve una respuesta sin texto útil."""
 
-    def invoke_model(self, **kwargs: object) -> dict:
-        return {"body": io.BytesIO(json.dumps({"content": []}).encode("utf-8"))}
+    def converse(self, **kwargs: object) -> dict:
+        return {"output": {"message": {"content": []}}}
 
 
 class _FakeBedrockFailing:
-    """Bedrock Runtime falso que lanza en cada invocación (simula fallo del SDK)."""
+    """Bedrock Runtime falso que lanza en cada invocación."""
 
     def __init__(self) -> None:
         self.calls = 0
 
-    def invoke_model(self, **kwargs: object) -> dict:
+    def converse(self, **kwargs: object) -> dict:
         self.calls += 1
         raise RuntimeError("fallo del SDK de AWS (p. ej. timeout o cuota)")
 
@@ -141,16 +141,19 @@ def test_bedrock_devuelve_el_texto_del_modelo() -> None:
 
 
 def test_bedrock_envia_prompt_y_contexto_y_modelo() -> None:
-    """La petición usa el model_id configurado e incluye prompt y contexto."""
+    """La ruta IAM usa Converse sin temperature y desactiva thinking."""
     fake = _FakeBedrockRuntime()
     prov = BedrockLlmProvider(bedrock_runtime_client=fake, model_id="mi-modelo")
     prov.generate("INSTRUCCION-UNICA", "CONTEXTO-UNICO")
     llamada = fake.llamadas[0]
     assert llamada["modelId"] == "mi-modelo"
-    cuerpo = json.loads(llamada["body"])
-    texto_enviado = cuerpo["messages"][0]["content"][0]["text"]
+    texto_enviado = llamada["messages"][0]["content"][0]["text"]
     assert "INSTRUCCION-UNICA" in texto_enviado
     assert "CONTEXTO-UNICO" in texto_enviado
+    assert "temperature" not in llamada["inferenceConfig"]
+    assert llamada["additionalModelRequestFields"]["thinking"] == {
+        "type": "disabled"
+    }
 
 
 def test_bedrock_traduce_fallo_del_sdk_a_llm_error() -> None:
@@ -218,6 +221,7 @@ def test_bedrock_api_key_usa_converse_sin_exponer_clave() -> None:
     assert "INSTRUCCION" in enviado
     assert "REGLAS Y EVIDENCIA" in enviado
     assert body["inferenceConfig"]["maxTokens"] == 4096
+    assert "temperature" not in body["inferenceConfig"]
     assert body["additionalModelRequestFields"]["thinking"] == {
         "type": "disabled"
     }

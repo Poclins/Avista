@@ -80,15 +80,11 @@ def _mock_settings() -> Settings:
 
 
 def _aws_settings() -> Settings:
-    """Config de modo AWS. Usa SQLite para no exigir Postgres al construir repos.
-
-    El propósito del test en modo AWS es verificar la **selección de clases** de
-    adaptadores, no conectar a servicios reales: los clientes boto3 y la conexión
-    pgvector se crean de forma diferida y nunca se invocan.
-    """
+    """Config de modo AWS con IA real habilitada, sin llamadas de red."""
     return Settings(
         _env_file=None,
         environment="production",
+        ai_enabled=True,
         database_url="sqlite://",
         aws_region="us-east-1",
         s3_bucket="jaimes-test",
@@ -168,7 +164,7 @@ def test_ingestion_embedding_adapter_indexa_via_embedding_service() -> None:
 def test_aws_mode_selecciona_adaptadores_aws() -> None:
     c = Container(_aws_settings())
 
-    assert isinstance(c.transcription_provider, AwsTranscriptionProvider)
+    assert isinstance(c.transcription_provider, NovaSonicTranscriptionProvider)
     assert isinstance(c.transcription_provider, TranscriptionProvider)
 
     assert isinstance(c.vector_repo, PgVectorRepo)
@@ -245,6 +241,30 @@ def test_local_con_api_key_usa_bedrock_sin_cambiar_repos_locales() -> None:
 
     assert isinstance(container.llm_provider, GuardedLlmProvider)
     assert isinstance(container.llm_provider._inner, BedrockLlmProvider)
-    assert isinstance(container.transcription_provider, NovaSonicTranscriptionProvider)
+    assert isinstance(
+        container.transcription_provider, NovaSonicTranscriptionProvider
+    )
     assert isinstance(container.vector_repo, InMemoryVectorRepo)
     assert isinstance(container.storage_repo, LocalStorageRepo)
+
+
+def test_ai_enabled_usa_bedrock_y_nova_con_repos_locales() -> None:
+    settings = Settings(
+        _env_file=None,
+        environment="development",
+        ai_enabled=True,
+        database_url="sqlite://",
+        local_storage_dir="./.pytest_storage",
+    )
+    container = Container(settings)
+
+    assert isinstance(container.relational_repo, SqlAlchemyRelationalRepo)
+    assert isinstance(container.vector_repo, InMemoryVectorRepo)
+    assert isinstance(container.storage_repo, LocalStorageRepo)
+    assert isinstance(container.embedding_provider, MockEmbeddingProvider)
+    assert isinstance(container.llm_provider._inner, BedrockLlmProvider)
+    assert isinstance(container.classifier, LlmClassifier)
+    assert isinstance(
+        container.transcription_provider, NovaSonicTranscriptionProvider
+    )
+    assert container.transcription_provider._api_key == ""

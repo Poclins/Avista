@@ -1,0 +1,31 @@
+{
+  "id": "FEAT-002",
+  "type": "feat",
+  "description": "Crear y desplegar el stack CDK independiente JaimesMvpStack, publicar la Function URL y verificar la demo completa con texto, Nova Sonic y Claude. Depende de la imagen/runtime de FEAT-001.",
+  "status": "pending",
+  "steps": [
+    "Recrear infra/ como proyecto CDK Python fijado; app.py registra únicamente JaimesMvpStack y usa el venv Windows infra/.venv/Scripts.",
+    "Implementar infra/stacks/jaimes_mvp_stack.py con DockerImageFunction.from_image_asset sobre la raíz, x86_64, 2048 MB, timeout 180 s, ephemeral storage 1024 MB, reserved concurrency 5 y logs de retención corta.",
+    "Añadir Function URL AuthType.NONE y output; adjuntar solo bedrock:InvokeModel, bedrock:InvokeModelWithResponseStream y bedrock:InvokeModelWithBidirectionalStream sobre Resource *; no crear ni referenciar los servicios prohibidos.",
+    "Añadir assertions CDK para recursos/parámetros requeridos y ausencia de API Gateway, VPC, RDS, S3, CloudFront, ECS y Secrets Manager.",
+    "Crear deployment/deploy_mvp.ps1 con preflight no mutante de AWS CLI, STS, cuenta 655275680575, us-east-1, CDK, Docker y bootstrap; después synth/deploy exclusivamente JaimesMvpStack con --require-approval never.",
+    "Crear deployment/verify_mvp.ps1 y README: verificar Function URL, health/PWA/API, transcribir audio_testing/test1.mp3, confirmar clasificación, generar bitácora y documentar evidencia/limitaciones/stacks anteriores intactos."
+  ],
+  "acceptance_criteria": [
+    "cdk synth JaimesMvpStack produce una plantilla con una sola Lambda de imagen, una Function URL pública y la policy Bedrock exacta, sin recursos de servicios prohibidos.",
+    "El script aborta antes del deploy si STS no está vigente, cuenta/región no coinciden o Docker no está disponible.",
+    "JaimesMvpStack alcanza CREATE_COMPLETE/UPDATE_COMPLETE y exporta una FunctionUrl HTTPS.",
+    "GET /health y GET / responden 200; la PWA consume la API en el mismo origen sin CORS.",
+    "audio_testing/test1.mp3 produce transcript no vacío mediante Nova IAM y una bitácora no truncada se genera mediante Claude IAM.",
+    "El reporte declara que stacks antiguos continúan existentes y ningún stack anterior fue destruido."
+  ],
+  "verification": [
+    "python -m venv infra/.venv; & .\\infra\\.venv\\Scripts\\python.exe -m pip install -r .\\infra\\requirements.txt; & .\\infra\\.venv\\Scripts\\python.exe -m pytest .\\infra\\tests",
+    "cd infra; cdk synth JaimesMvpStack",
+    "cd <repo>; powershell -ExecutionPolicy Bypass -File .\\deployment\\deploy_mvp.ps1",
+    "cd <repo>; powershell -ExecutionPolicy Bypass -File .\\deployment\\verify_mvp.ps1 -OutputsFile .\\infra\\cdk-outputs.json -AudioPath .\\audio_testing\\test1.mp3",
+    "Repetir backend pytest, frontend npm test/npm run build y cdk synth; revisar deployment/verification.md."
+  ],
+  "blocked_reason": null,
+  "findings": ""
+}
