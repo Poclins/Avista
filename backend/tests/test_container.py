@@ -43,6 +43,7 @@ from app.providers.embeddings.mock_embeddings import MockEmbeddingProvider
 from app.providers.embeddings.titan_embeddings import TitanEmbeddingProvider
 from app.providers.llm.base import LlmProvider
 from app.providers.llm.bedrock_llm import BedrockLlmProvider
+from app.providers.llm.guarded_llm import GuardedLlmProvider
 from app.providers.llm.mock_llm import MockLlmProvider
 from app.providers.transcription.aws_transcription import AwsTranscriptionProvider
 from app.providers.transcription.base import TranscriptionProvider
@@ -104,7 +105,11 @@ def test_mock_mode_selecciona_adaptadores_y_repos_mock() -> None:
     assert isinstance(c.embedding_provider, MockEmbeddingProvider)
 
     assert isinstance(c.llm_provider, LlmProvider)
-    assert isinstance(c.llm_provider, MockLlmProvider)
+    # El LLM se expone envuelto por el resguardo de datos sensibles
+    # (despersonalización, Requirements 11.2, 11.3), que a su vez envuelve el
+    # adaptador mock seleccionado por ``USE_MOCKS``.
+    assert isinstance(c.llm_provider, GuardedLlmProvider)
+    assert isinstance(c.llm_provider._inner, MockLlmProvider)
 
     assert isinstance(c.classifier, Classifier)
     assert isinstance(c.classifier, RuleBasedClassifier)
@@ -172,7 +177,10 @@ def test_aws_mode_providers_bedrock_son_diferidos() -> None:
     c = Container(_aws_settings())
 
     assert isinstance(c.embedding_provider, TitanEmbeddingProvider)
-    assert isinstance(c.llm_provider, BedrockLlmProvider)
+    # El LLM AWS (Bedrock) se expone envuelto por el resguardo de datos
+    # sensibles (Requirements 11.2, 11.3).
+    assert isinstance(c.llm_provider, GuardedLlmProvider)
+    assert isinstance(c.llm_provider._inner, BedrockLlmProvider)
     # El clasificador primario es el LLM, cableado sobre el LlmProvider AWS.
     assert isinstance(c.classifier, LlmClassifier)
 

@@ -377,6 +377,16 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792077891715
+      },
+      {
+        "executionId": "325fd155-03e6-4b6f-93fb-1d1989e3b1ae",
+        "chatSessionId": "sess_2cf3ef38-59dc-4f59-a892-05139729810c",
+        "timestamp": 1792105598797
+      },
+      {
+        "executionId": "325fd155-03e6-4b6f-93fb-1d1989e3b1ae",
+        "chatSessionId": "sess_2cf3ef38-59dc-4f59-a892-05139729810c",
+        "timestamp": 1792106125740
       }
     ],
     "11.2 Escribir los stacks CDK (Python): `NetworkStack`, `DataStack`, `ComputeStack`, `AiIamStack`": [
@@ -384,6 +394,16 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792077891796
+      },
+      {
+        "executionId": "325fd155-03e6-4b6f-93fb-1d1989e3b1ae",
+        "chatSessionId": "sess_2cf3ef38-59dc-4f59-a892-05139729810c",
+        "timestamp": 1792106129949
+      },
+      {
+        "executionId": "325fd155-03e6-4b6f-93fb-1d1989e3b1ae",
+        "chatSessionId": "sess_2cf3ef38-59dc-4f59-a892-05139729810c",
+        "timestamp": 1792107045121
       }
     ],
     "11.3 Desplegar (`cdk synth` → `cdk deploy`), sembrar E-1 en Aurora y verificar `/health`": [
@@ -391,6 +411,26 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792077891884
+      },
+      {
+        "executionId": "325fd155-03e6-4b6f-93fb-1d1989e3b1ae",
+        "chatSessionId": "sess_2cf3ef38-59dc-4f59-a892-05139729810c",
+        "timestamp": 1792107061116
+      },
+      {
+        "executionId": "d4c9fb39-4122-4ccd-bf70-bbf96bf8429c",
+        "chatSessionId": "sess_bd6ceefd-2bff-436f-b71e-9c005aff0248",
+        "timestamp": 1792110651555
+      },
+      {
+        "executionId": "d4c9fb39-4122-4ccd-bf70-bbf96bf8429c",
+        "chatSessionId": "sess_bd6ceefd-2bff-436f-b71e-9c005aff0248",
+        "timestamp": 1792111036216
+      },
+      {
+        "executionId": "d4c9fb39-4122-4ccd-bf70-bbf96bf8429c",
+        "chatSessionId": "sess_bd6ceefd-2bff-436f-b71e-9c005aff0248",
+        "timestamp": 1792111125253
       }
     ],
     "12. Frontend PWA — base y capa de servicios API (posterior) **[integración]** (consume la API REST que expone G)": [
@@ -634,6 +674,18 @@
         "executionId": "e86f5de2-b093-4af8-87ce-6537890f172a",
         "chatSessionId": "sess_fe537cd3-1c8c-4b9d-8b21-9f1cad68becf",
         "timestamp": 1792104627116
+      }
+    ],
+    "10. Transversal — Resguardo de datos sensibles (despersonalización)": [
+      {
+        "executionId": "a736b91c-24e2-4590-8fe9-33272e4d2b24",
+        "chatSessionId": "sess_6c63c7ae-69cc-4208-8225-29e8e086f8bc",
+        "timestamp": 1792105074620
+      },
+      {
+        "executionId": "a736b91c-24e2-4590-8fe9-33272e4d2b24",
+        "chatSessionId": "sess_6c63c7ae-69cc-4208-8225-29e8e086f8bc",
+        "timestamp": 1792105468882
       }
     ]
   }

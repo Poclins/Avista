@@ -10,8 +10,10 @@ mismas interfaces (Requirements 10.1 y 10.4).
 
 from __future__ import annotations
 
+import json
 from functools import lru_cache
 
+from pydantic import AliasChoices, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -37,7 +39,19 @@ class Settings(BaseSettings):
 
     # --- Base de datos relacional ---
     # En modo mock se usa SQLite; en AWS, Postgres/pgvector (RDS/Aurora).
+    # En AWS la URL **no** se fija aquí: se arma en runtime desde el secreto de
+    # Secrets Manager (``db_secret_arn``) + los datos de conexión que inyecta
+    # ``ComputeStack`` (``db_endpoint``/``db_port``/``db_name``). Ver
+    # :meth:`resolve_database_url`.
     database_url: str = "sqlite:///./jaimes.db"
+
+    # --- Conexión a Aurora (inyectada por ComputeStack en Lambda) ---
+    # El ARN del secreto de credenciales de Aurora en Secrets Manager; cuando
+    # está presente y ``use_mocks=false``, la URL de BD se arma leyéndolo.
+    db_secret_arn: str | None = None
+    db_endpoint: str | None = None
+    db_port: int = 5432
+    db_name: str = "jaimes"
 
     # --- Dataset E-1 oficial (seed) ---
     # Ruta al zip público del Dataset E-1 oficial (7 CSV + consolidado.json).
@@ -50,7 +64,15 @@ class Settings(BaseSettings):
     local_storage_dir: str = "./storage"
 
     # --- AWS ---
-    aws_region: str = "us-east-1"
+    # Acepta tanto ``AWS_REGION`` (que Lambda inyecta automáticamente) como
+    # ``AWS_REGION_NAME`` (la variable que define ``ComputeStack``), además del
+    # nombre de campo ``aws_region``.
+    aws_region: str = Field(
+        default="us-east-1",
+        validation_alias=AliasChoices(
+            "aws_region", "AWS_REGION_NAME", "AWS_REGION"
+        ),
+    )
     aws_access_key_id: str | None = None
     aws_secret_access_key: str | None = None
 
@@ -62,6 +84,84 @@ class Settings(BaseSettings):
     def is_mock_mode(self) -> bool:
         """Atajo semántico para ``use_mocks``."""
         return self.use_mocks
+
+    @property
+    def _usa_aurora_desde_secreto(self) -> bool:
+        """¿Debe armarse la URL de BD desde el secreto de Aurora?
+
+        Solo en el camino AWS real (``use_mocks=false``) y cuando
+        ``ComputeStack`` inyectó el ARN del secreto y el endpoint del cluster.
+        En modo mock (o sin esos datos) se conserva la ``database_url`` por
+        defecto (SQLite), de modo que importar la config no exija red ni
+        credenciales.
+        """
+        return (
+            not self.use_mocks
+            and bool(self.db_secret_arn)
+            and bool(self.db_endpoint)
+        )
+
+    def resolve_database_url(self) -> str:
+        """Devuelve la URL de BD efectiva, armándola desde Secrets Manager si aplica.
+
+        - **Modo mock / sin datos de Aurora:** devuelve ``database_url`` tal
+          cual (SQLite por defecto). No toca red ni credenciales.
+        - **Camino AWS (``use_mocks=false`` + ``db_secret_arn`` + ``db_endpoint``):**
+          lee el secreto JSON de Aurora (``username``/``password``) vía boto3 y
+          construye una URL ``postgresql+psycopg://USER:PASS@ENDPOINT:PORT/NAME``.
+
+        La lectura es **perezosa**: solo ocurre al llamar a este método (que el
+        contenedor de DI invoca al crear el engine), nunca al importar la
+        configuración. Mantiene el diseño perezoso del contenedor.
+        """
+        if not self._usa_aurora_desde_secreto:
+            return self.database_url
+        usuario, clave = self._leer_credenciales_secreto()
+        return construir_url_postgres(
+            usuario=usuario,
+            clave=clave,
+            host=self.db_endpoint or "",
+            puerto=self.db_port,
+            base=self.db_name,
+        )
+
+    def _leer_credenciales_secreto(self) -> tuple[str, str]:
+        """Lee ``username``/``password`` del secreto de Aurora en Secrets Manager.
+
+        Import diferido de boto3: solo se necesita en el camino AWS. El secreto
+        es un JSON con, al menos, ``username`` y ``password`` (formato estándar
+        de los secretos de credenciales de RDS/Aurora).
+        """
+        import boto3  # import diferido: solo en el camino AWS.
+
+        cliente = boto3.client("secretsmanager", region_name=self.aws_region)
+        respuesta = cliente.get_secret_value(SecretId=self.db_secret_arn)
+        datos = json.loads(respuesta["SecretString"])
+        return str(datos["username"]), str(datos["password"])
+
+
+def construir_url_postgres(
+    *,
+    usuario: str,
+    clave: str,
+    host: str,
+    puerto: int,
+    base: str,
+) -> str:
+    """Arma una URL SQLAlchemy ``postgresql+psycopg://`` segura.
+
+    Usuario y clave se **codifican** (``quote_plus``) para que caracteres
+    especiales en las credenciales (``@``, ``:``, ``/``, …) no rompan ni
+    "inyecten" partes de la URL. El driver es ``psycopg`` (v3), que el backend
+    ya declara como dependencia (``psycopg[binary]``).
+    """
+    from urllib.parse import quote_plus
+
+    usuario_q = quote_plus(usuario)
+    clave_q = quote_plus(clave)
+    return (
+        f"postgresql+psycopg://{usuario_q}:{clave_q}@{host}:{puerto}/{base}"
+    )
 
 
 @lru_cache

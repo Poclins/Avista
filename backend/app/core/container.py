@@ -46,6 +46,7 @@ from app.providers.embeddings.titan_embeddings import (
 from app.providers.embeddings.titan_embeddings import TitanEmbeddingProvider
 from app.providers.llm.base import LlmProvider
 from app.providers.llm.bedrock_llm import BedrockLlmProvider
+from app.providers.llm.guarded_llm import GuardedLlmProvider
 from app.providers.llm.mock_llm import MockLlmProvider
 from app.providers.transcription.aws_transcription import AwsTranscriptionProvider
 from app.providers.transcription.base import TranscriptionProvider
@@ -150,8 +151,20 @@ class Container:
     # Infraestructura relacional (engine + sesión)
     # ------------------------------------------------------------------
     @cached_property
+    def _database_url(self) -> str:
+        """URL de BD efectiva, resuelta de forma perezosa (una vez por proceso).
+
+        En modo mock es la ``database_url`` por defecto (SQLite); en el camino
+        AWS se arma desde el secreto de Aurora (Secrets Manager) + los datos de
+        conexión inyectados por ``ComputeStack`` (ver
+        :meth:`Settings.resolve_database_url`). Se cachea para no releer el
+        secreto en cada acceso.
+        """
+        return self._settings.resolve_database_url()
+
+    @cached_property
     def _session_factory(self) -> Any:
-        engine = create_db_engine(self._settings.database_url)
+        engine = create_db_engine(self._database_url)
         return create_session_factory(engine)
 
     # ------------------------------------------------------------------
@@ -208,13 +221,22 @@ class Container:
 
     @cached_property
     def llm_provider(self) -> LlmProvider:
-        """LLM: mock (local) o Amazon Bedrock (Claude) (AWS)."""
+        """LLM: mock (local) o Amazon Bedrock (Claude) (AWS).
+
+        El proveedor activo se **envuelve** con ``GuardedLlmProvider`` para
+        aplicar el resguardo de datos sensibles (despersonalización) en el único
+        punto de cableado del LLM: así todos los servicios que generan texto
+        (bitácora, recomendación, reporte) quedan protegidos sin duplicar la
+        validación (Requirements 11.2, 11.3).
+        """
         if self.use_mocks:
-            return MockLlmProvider()
-        return BedrockLlmProvider(
-            region=self._settings.aws_region,
-            model_id=self._settings.bedrock_model_id,
-        )
+            inner: LlmProvider = MockLlmProvider()
+        else:
+            inner = BedrockLlmProvider(
+                region=self._settings.aws_region,
+                model_id=self._settings.bedrock_model_id,
+            )
+        return GuardedLlmProvider(inner)
 
     @cached_property
     def classifier(self) -> Classifier:
@@ -317,7 +339,12 @@ class Container:
         """
         import psycopg  # import diferido: solo en el camino AWS/Postgres.
 
-        url = self._settings.database_url
+        # ``_database_url`` es una URL SQLAlchemy (``postgresql+psycopg://``);
+        # ``psycopg.connect`` espera una URL libpq (``postgresql://``), así que
+        # se normaliza el prefijo del dialecto.
+        url = self._database_url.replace(
+            "postgresql+psycopg://", "postgresql://", 1
+        )
 
         def _factory() -> Any:
             return psycopg.connect(url)
