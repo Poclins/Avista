@@ -1,4 +1,4 @@
-﻿# Implementation Plan â€” jAImes MVP
+# Implementation Plan â€” jAImes MVP
 
 ## Overview
 
@@ -13,7 +13,7 @@ Principios de ejecuciÃ³n:
 - **Frontend es una tarea posterior**, construida desde los mockups de Figma; no bloquea los mÃ³dulos de backend.
 - **IntegraciÃ³n final (E2E)** va al final: solo cablea implementaciones reales vÃ­a el contenedor DI y prueba el cruce entre mÃ³dulos, sin romper la independencia de los mÃ³dulos previos.
 
-Estado actual: las tareas **1 (bootstrap), 2 (MÃ³dulo A) y 3.1â€“3.3 (MÃ³dulo B: esquema + `RelationalRepo` + seed inicial E-1)** ya estÃ¡n implementadas y marcadas `[x]`. El cierre del MÃ³dulo B migra el seed al **Dataset E-1 oficial** (3.7â€“3.11) y el resto estÃ¡ sin iniciar. Al final del plan se aÃ±ade un bloque transversal de **atributos de calidad** (tarea 17, pilares de evaluaciÃ³n) y una **matriz legible de dependencias entre mÃ³dulos** (independiente vs integraciÃ³n) en la secciÃ³n *Task Dependency Graph*.
+Estado actual: los **mÃ³dulos Aâ€“F** tienen sus tareas de nÃºcleo implementadas y sus tests requeridos en verde â€” la **suite completa del backend pasa (391 tests en modo mock)** â€” y el **checkpoint 8 estÃ¡ superado**. Esto incluye 1 (bootstrap), 2/2.1 (MÃ³dulo A congelado), 3.1â€“3.5 y 3.7â€“3.9 (MÃ³dulo B: esquema + `RelationalRepo` + consultas agregadas + `DatasetLoader` del Dataset E-1 oficial), 4.1â€“4.3 (MÃ³dulo C), 5.1â€“5.4 (MÃ³dulo D), 6.1â€“6.2 (MÃ³dulo E) y 7.1â€“7.3/7.6/7.7/7.9 (MÃ³dulo F: rÃºbrica oficial + bitÃ¡coras + recomendaciÃ³n). La tarea **3.4a estÃ¡ hecha**: los dos fakes de `RelationalRepo` en tests (`_FakeRelationalRepo` en `tests/test_classification_service.py` y `FakeRelationalRepo` en `tests/test_ingestion_service.py`) ya implementan las 7 consultas agregadas de 3.4, por lo que la suite instancia y pasa. Quedan **sin iniciar**: el **MÃ³dulo G** (reporte de direcciÃ³n + API REST + contenedor DI), el **MÃ³dulo H** (infraestructura AWS CDK + despliegue), la **tarea transversal 10** (resguardo de datos sensibles/despersonalizaciÃ³n), el **Frontend** (12â€“13) y el **disparador de Figma** (14, a la espera del PDF), ademÃ¡s de la integraciÃ³n E2E (15) y los atributos de calidad del sistema (17). Al final del plan se aÃ±ade un bloque transversal de **atributos de calidad** (tarea 17, pilares de evaluaciÃ³n) y una **matriz legible de dependencias entre mÃ³dulos** (independiente vs integraciÃ³n) en la secciÃ³n *Task Dependency Graph*.
 
 ## Tasks
 
@@ -64,7 +64,7 @@ Estado actual: las tareas **1 (bootstrap), 2 (MÃ³dulo A) y 3.1â€“3.3 (MÃ
 - [x] 3.4 MÃ³dulo B â€” AÃ±adir consultas agregadas para el reporte de direcciÃ³n a `RelationalRepo`
   - Implementar consultas que el MÃ³dulo G consumirÃ¡ vÃ­a interfaz: conteos subieron/mantuvieron/bajaron por sala, distribuciÃ³n por nivel y dominio, conteo de observaciones/bitÃ¡coras total y por educadora, alertas de retroceso y de inactividad (14 dÃ­as).
   - _Requirements: 7.1, 7.3, 7.8_
-- [ ] 3.4a Modulo B/D/E -- Actualizar los fakes de `RelationalRepo` en tests con las 7 consultas agregadas de 3.4
+- [x] 3.4a Modulo B/D/E -- Actualizar los fakes de `RelationalRepo` en tests con las 7 consultas agregadas de 3.4
   - Implementar `conteos_nivel_por_sala`, `distribucion_niveles_por_sala`, `distribucion_niveles_por_dominio`, `contar_observaciones_periodo`, `contar_bitacoras_periodo`, `alertas_retroceso`, `alertas_inactividad` en `_FakeRelationalRepo` (`tests/test_classification_service.py`) y `FakeRelationalRepo` (`tests/test_ingestion_service.py`), para que vuelvan a instanciar tras ampliarse la interfaz en 3.4.
   - Dejar la suite completa en verde (las 22 fallas actuales son solo por fakes desactualizados, no por regresion de los servicios D/E).
   - _Requirements: 7.1, 7.3, 13.2_
@@ -350,6 +350,44 @@ Estado actual: las tareas **1 (bootstrap), 2 (MÃ³dulo A) y 3.1â€“3.3 (MÃ
 - [ ] 17.5 Calidad de presentaciÃ³n â€” guion de demo y documentaciÃ³n por Ã¡rea **[integraciÃ³n]**
   - Escribir el **guion de demo en el README** (demo mock de un solo comando + demo en vivo sobre AWS con `/health`) y asegurar que `docs/` existe **organizada por Ã¡rea** (`backend/`, `frontend/`, `database/`, `cloud/`), cada una con al menos un Markdown y un diagrama ```mermaid```.
   - _Requirements: 19.1, 19.2, 19.3, 19.4_
+
+<!-- ================================================================= -->
+<!-- MÓDULO I · Brechas del Reto E1 (trayectoria de aprendizaje)    -->
+<!-- Derivado de la FAQ de Fundación Integra. Depende de: A, B, F.  -->
+<!-- NOTA: varias subtareas requieren formalizar nuevos requisitos  -->
+<!--       en requirements.md antes de implementarse.               -->
+<!-- ================================================================= -->
+
+- [ ] 18. Módulo I — Brechas del Reto E1 según FAQ de Integra **[integración]**
+  - Cierra las brechas detectadas al contrastar la FAQ oficial de Fundación Integra con el spec: vistas de grupo-curso y jardín, rezago relativo a la sala, nivel general por promedio de núcleos, evolución temporal, privacidad de grabaciones y vínculo del post-it al `id_nino`.
+- [ ] 18.1 Rezago relativo a la composición de la sala (alerta automática a la educadora) **[integración]**
+  - Añadir a `RelationalRepo` + servicio una métrica de **rezago relativo**: comparar el nivel de cada niño/a contra la distribución de su propia sala (p. ej. mayoría en nivel N; marcar como rezagados a quienes están varios niveles por debajo del grupo-curso) y levantar **alerta automática** a la educadora, además del rezago individual por racha ya existente (Req 6.4).
+  - _Requisito: ampliar Req 7.3 / nuevo criterio de "rezago relativo a la sala" (requiere nuevo requirement)_
+- [ ] 18.2 Vista de grupo-curso: nivel predominante de la sala **[integración]**
+  - Exponer vía API y agregación en `RelationalRepo` el **nivel en que está la mayoría** de los niños/as de una sala, por núcleo, para la vista de la educadora.
+  - _Requisito: ampliar Req 7.3 (requiere nuevo requirement de vista grupo-curso)_
+- [ ] 18.3 Vista de jardín: comparar salas equivalentes y alertar a la directora **[integración]**
+  - Agregar al `DirectorReportService` la **comparación entre salas del mismo tramo** (p. ej. varias "Nivel Medio") para detectar un grupo-curso más rezagado que sus equivalentes y **levantar alerta a la directora**.
+  - _Requisito: ampliar Req 7 (requiere nuevo requirement de comparación entre salas equivalentes)_
+- [ ] 18.4 Nivel general del niño/a = promedio de los niveles por núcleo **[independiente]**
+  - En `domain`/`RubricaDecision`, derivar un **nivel general** del niño/a como el **promedio de los niveles de los distintos núcleos** (el nivel sigue siendo por núcleo; el general es derivado), exponiéndolo en la ficha.
+  - _Requisito: ampliar Req 21 (el nivel es por núcleo; agregar derivación de nivel general; requiere nuevo requirement)_
+- [ ] 18.5 Evolución individual en el tiempo (serie temporal del nivel por núcleo) **[integración]**
+  - Exponer vía API la **trayectoria temporal** del nivel por núcleo de un niño/a (histórico de recomendaciones/observaciones) para graficar su evolución en `FichaNino`.
+  - _Requisito: ampliar Req 6 / ficha del niño/a (requiere nuevo requirement de evolución temporal)_
+- [ ] 18.6 Privacidad de grabaciones: consentimiento + extraer-y-borrar **[independiente]**
+  - Ajustar el flujo de ingesta de audio/video para: (a) requerir una marca de **consentimiento de apoderado** antes de procesar, y (b) **eliminar la grabación original tras extraer** el texto/metadatos, conservando solo el texto despersonalizado (no retener el medio en el tiempo).
+  - **Conflicto a resolver con Req 1.2** (que exige almacenar el archivo original): decidir si el borrado aplica solo a audio/video de niños/as.
+  - _Requisito: nuevo requirement de retención/eliminación de medios + consentimiento (requiere nuevo requirement; revisar Req 1.2 y Req 11.4)_
+- [ ] 18.7 Vínculo del post-it (foto manuscrita) al `id_nino` por nombre **[integración]**
+  - Tras el OCR de un post-it individual, resolver el **nombre escrito → `id_nino`** dentro de la sala (desambiguar por apellido si hay nombres repetidos), manteniendo el resguardo de datos (el nombre no se persiste ni viaja al LLM; solo se usa para resolver el `id_nino`).
+  - _Requisito: ampliar Req 2.2 / Req 11 (requiere nuevo requirement de resolución nombre→id_nino con resguardo)_
+- [ ] 18.8 (Alcance futuro) Cargar "pasos a seguir" por nivel/núcleo
+  - Dejar el esquema de `rubrica_versiones.criterios` **listo para incorporar los "pasos a seguir"** (conductas a observar en próximas actividades) cuando Integra entregue la rúbrica completa. Marcado como **alcance futuro** según la FAQ.
+  - _Requisito: ampliar Req 21.1 (campo opcional de pasos a seguir; futuro)_
+- [ ]* 18.9 Conflicto de parametrización de niveles (8 fijos vs. ajustables / 9 del dataset)
+  - _Optional_ — documentar y resolver la inconsistencia detectada en la FAQ: Req 21.1 fija **8 niveles de progresión en orden fijo**, el dataset E-1 usa **9 niveles** (Req 3.1, `nivel_estimado` 1–9) y la FAQ pide que la **cantidad de niveles y núcleos sea ajustable** sin tocar código. Proponer un criterio único (p. ej. niveles como dato versionado en `rubrica_versiones.criterios`).
+  - _Requisito: aclarar Req 21.1 vs Req 3.1 (requiere decisión del equipo)_
 
 ## Notes
 
