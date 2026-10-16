@@ -16,8 +16,9 @@ Diseño:
   - **404** recurso no encontrado (``BitacoraNoEncontradaError``,
     ``RecommendationError``, ``PersistenciaError`` de "no existe").
   - **409** conflicto con el estado actual (``BitacoraConflictoError``).
-  - **422** validación / sin evidencia (``BitacoraSinEvidenciaError``,
-    ``ReporteRangoInvalidoError``, ``PersistenciaError`` genérico).
+  - **422** validación / sin evidencia / datos no permitidos
+    (``BitacoraSinEvidenciaError``, ``ReporteRangoInvalidoError``,
+    ``DatosSensiblesError``, ``PersistenciaError`` genérico).
   - **503** fallo del LLM o de un proveedor de IA (``BitacoraLlmError``,
     ``LlmError``/``ProviderError``).
 - **Sanitización**: los errores crudos de proveedor/AWS
@@ -39,6 +40,7 @@ import logging
 from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
 
+from app.core.despersonalizacion import DatosSensiblesError
 from app.providers.errors import (
     EmbeddingError,
     LlmError,
@@ -135,6 +137,21 @@ def registrar_manejadores_errores(app: FastAPI) -> None:
     async def _reporte_rango_invalido(
         _request: Request, exc: ReporteRangoInvalidoError
     ) -> JSONResponse:
+        return _respuesta(status.HTTP_422_UNPROCESSABLE_ENTITY, str(exc))
+
+    @app.exception_handler(DatosSensiblesError)
+    async def _datos_sensibles(
+        _request: Request, exc: DatosSensiblesError
+    ) -> JSONResponse:
+        # Resguardo de datos sensibles (Requirement 11.3): el envío al LLM se
+        # bloqueó porque el contenido contiene datos no permitidos. El mensaje
+        # ya está en español y NO incluye el valor sensible; las categorías se
+        # registran para trazabilidad sin exponer el dato.
+        logger.warning(
+            "Solicitud bloqueada por el resguardo de datos sensibles "
+            "(categorías: %s).",
+            ", ".join(exc.categorias),
+        )
         return _respuesta(status.HTTP_422_UNPROCESSABLE_ENTITY, str(exc))
 
     @app.exception_handler(PersistenciaError)

@@ -243,7 +243,7 @@ Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B:
 <!-- TRANSVERSAL Â· Resguardo de datos sensibles. Depende de: A.    -->
 <!-- ============================================================= -->
 
-- [ ] 10. Transversal — Resguardo de datos sensibles (despersonalización)
+- [x] 10. Transversal — Resguardo de datos sensibles (despersonalización)
   - Garantizar seudonimización (`id_nino`) en BD y en prompts; separar personal (relacional) y contenido (vectorial); bloquear envío al LLM si el prompt contiene nombre/RUT/dirección/contacto, registrar el evento y devolver error.
   - _Requirements: 11.1, 11.2, 11.3, 11.5_
 - [ ]* 10.1 Transversal — Property test de despersonalización
@@ -257,10 +257,10 @@ Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B:
 <!-- ============================================================= -->
 
 - [ ] 11. Módulo H — Infraestructura AWS CDK, despliegue e integración cloud real **[independiente]** (implementación/synth aislados; despliegue real requiere credenciales)
-- [ ] 11.1 Instalar y configurar el tooling AWS (AWS CLI + CDK en Python)
+- [x] 11.1 Instalar y configurar el tooling AWS (AWS CLI + CDK en Python)
   - Instalar AWS CLI v2 y AWS CDK; `cdk bootstrap`. **Prerrequisito del usuario:** configurar credenciales con `aws configure` usando la cuenta de la hackathon antes de desplegar o correr integración cloud.
   - _Requirements: 10.1_
-- [ ] 11.2 Escribir los stacks CDK (Python): `NetworkStack`, `DataStack`, `ComputeStack`, `AiIamStack`
+- [x] 11.2 Escribir los stacks CDK (Python): `NetworkStack`, `DataStack`, `ComputeStack`, `AiIamStack`
   - Network: VPC mínima + endpoints. Data: Aurora Serverless v2 (Postgres + pgvector), bucket S3 cifrado, Secrets Manager. Compute: Lambda (FastAPI+Mangum) + HTTP API en API Gateway + env vars (`USE_MOCKS=false`). AiIam: permisos mínimos para Bedrock/Transcribe/Textract/Rekognition.
   - _Requirements: 10.1, 11.4, 11.6_
 - [ ] 11.3 Desplegar (`cdk synth` → `cdk deploy`), sembrar E-1 en Aurora y verificar `/health`
