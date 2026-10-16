@@ -351,6 +351,44 @@ Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B:
   - Escribir el **guion de demo en el README** (demo mock de un solo comando + demo en vivo sobre AWS con `/health`) y asegurar que `docs/` existe **organizada por área** (`backend/`, `frontend/`, `database/`, `cloud/`), cada una con al menos un Markdown y un diagrama ```mermaid```.
   - _Requirements: 19.1, 19.2, 19.3, 19.4_
 
+<!-- ================================================================= -->
+<!-- MÓDULO I · Brechas del Reto E1 (trayectoria de aprendizaje)    -->
+<!-- Derivado de la FAQ de Fundación Integra. Depende de: A, B, F.  -->
+<!-- NOTA: varias subtareas requieren formalizar nuevos requisitos  -->
+<!--       en requirements.md antes de implementarse.               -->
+<!-- ================================================================= -->
+
+- [ ] 18. Módulo I — Brechas del Reto E1 según FAQ de Integra **[integración]**
+  - Cierra las brechas detectadas al contrastar la FAQ oficial de Fundación Integra con el spec: vistas de grupo-curso y jardín, rezago relativo a la sala, nivel general por promedio de núcleos, evolución temporal, privacidad de grabaciones y vínculo del post-it al `id_nino`.
+- [ ] 18.1 Rezago relativo a la composición de la sala (alerta automática a la educadora) **[integración]**
+  - Añadir a `RelationalRepo` + servicio una métrica de **rezago relativo**: comparar el nivel de cada niño/a contra la distribución de su propia sala (p. ej. mayoría en nivel N; marcar como rezagados a quienes están varios niveles por debajo del grupo-curso) y levantar **alerta automática** a la educadora, además del rezago individual por racha ya existente (Req 6.4).
+  - _Requisito: ampliar Req 7.3 / nuevo criterio de "rezago relativo a la sala" (requiere nuevo requirement)_
+- [ ] 18.2 Vista de grupo-curso: nivel predominante de la sala **[integración]**
+  - Exponer vía API y agregación en `RelationalRepo` el **nivel en que está la mayoría** de los niños/as de una sala, por núcleo, para la vista de la educadora.
+  - _Requisito: ampliar Req 7.3 (requiere nuevo requirement de vista grupo-curso)_
+- [ ] 18.3 Vista de jardín: comparar salas equivalentes y alertar a la directora **[integración]**
+  - Agregar al `DirectorReportService` la **comparación entre salas del mismo tramo** (p. ej. varias "Nivel Medio") para detectar un grupo-curso más rezagado que sus equivalentes y **levantar alerta a la directora**.
+  - _Requisito: ampliar Req 7 (requiere nuevo requirement de comparación entre salas equivalentes)_
+- [ ] 18.4 Nivel general del niño/a = promedio de los niveles por núcleo **[independiente]**
+  - En `domain`/`RubricaDecision`, derivar un **nivel general** del niño/a como el **promedio de los niveles de los distintos núcleos** (el nivel sigue siendo por núcleo; el general es derivado), exponiéndolo en la ficha.
+  - _Requisito: ampliar Req 21 (el nivel es por núcleo; agregar derivación de nivel general; requiere nuevo requirement)_
+- [ ] 18.5 Evolución individual en el tiempo (serie temporal del nivel por núcleo) **[integración]**
+  - Exponer vía API la **trayectoria temporal** del nivel por núcleo de un niño/a (histórico de recomendaciones/observaciones) para graficar su evolución en `FichaNino`.
+  - _Requisito: ampliar Req 6 / ficha del niño/a (requiere nuevo requirement de evolución temporal)_
+- [ ] 18.6 Privacidad de grabaciones: consentimiento + extraer-y-borrar **[independiente]**
+  - Ajustar el flujo de ingesta de audio/video para: (a) requerir una marca de **consentimiento de apoderado** antes de procesar, y (b) **eliminar la grabación original tras extraer** el texto/metadatos, conservando solo el texto despersonalizado (no retener el medio en el tiempo).
+  - **Conflicto a resolver con Req 1.2** (que exige almacenar el archivo original): decidir si el borrado aplica solo a audio/video de niños/as.
+  - _Requisito: nuevo requirement de retención/eliminación de medios + consentimiento (requiere nuevo requirement; revisar Req 1.2 y Req 11.4)_
+- [ ] 18.7 Vínculo del post-it (foto manuscrita) al `id_nino` por nombre **[integración]**
+  - Tras el OCR de un post-it individual, resolver el **nombre escrito → `id_nino`** dentro de la sala (desambiguar por apellido si hay nombres repetidos), manteniendo el resguardo de datos (el nombre no se persiste ni viaja al LLM; solo se usa para resolver el `id_nino`).
+  - _Requisito: ampliar Req 2.2 / Req 11 (requiere nuevo requirement de resolución nombre→id_nino con resguardo)_
+- [ ] 18.8 (Alcance futuro) Cargar "pasos a seguir" por nivel/núcleo
+  - Dejar el esquema de `rubrica_versiones.criterios` **listo para incorporar los "pasos a seguir"** (conductas a observar en próximas actividades) cuando Integra entregue la rúbrica completa. Marcado como **alcance futuro** según la FAQ.
+  - _Requisito: ampliar Req 21.1 (campo opcional de pasos a seguir; futuro)_
+- [ ]* 18.9 Conflicto de parametrización de niveles (8 fijos vs. ajustables / 9 del dataset)
+  - _Optional_ — documentar y resolver la inconsistencia detectada en la FAQ: Req 21.1 fija **8 niveles de progresión en orden fijo**, el dataset E-1 usa **9 niveles** (Req 3.1, `nivel_estimado` 1–9) y la FAQ pide que la **cantidad de niveles y núcleos sea ajustable** sin tocar código. Proponer un criterio único (p. ej. niveles como dato versionado en `rubrica_versiones.criterios`).
+  - _Requisito: aclarar Req 21.1 vs Req 3.1 (requiere decisión del equipo)_
+
 ## Notes
 
 - **Prerrequisito AWS:** antes de desplegar (Módulo H) o correr las pruebas de integración cloud, el usuario debe configurar credenciales con `aws configure` usando la cuenta de la hackathon. Sin credenciales, todo el resto se desarrolla y prueba en modo mock (`USE_MOCKS=true`).
