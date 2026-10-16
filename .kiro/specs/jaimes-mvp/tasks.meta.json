@@ -405,6 +405,16 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792077892033
+      },
+      {
+        "executionId": "91c56db7-f39c-4eb4-9cd4-7897233e8e6a",
+        "chatSessionId": "sess_32db85ae-4740-4c28-ab34-4aea85fa8710",
+        "timestamp": 1792108198245
+      },
+      {
+        "executionId": "91c56db7-f39c-4eb4-9cd4-7897233e8e6a",
+        "chatSessionId": "sess_32db85ae-4740-4c28-ab34-4aea85fa8710",
+        "timestamp": 1792108497068
       }
     ],
     "14.2 Gap-analysis de pantallas/flujos contra el **contrato REST existente**, identificando los endpoints que consume cada pantalla y las brechas detectadas": [
@@ -412,6 +422,16 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792077892116
+      },
+      {
+        "executionId": "a51cbfcb-a009-4d32-8d64-2b4ee753416f",
+        "chatSessionId": "sess_77247be7-2dc4-43dd-8aa6-2e79b895b944",
+        "timestamp": 1792108551578
+      },
+      {
+        "executionId": "a51cbfcb-a009-4d32-8d64-2b4ee753416f",
+        "chatSessionId": "sess_77247be7-2dc4-43dd-8aa6-2e79b895b944",
+        "timestamp": 1792108756762
       }
     ],
     "14.3 Producir tareas de **componentes concretos** mapeados a las pantallas existentes": [
@@ -419,6 +439,16 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792077892228
+      },
+      {
+        "executionId": "d08e94ee-8df2-43c5-84f1-ce3a97a58784",
+        "chatSessionId": "sess_1961c5da-1ec3-4b03-a9d7-924d6f5bbf96",
+        "timestamp": 1792108860606
+      },
+      {
+        "executionId": "d08e94ee-8df2-43c5-84f1-ce3a97a58784",
+        "chatSessionId": "sess_1961c5da-1ec3-4b03-a9d7-924d6f5bbf96",
+        "timestamp": 1792109074657
       }
     ],
     "14.4 Implementar aplicando **estilos y tokens de diseño sobre la estructura existente**, sin alterar la lógica de negocio": [
@@ -561,6 +591,42 @@
         "executionId": "ba572869-251d-4ec6-bffb-2fd5316cdb49",
         "chatSessionId": "sess_6ed39315-605f-40af-851d-73e4e955f2f6",
         "timestamp": 1792085659185
+      }
+    ],
+    "12. Frontend PWA â€” base y capa de servicios API (posterior) **[integraciÃ³n]** (consume la API REST que expone G)": [
+      {
+        "executionId": "7498db08-264e-437b-ab9a-23a76f56fb14",
+        "chatSessionId": "sess_854007e3-9054-40f9-9a4a-4918bd0632fc",
+        "timestamp": 1792104011161
+      },
+      {
+        "executionId": "7498db08-264e-437b-ab9a-23a76f56fb14",
+        "chatSessionId": "sess_854007e3-9054-40f9-9a4a-4918bd0632fc",
+        "timestamp": 1792105396258
+      }
+    ],
+    "13. Frontend â€” pantallas de educadora y dashboard de direcciÃ³n (estilo placeholder) **[integraciÃ³n]**": [
+      {
+        "executionId": "c328f2f5-6f4e-4199-8956-031495362b93",
+        "chatSessionId": "sess_bc96af9e-dc6b-4cc0-868b-04835c8f6f1a",
+        "timestamp": 1792105556119
+      },
+      {
+        "executionId": "c328f2f5-6f4e-4199-8956-031495362b93",
+        "chatSessionId": "sess_bc96af9e-dc6b-4cc0-868b-04835c8f6f1a",
+        "timestamp": 1792106082963
+      }
+    ],
+    "14.4 Implementar aplicando **estilos y tokens de diseÃ±o sobre la estructura existente**, sin alterar la lÃ³gica de negocio": [
+      {
+        "executionId": "64bdf92b-7b54-43ec-b10d-82fec046f09a",
+        "chatSessionId": "sess_70bdc6ab-5fbd-4ab4-9012-d3b64c4f6a1e",
+        "timestamp": 1792109193031
+      },
+      {
+        "executionId": "64bdf92b-7b54-43ec-b10d-82fec046f09a",
+        "chatSessionId": "sess_70bdc6ab-5fbd-4ab4-9012-d3b64c4f6a1e",
+        "timestamp": 1792109488014 
       }
     ],
     "9. Módulo G — Reporte de dirección, API REST y contenedor DI **[integración]** (cablea B/D/E/F vía DI; integración real requiere esos módulos funcionales)": [

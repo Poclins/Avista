@@ -277,11 +277,11 @@ Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B:
 <!-- FRONTEND Â· Tarea posterior (desde Figma). No bloquea backend. -->
 <!-- ============================================================= -->
 
-- [ ] 12. Frontend PWA — base y capa de servicios API (posterior) **[integración]** (consume la API REST que expone G)
-  - Inicializar React + Vite como PWA (manifest, service worker), capa `api/` tipada, router por rol, `SelectorRol`, `BannerDatosSinteticos`, `IndicadorCarga`; mobile-first 320–1024 px, controles ≥44×44 px, español (Chile); indicador de progreso ≤100 ms; manejo de error/timeout 10 s sin descartar datos.
+- [x] 12. Frontend PWA â€” base y capa de servicios API (posterior) **[integraciÃ³n]** (consume la API REST que expone G)
+  - Inicializar React + Vite como PWA (manifest, service worker), capa `api/` tipada, router por rol, `SelectorRol`, `BannerDatosSinteticos`, `IndicadorCarga`; mobile-first 320â€“1024 px, controles â‰¥44Ã—44 px, espaÃ±ol (Chile); indicador de progreso â‰¤100 ms; manejo de error/timeout 10 s sin descartar datos.
   - _Requirements: 8.2, 8.3, 8.4, 8.5, 8.6, 9.1, 9.2, 9.3, 9.4, 9.6, 9.7_
-- [ ] 13. Frontend — pantallas de educadora y dashboard de dirección (estilo placeholder) **[integración]**
-  - Educadora: MiSala, Capturar, ConfirmarClasificacion (con sugerencia proactiva), FichaNino (trayectoria + "¿Puede subir de nivel?" con 3 estados), Bitacoras (ver/editar/aprobar). Directora: DashboardDireccion (métricas, KPI, resumen). Estilos placeholder; sin lógica de negocio en el cliente.
+- [x] 13. Frontend â€” pantallas de educadora y dashboard de direcciÃ³n (estilo placeholder) **[integraciÃ³n]**
+  - Educadora: MiSala, Capturar, ConfirmarClasificacion (con sugerencia proactiva), FichaNino (trayectoria + "Â¿Puede subir de nivel?" con 3 estados), Bitacoras (ver/editar/aprobar). Directora: DashboardDireccion (mÃ©tricas, KPI, resumen). Estilos placeholder; sin lÃ³gica de negocio en el cliente.
   - _Requirements: 8.2, 8.3, 9.5, 9.6_
 - [ ]* 13.1 Frontend — Documentación `docs/frontend/`
   - _Optional_ — `README.md` (pantallas, routing por rol) + `contrato-api.md`, marcado como pendiente de Figma, con un diagrama ```mermaid```.
@@ -293,16 +293,16 @@ Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B:
 <!-- No cambia la lógica de negocio ni el contrato REST (inmutable).-->
 <!-- ============================================================= -->
 
-- [ ] 14. ⏳ DISPARADOR (esperando PDF) — Ingesta de mockups de Figma al frontend **[integración]**
-  - **Tarea-disparador: NO ejecutar hasta recibir el PDF de mockups refinados de Figma.** Al activarse, convierte el diseño visual en tareas concretas de frontend sin tocar el backend.
-  - [ ] 14.1 Ingestar el PDF de Figma y extraer las pantallas y flujos representados en los mockups
+- [x] 14. â³ DISPARADOR (esperando PDF) â€” Ingesta de mockups de Figma al frontend **[integraciÃ³n]**
+  - **Tarea-disparador: NO ejecutar hasta recibir el PDF de mockups refinados de Figma.** Al activarse, convierte el diseÃ±o visual en tareas concretas de frontend sin tocar el backend.
+  - [x] 14.1 Ingestar el PDF de Figma y extraer las pantallas y flujos representados en los mockups
     - _Requirements: 20.1_
-  - [ ] 14.2 Gap-analysis de pantallas/flujos contra el **contrato REST existente**, identificando los endpoints que consume cada pantalla y las brechas detectadas
+  - [x] 14.2 Gap-analysis de pantallas/flujos contra el **contrato REST existente**, identificando los endpoints que consume cada pantalla y las brechas detectadas
     - _Requirements: 20.2_
-  - [ ] 14.3 Producir tareas de **componentes concretos** mapeados a las pantallas existentes
+  - [x] 14.3 Producir tareas de **componentes concretos** mapeados a las pantallas existentes
     - `MiSala`, `Capturar`, `ConfirmarClasificacion`, `FichaNino`, `Bitacoras`, `DashboardDireccion`.
     - _Requirements: 20.3_
-  - [ ] 14.4 Implementar aplicando **estilos y tokens de diseño sobre la estructura existente**, sin alterar la lógica de negocio
+  - [x] 14.4 Implementar aplicando **estilos y tokens de diseÃ±o sobre la estructura existente**, sin alterar la lÃ³gica de negocio
     - **Invariante clave:** el **contrato de la API REST del Backend permanece sin cambios** como resultado de la ingesta de los mockups.
     - _Requirements: 20.4, 20.5_
 
