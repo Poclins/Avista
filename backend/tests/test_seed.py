@@ -43,6 +43,7 @@ from app.repositories.seed.seed import (
     conteos_esperados,
     seed,
     seed_oficial,
+    seed_rubrica_oficial,
     validar_conteos,
 )
 from app.repositories.seed.dataset_loader import DatasetE1
@@ -202,7 +203,7 @@ _FILAS: dict[str, list[dict[str, str]]] = {
         {
             "id_educadora": "E-001",
             "id_jardin": "J-001",
-            "rol": "educadora",
+            "rol": "educadora_parvulos",
             "anios_experiencia": "4",
         },
     ],
@@ -298,13 +299,71 @@ def zip_oficial(tmp_path: Path) -> Path:
 def test_seed_oficial_carga_desde_zip_y_valida_conteos(
     repo, session_factory, zip_oficial
 ) -> None:
-    """``seed_oficial`` carga las 7 tablas desde el zip y valida conteos OK."""
+    """``seed_oficial`` carga las 7 tablas desde el zip y valida conteos OK.
+
+    Además siembra la versión inicial de la rúbrica oficial (su fuente es el PDF
+    transcrito, no el zip): el resumen incluye ``rubrica_versiones`` junto a las
+    7 tablas del dataset oficial (tarea 7.3).
+    """
     cargados = seed_oficial(repo, zip_oficial)
-    assert cargados == _CONTEOS_OK
+    assert {t: cargados[t] for t in TABLAS} == _CONTEOS_OK
+    assert cargados["rubrica_versiones"] >= 1
     # Las filas quedaron realmente en la base relacional.
     assert _contar(session_factory, Jardin) == 1
     assert _contar(session_factory, Observacion) == 2
     assert _contar(session_factory, ObservacionManifestacion) == 1
+    assert _contar(session_factory, RubricaVersion) >= 1
+
+
+def test_seed_oficial_carga_roles_reales_del_dataset(
+    repo, session_factory, tmp_path
+) -> None:
+    """Los valores de ``rol`` del Dataset E-1 oficial se cargan sin error.
+
+    La columna ``rol`` del ``educadoras.csv`` oficial trae exactamente dos
+    valores de aula —``educadora_parvulos`` y ``tecnico_parvulos``— más
+    ``directora``. El enum ``Rol`` del dominio/esquema debe aceptarlos tal cual
+    (la fuente de verdad es el dataset). Este test construye un zip oficial de
+    juguete con esos tres valores y verifica que persisten intactos.
+    """
+    filas = {tabla: [dict(f) for f in _FILAS[tabla]] for tabla in TABLAS}
+    filas["jardines"][0]["numero_educadoras"] = "3"
+    filas["educadoras"] = [
+        {"id_educadora": "E-001", "id_jardin": "J-001",
+         "rol": "educadora_parvulos", "anios_experiencia": "4"},
+        {"id_educadora": "E-002", "id_jardin": "J-001",
+         "rol": "tecnico_parvulos", "anios_experiencia": "9"},
+        {"id_educadora": "E-003", "id_jardin": "J-001",
+         "rol": "directora", "anios_experiencia": "15"},
+    ]
+    conteos = {t: len(filas[t]) for t in TABLAS}
+
+    ruta = tmp_path / "dataset_e1_publico.zip"
+    with zipfile.ZipFile(ruta, "w") as zf:
+        for tabla in TABLAS:
+            buffer = io.StringIO(newline="")
+            writer = csv.DictWriter(buffer, fieldnames=list(filas[tabla][0]))
+            writer.writeheader()
+            writer.writerows(filas[tabla])
+            zf.writestr(f"{CARPETA_DATOS}/{tabla}.csv", buffer.getvalue())
+        zf.writestr(
+            f"{CARPETA_DATOS}/{NOMBRE_CONSOLIDADO}",
+            json.dumps({"conteos": conteos}, ensure_ascii=False),
+        )
+
+    cargados = seed_oficial(repo, ruta)
+    assert cargados["educadoras"] == 3
+
+    with session_factory() as session:
+        roles = {
+            e.id_educadora: (e.rol.value if hasattr(e.rol, "value") else str(e.rol))
+            for e in session.execute(select(Educadora)).scalars().all()
+        }
+    assert roles == {
+        "E-001": "educadora_parvulos",
+        "E-002": "tecnico_parvulos",
+        "E-003": "directora",
+    }
 
 
 def test_seed_oficial_mapea_celdas_vacias_como_ausencia(
@@ -322,10 +381,12 @@ def test_seed_oficial_mapea_celdas_vacias_como_ausencia(
 
 def test_seed_oficial_es_idempotente(repo, session_factory, zip_oficial) -> None:
     """Cargar el dataset oficial dos veces no duplica filas (merge por PK)."""
-    seed_oficial(repo, zip_oficial)
+    primera = seed_oficial(repo, zip_oficial)
     seed_oficial(repo, zip_oficial)
     assert _contar(session_factory, Observacion) == 2
     assert _contar(session_factory, Nino) == 1
+    # La rúbrica tampoco se duplica entre ejecuciones (merge por version_rubrica).
+    assert _contar(session_factory, RubricaVersion) == primera["rubrica_versiones"]
 
 
 def test_seed_oficial_rechaza_si_un_conteo_no_coincide(
@@ -361,14 +422,223 @@ def test_validar_conteos_detecta_tabla_faltante() -> None:
 
 
 def test_conteos_esperados_desde_consolidado() -> None:
-    """``conteos_esperados`` extrae la sección 'conteos' de consolidado.json."""
+    """Compat. hacia atrás: usa la sección 'conteos' plana si está presente."""
     dataset = DatasetE1(csvs={}, consolidado={"conteos": dict(_CONTEOS_OK)})
     esperados = conteos_esperados(dataset)
     assert esperados == _CONTEOS_OK
 
 
-def test_conteos_esperados_falla_sin_seccion_de_conteos() -> None:
-    """Si falta la sección de conteos no se puede validar: error en español."""
-    dataset = DatasetE1(csvs={}, consolidado={})
-    with pytest.raises(SeedValidationError, match="conteos de referencia"):
+def test_conteos_esperados_consolidado_oficial_sin_conteos() -> None:
+    """Dataset E-1 oficial (consolidado anidado, SIN 'conteos') valida OK.
+
+    El ``consolidado.json`` oficial no trae un bloque plano ``conteos`` (sus
+    claves son ``fecha_referencia``, ``jardines``, ``naturaleza``,
+    ``ruta_niveles``, ``schema_version``). ``conteos_esperados`` debe derivar
+    los conteos del propio CSV y, si las listas anidadas del consolidado
+    cuadran, no debe lanzar.
+    """
+    csvs = {tabla: list(_FILAS[tabla]) for tabla in TABLAS}
+    consolidado_oficial = {
+        "fecha_referencia": "2026-10-13",
+        "schema_version": "1.0.0",
+        "naturaleza": "sintetico",
+        # Listas anidadas coherentes con los CSV (1 jardín, 1 nivel de ruta).
+        "jardines": [{"id_jardin": "J-001"}],
+        "ruta_niveles": [{"nivel": 1}],
+    }
+    dataset = DatasetE1(csvs=csvs, consolidado=consolidado_oficial)
+    esperados = conteos_esperados(dataset)
+    # Los conteos esperados se derivan del CSV (consistencia interna).
+    assert esperados == {tabla: len(_FILAS[tabla]) for tabla in TABLAS}
+
+
+def test_conteos_esperados_rechaza_consolidado_anidado_incoherente() -> None:
+    """Si las listas anidadas del consolidado no cuadran con los CSV, se rechaza."""
+    csvs = {tabla: list(_FILAS[tabla]) for tabla in TABLAS}
+    # El CSV trae 1 jardín, pero el consolidado dice 3: incoherencia interna.
+    consolidado_incoherente = {
+        "fecha_referencia": "2026-10-13",
+        "jardines": [{"id_jardin": "J-001"}, {"id_jardin": "J-002"}, {"id": "J-003"}],
+        "ruta_niveles": [{"nivel": 1}],
+    }
+    dataset = DatasetE1(csvs=csvs, consolidado=consolidado_incoherente)
+    with pytest.raises(SeedValidationError) as exc:
         conteos_esperados(dataset)
+    mensaje = str(exc.value)
+    assert "jardines" in mensaje
+    assert "incoherente" in mensaje.lower()
+
+
+def test_seed_oficial_oficial_sin_conteos_valida_y_detecta_mismatch(
+    repo, session_factory, tmp_path
+) -> None:
+    """Un zip con consolidado estilo oficial (sin 'conteos') seedea OK.
+
+    Y si se simula un descarte de fila (consolidado anidado que no cuadra con el
+    CSV) el seed debe rechazar con ``SeedValidationError`` en español.
+    """
+    # 1) Zip estilo oficial: consolidado anidado coherente, SIN clave 'conteos'.
+    ruta_ok = tmp_path / "dataset_oficial_ok.zip"
+    with zipfile.ZipFile(ruta_ok, "w") as zf:
+        for tabla in TABLAS:
+            buffer = io.StringIO(newline="")
+            writer = csv.DictWriter(buffer, fieldnames=_CABECERAS[tabla])
+            writer.writeheader()
+            writer.writerows(_FILAS[tabla])
+            zf.writestr(f"{CARPETA_DATOS}/{tabla}.csv", buffer.getvalue())
+        consolidado = {
+            "fecha_referencia": "2026-10-13",
+            "schema_version": "1.0.0",
+            "jardines": [{"id_jardin": "J-001"}],
+            "ruta_niveles": [{"nivel": 1}],
+        }
+        zf.writestr(
+            f"{CARPETA_DATOS}/{NOMBRE_CONSOLIDADO}",
+            json.dumps(consolidado, ensure_ascii=False),
+        )
+    cargados = seed_oficial(repo, ruta_ok)
+    assert {t: cargados[t] for t in TABLAS} == _CONTEOS_OK
+    assert _contar(session_factory, Observacion) == 2
+
+    # 2) Zip incoherente: el consolidado dice 9 ruta_niveles pero el CSV trae 1.
+    ruta_mal = tmp_path / "dataset_oficial_mal.zip"
+    with zipfile.ZipFile(ruta_mal, "w") as zf:
+        for tabla in TABLAS:
+            buffer = io.StringIO(newline="")
+            writer = csv.DictWriter(buffer, fieldnames=_CABECERAS[tabla])
+            writer.writeheader()
+            writer.writerows(_FILAS[tabla])
+            zf.writestr(f"{CARPETA_DATOS}/{tabla}.csv", buffer.getvalue())
+        consolidado_mal = {
+            "fecha_referencia": "2026-10-13",
+            "jardines": [{"id_jardin": "J-001"}],
+            "ruta_niveles": [{"nivel": n} for n in range(1, 10)],  # 9 ≠ 1 CSV
+        }
+        zf.writestr(
+            f"{CARPETA_DATOS}/{NOMBRE_CONSOLIDADO}",
+            json.dumps(consolidado_mal, ensure_ascii=False),
+        )
+    with pytest.raises(SeedValidationError) as exc:
+        seed_oficial(repo, ruta_mal)
+    assert "ruta_niveles" in str(exc.value)
+
+
+# ===========================================================================
+# Tarea 7.3 — Siembra de la versión inicial de la rúbrica oficial en
+# ``rubrica_versiones`` vía la interfaz ``RelationalRepo`` (Req 6.6, 21.1, 21.5)
+# ===========================================================================
+
+# Los 3 tramos conservados por compatibilidad y los 9 niveles reales de E-1.
+_TRAMOS = ("sala_cuna", "nivel_medio", "transicion")
+_NIVELES_ESPERADOS = [
+    (1, "Atención y regulación inicial"),
+    (2, "Interacción y control emergente"),
+    (3, "Alcance y exploración corporal"),
+    (4, "Sedestación y comunicación intencional"),
+    (5, "Movilidad y propósito"),
+    (6, "Autonomía funcional inicial"),
+    (7, "Representación y combinación inicial"),
+    (8, "Combinación y participación"),
+    (9, "Secuencias y autonomía creciente"),
+]
+# Rangos etarios (en meses) por tramo, según el diseño.
+_RANGOS_ETARIOS = {
+    "sala_cuna": [0, 24],
+    "nivel_medio": [24, 48],
+    "transicion": [48, 72],
+}
+
+
+def _rubrica_vigente_criterios(repo) -> dict:
+    """Devuelve los ``criterios`` de la rúbrica vigente sembrada vía el repo."""
+    vigente = repo.rubrica_vigente()
+    assert vigente is not None, "No se sembró ninguna versión de rúbrica."
+    assert isinstance(vigente.criterios, dict)
+    return vigente.criterios
+
+
+def test_seed_rubrica_oficial_persiste_version_via_repo(repo, session_factory) -> None:
+    """``seed_rubrica_oficial`` siembra ≥1 versión y queda consultable por el repo."""
+    n = seed_rubrica_oficial(repo)
+    assert n >= 1
+    assert _contar(session_factory, RubricaVersion) == n
+    # Se accede a la rúbrica solo vía la interfaz del repo (no vía SDK).
+    vigente = repo.rubrica_vigente()
+    assert vigente is not None
+    assert vigente.version_rubrica
+
+
+def test_rubrica_contiene_nucleo_identidad_en_los_3_tramos(repo) -> None:
+    """La versión sembrada trae el núcleo Identidad y Autonomía en los 3 tramos."""
+    seed_rubrica_oficial(repo)
+    criterios = _rubrica_vigente_criterios(repo)
+    tramos = criterios["tramos"]
+    for tramo in _TRAMOS:
+        assert tramo in tramos, f"Falta el tramo '{tramo}'."
+        assert tramos[tramo]["rango_etario_meses"] == _RANGOS_ETARIOS[tramo]
+        nucleos = tramos[tramo]["nucleos"]
+        assert "identidad_y_autonomia" in nucleos, (
+            f"Falta el núcleo identidad_y_autonomia en el tramo '{tramo}'."
+        )
+
+
+def test_cada_tramo_tiene_9_niveles_e1_en_orden_correcto(repo) -> None:
+    """Cada tramo×núcleo trae exactamente los 9 niveles E-1 en orden."""
+    seed_rubrica_oficial(repo)
+    criterios = _rubrica_vigente_criterios(repo)
+    for tramo in _TRAMOS:
+        niveles = criterios["tramos"][tramo]["nucleos"]["identidad_y_autonomia"][
+            "niveles"
+        ]
+        assert len(niveles) == 9, f"El tramo '{tramo}' no tiene 9 niveles E-1."
+        pares = [(int(nv["n"]), nv["nombre"]) for nv in niveles]
+        assert pares == _NIVELES_ESPERADOS, (
+            f"Los niveles del tramo '{tramo}' no están en el orden esperado."
+        )
+
+
+def test_cada_nivel_tiene_descriptor_y_conductas_observables(repo) -> None:
+    """Cada nivel trae un descriptor no vacío y ≥1 conducta observable."""
+    seed_rubrica_oficial(repo)
+    criterios = _rubrica_vigente_criterios(repo)
+    for tramo in _TRAMOS:
+        niveles = criterios["tramos"][tramo]["nucleos"]["identidad_y_autonomia"][
+            "niveles"
+        ]
+        for nivel in niveles:
+            assert isinstance(nivel.get("descriptor"), str)
+            assert nivel["descriptor"].strip(), (
+                f"Descriptor vacío en {tramo} nivel {nivel['n']}."
+            )
+            conductas = nivel.get("conductas_observables")
+            assert isinstance(conductas, list) and conductas, (
+                f"Sin conductas observables en {tramo} nivel {nivel['n']}."
+            )
+            assert all(isinstance(c, str) and c.strip() for c in conductas)
+
+
+def test_rubrica_define_umbrales_de_decision(repo) -> None:
+    """La rúbrica trae los umbrales de decisión versionados (Req 21.5)."""
+    seed_rubrica_oficial(repo)
+    criterios = _rubrica_vigente_criterios(repo)
+    umbrales = criterios["umbrales"]
+    assert "cobertura_avanzar" in umbrales
+    assert "nucleos_requeridos" in umbrales
+    assert "racha_retroceso" in umbrales
+    assert "identidad_y_autonomia" in umbrales["nucleos_requeridos"]
+
+
+def test_seed_rubrica_oficial_es_idempotente(repo, session_factory) -> None:
+    """Re-ejecutar la siembra no crea versiones duplicadas (merge por PK)."""
+    primera = seed_rubrica_oficial(repo)
+    segunda = seed_rubrica_oficial(repo)
+    assert primera == segunda
+    assert _contar(session_factory, RubricaVersion) == primera
+
+
+def test_seed_reducido_tambien_siembra_la_rubrica(repo, session_factory) -> None:
+    """El camino de seed reducido deja la rúbrica consultable vía el repo."""
+    resumen = seed(repo)
+    assert resumen["rubrica_versiones"] >= 1
+    assert _contar(session_factory, RubricaVersion) == resumen["rubrica_versiones"]
+    assert repo.rubrica_vigente() is not None

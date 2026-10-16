@@ -311,3 +311,102 @@ El sistema se apoya en el **dataset oficial E-1** (sintético y seudonimizado, d
 4. WHEN se genera la recomendación o la bitácora THEN el `LlmProvider` SHALL recibir como contexto las conductas observables aplicables y las observaciones previas del niño/a (evidencia) y SHALL argumentar citándolas, sin alterar la decisión determinista calculada por `RubricaDecision`.
 5. THE script de seed SHALL cargar al menos el núcleo "Identidad y Autonomía" para los tres tramos de sala (Sala Cuna, Nivel Medio, Transición) como versión inicial de la rúbrica oficial en `rubrica_versiones.criterios`, y los núcleos adicionales SHALL agregarse como nuevas versiones sin cambios de código.
 6. WHERE una conducta observable del nivel evaluado no tenga evidencia asociada en las observaciones del niño/a THEN `RubricaDecision` SHALL contarla como pendiente, sin inferir su cumplimiento.
+
+### Requirement 22: Rezago relativo a la composición de la sala
+
+**User Story:** Como educadora, quiero que el sistema me avise cuando un niño/a queda rezagado respecto del nivel de la mayoría de su propia sala, para detectar a tiempo a quienes necesitan apoyo adicional dentro de su grupo-curso.
+
+Este requisito amplía el Requirement 7.3 agregando un criterio de "rezago relativo a la sala", complementario al rezago individual por racha ya definido en el Requirement 6.4.
+
+#### Acceptance Criteria
+1. WHEN se evalúa el estado de una sala (identificada por `id_jardin` y `sala_grupo`) para un núcleo dado THEN el Sistema jAImes SHALL calcular, mediante `RelationalRepo`, el nivel predominante de la sala como el nivel de progresión en que se encuentra la mayoría de los niños/as de esa sala en ese núcleo.
+2. WHEN se dispone del nivel predominante de la sala THEN el Sistema jAImes SHALL marcar como rezagado relativo a cada niño/a cuyo nivel de progresión en ese núcleo esté al menos un umbral configurable de niveles por debajo del nivel predominante de la sala, siendo dicho umbral por defecto de 2 niveles.
+3. WHEN uno o más niños/as de una sala quedan marcados como rezagados relativos THEN el Sistema jAImes SHALL levantar una alerta automática dirigida a la educadora de esa sala que identifique a los niños/as rezagados por su `id_nino`, el núcleo afectado, su nivel y el nivel predominante de la sala.
+4. THE criterio de rezago relativo a la sala SHALL ser independiente y adicional al rezago individual por racha del Requirement 6.4, de modo que un niño/a pueda señalarse por cualquiera de los dos criterios o por ambos.
+5. IF una sala no tiene suficientes niños/as con nivel asignado en el núcleo para determinar un nivel predominante THEN el Sistema jAImes SHALL abstenerse de calcular el rezago relativo para esa sala y núcleo, sin producir error.
+
+### Requirement 23: Vista de grupo-curso (nivel predominante de la sala por núcleo)
+
+**User Story:** Como educadora, quiero ver en qué nivel está la mayoría de los niños/as de mi sala en cada núcleo, para tener una visión de grupo-curso además de la ficha individual.
+
+Este requisito amplía el Requirement 7.3 agregando una vista agregada de grupo-curso para la educadora.
+
+#### Acceptance Criteria
+1. WHEN la educadora solicita la vista de grupo-curso de una sala (identificada por `id_jardin` y `sala_grupo`) THEN el Sistema jAImes SHALL exponer, mediante la API REST, el nivel predominante de la sala por núcleo, calculado por agregación en `RelationalRepo`.
+2. WHEN se calcula el nivel predominante de un núcleo en una sala THEN el Sistema jAImes SHALL determinarlo como el nivel de progresión en que se encuentra la mayor cantidad de niños/as de la sala en ese núcleo, incluyendo además la distribución de niños/as por nivel de ese núcleo.
+3. WHEN una sala no tiene niños/as con nivel asignado en un núcleo THEN el Sistema jAImes SHALL devolver la vista con ese núcleo marcado como sin datos, sin producir error.
+4. THE vista de grupo-curso SHALL calcularse exclusivamente mediante `RelationalRepo` y SHALL NOT ser inferida por el `LlmProvider`.
+
+### Requirement 24: Vista de jardín (comparación entre salas equivalentes)
+
+**User Story:** Como directora de jardín, quiero comparar salas del mismo tramo entre sí, para detectar un grupo-curso que esté más rezagado que sus equivalentes y actuar sobre él.
+
+Este requisito amplía el Requirement 7 agregando al `DirectorReportService` la comparación entre salas del mismo tramo de sala.
+
+#### Acceptance Criteria
+1. WHEN se genera el reporte de dirección de un `id_jardin` para un período THEN el `DirectorReportService` SHALL agrupar las salas del jardín por tramo de sala (Sala Cuna, Nivel Medio, Transición) y SHALL comparar entre sí las salas que pertenecen al mismo tramo.
+2. WHEN existen dos o más salas del mismo tramo THEN el `DirectorReportService` SHALL calcular, para cada sala, una métrica de avance agregada comparable (por ejemplo, el nivel de progresión promedio o predominante del grupo-curso) mediante `RelationalRepo`.
+3. WHEN una sala presenta una métrica de avance al menos un umbral configurable por debajo de la mediana de las salas de su mismo tramo THEN el `DirectorReportService` SHALL levantar una alerta dirigida a la directora que identifique la sala rezagada, su tramo y la diferencia respecto de sus equivalentes.
+4. IF un tramo tiene una sola sala en el jardín THEN el `DirectorReportService` SHALL omitir la comparación entre salas equivalentes para ese tramo, sin producir error ni alerta.
+5. THE comparación entre salas equivalentes SHALL calcularse mediante `RelationalRepo` y SHALL NOT ser inferida por el `LlmProvider`.
+
+### Requirement 25: Nivel general del niño/a derivado del promedio por núcleo
+
+**User Story:** Como educadora, quiero ver un nivel general del niño/a además de su nivel por núcleo, para tener una lectura rápida de su desarrollo global sin perder el detalle por núcleo.
+
+Este requisito amplía el Requirement 21: el nivel de progresión sigue siendo por núcleo; el nivel general es un valor derivado.
+
+#### Acceptance Criteria
+1. THE nivel de progresión de un niño/a SHALL seguir determinándose por núcleo conforme al Requirement 21, y el nivel general SHALL ser un valor derivado, sin reemplazar a los niveles por núcleo.
+2. WHEN un niño/a tiene nivel de progresión asignado en uno o más núcleos THEN `RubricaDecision` SHALL derivar su nivel general como el promedio de los niveles de progresión de los distintos núcleos con nivel asignado.
+3. WHEN se expone la ficha del niño/a THEN el Sistema jAImes SHALL incluir tanto el nivel de progresión por núcleo como el nivel general derivado.
+4. IF un niño/a no tiene nivel de progresión asignado en ningún núcleo THEN el Sistema jAImes SHALL indicar que el nivel general no está disponible, sin producir error.
+
+### Requirement 26: Evolución individual en el tiempo (serie temporal por núcleo)
+
+**User Story:** Como educadora, quiero ver cómo ha evolucionado en el tiempo el nivel de un niño/a en cada núcleo, para graficar su trayectoria en la ficha del niño/a.
+
+Este requisito amplía el Requirement 6 y la ficha del niño/a agregando la trayectoria temporal del nivel por núcleo.
+
+#### Acceptance Criteria
+1. WHEN se solicita la trayectoria temporal de un niño/a (identificado por `id_nino`) THEN el Sistema jAImes SHALL exponer, mediante la API REST, la serie temporal del nivel de progresión por núcleo a partir del histórico de recomendaciones y observaciones del niño/a mediante `RelationalRepo`.
+2. WHEN se construye la serie temporal de un núcleo THEN el Sistema jAImes SHALL devolver, en orden cronológico ascendente, los puntos con su fecha y el nivel de progresión del niño/a en ese núcleo en esa fecha.
+3. WHEN un niño/a no tiene histórico suficiente para un núcleo THEN el Sistema jAImes SHALL devolver la serie temporal vacía para ese núcleo, sin producir error.
+4. THE serie temporal SHALL calcularse mediante `RelationalRepo` y SHALL NOT ser inferida por el `LlmProvider`.
+
+### Requirement 27: Consentimiento y retención de grabaciones (extraer y borrar)
+
+**User Story:** Como institución, necesito que las grabaciones de audio y video de los niños/as solo se procesen con consentimiento del apoderado y que no se retengan en el tiempo, para proteger la privacidad conservando únicamente el texto despersonalizado.
+
+Este requisito es nuevo y revisa el Requirement 1.2 y el Requirement 11.4. Resuelve el conflicto con el Requirement 1.2 (que exige almacenar el archivo original) acotando el borrado tras la extracción exclusivamente a los medios de audio y video de niños/as.
+
+#### Acceptance Criteria
+1. IF una carga de audio o video no incluye una marca de consentimiento de apoderado válida THEN THE Sistema jAImes SHALL rechazar el procesamiento de ese medio con un mensaje de error en español, SHALL NOT transcribirlo y SHALL NOT retener el archivo original.
+2. WHEN se procesa un audio o video de un niño/a con consentimiento de apoderado válido THEN el Sistema jAImes SHALL extraer el texto y los metadatos conforme al Requirement 2 y, una vez completada la extracción, SHALL eliminar la grabación original del almacenamiento, conservando únicamente el texto despersonalizado y los metadatos asociados a la observación.
+3. THE borrado del medio original tras la extracción SHALL aplicarse exclusivamente a los medios de audio y video de niños/as; los demás medios (por ejemplo, fotos de notas manuscritas) SHALL seguir el almacenamiento definido en el Requirement 1.2 y el Requirement 11.4.
+4. WHEN se registra el consentimiento de apoderado de un medio THEN el Sistema jAImes SHALL persistir dicha marca de consentimiento asociada a la observación mediante `RelationalRepo`, sin almacenar datos directamente identificatorios del apoderado conforme al Requirement 11.
+5. IF la extracción de texto de un audio o video falla tras agotar los reintentos del Requirement 2.7 THEN THE Sistema jAImes SHALL conservar temporalmente la grabación original marcada como pendiente de transcripción y SHALL eliminarla una vez que la extracción se complete o la observación se descarte, sin retenerla indefinidamente.
+
+### Requirement 28: Resolución del post-it manuscrito al id_nino por nombre
+
+**User Story:** Como educadora, quiero que al fotografiar un post-it manuscrito con el nombre de un niño/a, el sistema lo asocie automáticamente al niño/a correcto de mi sala, sin que su nombre quede guardado ni se envíe al LLM.
+
+Este requisito amplía el Requirement 2.2 y el Requirement 11 agregando la resolución de nombre escrito a `id_nino` con resguardo de datos.
+
+#### Acceptance Criteria
+1. WHEN el OCR de un post-it individual (conforme al Requirement 2.2) extrae un nombre escrito THEN el Sistema jAImes SHALL resolver ese nombre a un `id_nino` existente dentro de la sala del contexto activo (`id_jardin` y `sala_grupo`).
+2. IF dentro de la sala existen varios niños/as con el mismo nombre THEN THE Sistema jAImes SHALL desambiguar usando el apellido escrito y, si aún persiste la ambigüedad, SHALL solicitar a la educadora que seleccione el `id_nino` correcto, sin asociar la observación de forma automática.
+3. IF el nombre escrito no corresponde a ningún niño/a de la sala THEN THE Sistema jAImes SHALL marcar la observación como pendiente de vinculación manual con un mensaje en español, sin descartar el texto extraído.
+4. THE nombre escrito usado para la resolución SHALL emplearse únicamente para resolver el `id_nino` y SHALL NOT persistirse en la base de datos ni incluirse en ningún prompt enviado al `LlmProvider`, conforme al Requirement 11.1 y el Requirement 11.2.
+5. WHEN se resuelve el `id_nino` a partir del post-it THEN el Sistema jAImes SHALL asociar la observación resultante a ese `id_nino` seudónimo, descartando el nombre escrito tras la resolución.
+
+### Requirement 29: Pasos a seguir por nivel y núcleo (alcance futuro)
+
+**User Story:** Como equipo, quiero que el esquema de la rúbrica esté preparado para incorporar los "pasos a seguir" (conductas a observar en próximas actividades) cuando Fundación Integra entregue la rúbrica completa, para no requerir cambios de código al incorporarlos.
+
+Este requisito amplía el Requirement 21.1 agregando un campo opcional de "pasos a seguir". Está marcado como alcance futuro conforme a la FAQ de Fundación Integra.
+
+#### Acceptance Criteria
+1. THE estructura versionada `rubrica_versiones.criterios` SHALL admitir, por cada nivel de progresión de un tramo × núcleo, un campo opcional de "pasos a seguir" (conductas a observar en próximas actividades), sin requerir cambios de código para incorporarlo.
+2. WHERE una versión de la rúbrica no incluya los "pasos a seguir" de un nivel THEN el Sistema jAImes SHALL operar normalmente, tratando dicho campo como ausente, sin producir error.
+3. WHEN una versión de la rúbrica incluya "pasos a seguir" para un nivel THEN el Sistema jAImes SHALL poder exponerlos como parte de los criterios de ese nivel, sin alterar la decisión determinista de `RubricaDecision` definida en el Requirement 6.2.

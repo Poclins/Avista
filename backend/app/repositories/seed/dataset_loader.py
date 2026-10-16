@@ -42,6 +42,8 @@ from datetime import date
 from pathlib import Path
 from typing import Any
 
+from app.core.nombres_sinteticos import nombres_para_nino
+
 from app.repositories.schema import (
     Base,
     Educadora,
@@ -315,6 +317,12 @@ class DatasetLoader:
         """Convierte los valores de texto de una fila a los tipos del esquema."""
         datos: dict[str, Any] = dict(fila)
 
+        if tabla == "ninos" and datos.get("id_nino"):
+            nombre, paterno, materno = nombres_para_nino(datos["id_nino"])
+            datos.setdefault("nombre", nombre)
+            datos.setdefault("apellido_paterno", paterno)
+            datos.setdefault("apellido_materno", materno)
+
         for campo in _INT_FIELDS.get(tabla, ()):
             if campo in datos:
                 datos[campo] = self._a_int(datos[campo])
@@ -365,7 +373,11 @@ class DatasetLoader:
         try:
             parsed = json.loads(texto)
         except json.JSONDecodeError:
-            return [parte.strip() for parte in texto.split(",") if parte.strip()]
+            # El Dataset E-1 oficial serializa listas en una celda con el
+            # separador "|" (p. ej. dominios de ``ruta_niveles``). Se acepta
+            # tambien "," como respaldo del dataset reducido/casero.
+            separador = "|" if "|" in texto else ","
+            return [p.strip() for p in texto.split(separador) if p.strip()]
         if isinstance(parsed, list):
             return parsed
         return [parsed]

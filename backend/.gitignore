@@ -1,10 +1,16 @@
-__pycache__/
+﻿__pycache__/
 *.py[cod]
 .pytest_cache/
 .venv/
 venv/
 .env
 *.db
-storage/
+/storage/
 *.egg-info/
 .mypy_cache/
+
+# scratch / local run logs (no deben versionarse)
+_full*.txt
+_pytest*.txt
+_diag*.txt
+*.log

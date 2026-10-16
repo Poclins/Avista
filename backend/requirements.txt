@@ -5,6 +5,7 @@
 fastapi==0.115.6
 uvicorn[standard]==0.34.0
 python-multipart==0.0.20          # cargas multipart (medios de observación)
+mangum==0.19.0                    # adaptador ASGI→Lambda (handler = Mangum(app))
 
 # --- Configuración y validación ---
 pydantic==2.10.4
@@ -19,3 +20,8 @@ pgvector==0.3.6
 
 # --- AWS SDK (camino USE_MOCKS=false) ---
 boto3==1.35.90
+
+# --- Audio IA en tiempo real (Amazon Nova 2 Sonic) ---
+aws-sdk-bedrock-runtime==0.9.0
+awscrt==0.32.2
+soundfile==0.14.0

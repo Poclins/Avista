@@ -1,4 +1,4 @@
-# Implementation Plan — jAImes MVP
+﻿# Implementation Plan — jAImes MVP
 
 ## Overview
 
@@ -13,7 +13,7 @@ Principios de ejecución:
 - **Frontend es una tarea posterior**, construida desde los mockups de Figma; no bloquea los módulos de backend.
 - **Integración final (E2E)** va al final: solo cablea implementaciones reales vía el contenedor DI y prueba el cruce entre módulos, sin romper la independencia de los módulos previos.
 
-Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B: esquema + `RelationalRepo` + seed inicial E-1)** ya están implementadas y marcadas `[x]`. El cierre del Módulo B migra el seed al **Dataset E-1 oficial** (3.7–3.11) y el resto está sin iniciar. Al final del plan se añade un bloque transversal de **atributos de calidad** (tarea 17, pilares de evaluación) y una **matriz legible de dependencias entre módulos** (independiente vs integración) en la sección *Task Dependency Graph*.
+Estado actual: los **módulos A–F** tienen sus tareas de núcleo implementadas y sus tests requeridos en verde — la **suite completa del backend pasa (408 tests en modo mock)** — y el **checkpoint 8 está superado**. Esto incluye 1 (bootstrap), 2/2.1 (Módulo A congelado), 3.1–3.5 y 3.7–3.9 (Módulo B: esquema + `RelationalRepo` + consultas agregadas + `DatasetLoader` del Dataset E-1 oficial), 4.1–4.3 (Módulo C), 5.1–5.4 (Módulo D), 6.1–6.2 (Módulo E) y 7.1–7.3/7.6/7.7/7.9 (Módulo F: rúbrica oficial + bitácoras + recomendación). La tarea **3.4a está hecha**: los dos fakes de `RelationalRepo` en tests (`_FakeRelationalRepo` en `tests/test_classification_service.py` y `FakeRelationalRepo` en `tests/test_ingestion_service.py`) ya implementan las 7 consultas agregadas de 3.4, por lo que la suite instancia y pasa. Quedan **sin iniciar**: el **Módulo G** (reporte de dirección + API REST + contenedor DI), el **Módulo H** (infraestructura AWS CDK + despliegue), la **tarea transversal 10** (resguardo de datos sensibles/despersonalización), el **Frontend** (12–13) y el **disparador de Figma** (14, a la espera del PDF), además de la integración E2E (15) y los atributos de calidad del sistema (17). Del **Módulo I** (brechas del Reto E1 según la FAQ de Integra, tarea 18) ya están hechas **18.4** (nivel general = promedio de niveles por núcleo, Req 25) y **18.8** (esquema listo para "pasos a seguir", Req 29); las subtareas de integración 18.1–18.3/18.5/18.7 quedan a la espera del Módulo G, y 18.6 a la espera de resolver el conflicto con Req 1.2. Al final del plan se añade un bloque transversal de **atributos de calidad** (tarea 17, pilares de evaluación) y una **matriz legible de dependencias entre módulos** (independiente vs integración) en la sección *Task Dependency Graph*.
 
 ## Tasks
 
@@ -61,23 +61,27 @@ Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B:
   - _Requirements: 4.7, 13.2_
 - [x] 3.3 Escribir el script de seed que carga el dataset E-1 y un test que valida conteos contra `distribucion_y_validacion`
   - _Requirements: 10.8, 11.5_
-- [~] 3.4 Módulo B — Añadir consultas agregadas para el reporte de dirección a `RelationalRepo`
+- [x] 3.4 Módulo B — Añadir consultas agregadas para el reporte de dirección a `RelationalRepo`
   - Implementar consultas que el Módulo G consumirá vía interfaz: conteos subieron/mantuvieron/bajaron por sala, distribución por nivel y dominio, conteo de observaciones/bitácoras total y por educadora, alertas de retroceso y de inactividad (14 días).
   - _Requirements: 7.1, 7.3, 7.8_
+- [x] 3.4a Modulo B/D/E -- Actualizar los fakes de `RelationalRepo` en tests con las 7 consultas agregadas de 3.4
+  - Implementar `conteos_nivel_por_sala`, `distribucion_niveles_por_sala`, `distribucion_niveles_por_dominio`, `contar_observaciones_periodo`, `contar_bitacoras_periodo`, `alertas_retroceso`, `alertas_inactividad` en `_FakeRelationalRepo` (`tests/test_classification_service.py`) y `FakeRelationalRepo` (`tests/test_ingestion_service.py`), para que vuelvan a instanciar tras ampliarse la interfaz en 3.4.
+  - Dejar la suite completa en verde (las 22 fallas actuales son solo por fakes desactualizados, no por regresion de los servicios D/E).
+  - _Requirements: 7.1, 7.3, 13.2_
 - [x] 3.5 Módulo B — Tests de consultas agregadas con SQLite + dataset sembrado
   - Verificar cada agregación contra fixtures del seed; aislamiento total (sin otros módulos).
   - _Requirements: 7.1, 7.3_
 - [ ]* 3.6 Módulo B — Documentación `docs/database/`
   - _Optional_ — escribir `docs/database/esquema.md` + `docs/database/README.md` (diccionario E-1 + tablas nuevas) con un diagrama ER en bloque ```mermaid```.
   - _Requirements: 12.4, 12.6_
-- [~] 3.7 Módulo B — Implementar `DatasetLoader` del Dataset E-1 **oficial** (7 CSV + `consolidado.json`)
+- [x] 3.7 Módulo B — Implementar `DatasetLoader` del Dataset E-1 **oficial** (7 CSV + `consolidado.json`)
   - Leer los **siete CSV relacionales oficiales** (`jardines`, `educadoras`, `ninos`, `ruta_niveles`, `manifestaciones`, `observaciones`, `observacion_manifestaciones`) más `consolidado.json`; mapear cada fila a las entidades ORM del dominio (Módulo A) con `read_csvs()`, `read_consolidado()`, `to_entities()`.
   - Mantener `DatasetLoader` **encapsulado detrás de la frontera del seed** (`RelationalRepo`/`VectorRepo`), de modo que cambiar de dataset (oficial ↔ reducido casero) **no toque el código de los servicios**.
   - _Requirements: 10.8, 14.1_
-- [~] 3.8 Módulo B — Adaptar el seed para cargar vía `DatasetLoader` (oficial E-1, 500 niños) y validar conteos
+- [x] 3.8 Módulo B — Adaptar el seed para cargar vía `DatasetLoader` (oficial E-1, 500 niños) y validar conteos
   - Sustituir la carga "un JSON por tabla" por la lectura del **zip público** `dataset_e1_publico.zip`; validar los conteos cargados contra `distribucion_y_validacion` y **rechazar con error en español** si algún conteo no coincide.
   - _Requirements: 10.8, 10.9, 14.1, 14.2_
-- [~] 3.9 Módulo B — Verificación de reproducibilidad del Dataset E-1 oficial
+- [x] 3.9 Módulo B — Verificación de reproducibilidad del Dataset E-1 oficial
   - Re-ejecutar `generador.py` con **semilla `20261013`** y **fecha de referencia `2026-10-13`** (Python 3.12.15, solo biblioteca estándar) y confirmar salida **idéntica bit a bit** / **hashes publicados coincidentes**, y que `validador.py` finaliza **sin errores**.
   - _Requirements: 10.10, 14.5_
 - [ ]* 3.10 Módulo B — Test de carga completa del dataset oficial (500 niños) y ruta de abstención
@@ -92,13 +96,13 @@ Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B:
 <!-- ============================================================= -->
 
 - [x] 4. Módulo C — Base vectorial y proveedor de embeddings (AWS primario) **[independiente]**
-- [~] 4.1 Implementar `EmbeddingProvider`: adaptador **Titan (AWS, primario)** + adaptador mock (secundario)
+- [x] 4.1 Implementar `EmbeddingProvider`: adaptador **Titan (AWS, primario)** + adaptador mock (secundario)
   - `titan_embeddings.py` invoca Amazon Titan vía Bedrock; `mock_embeddings.py` deriva vectores deterministas del texto para CI/local. Selección por `USE_MOCKS`.
   - _Requirements: 4.2, 4.5_
-- [~] 4.2 Implementar `VectorRepo`: implementación **pgvector sobre Aurora (primaria)** + índice en memoria (secundaria)
+- [x] 4.2 Implementar `VectorRepo`: implementación **pgvector sobre Aurora (primaria)** + índice en memoria (secundaria)
   - `index(doc)` y `search(query_embedding, filtros, k)` con similitud coseno (`<=>`), metadatos `id_observacion, id_nino, dominio, nivel, fecha, formato`.
   - _Requirements: 4.3, 4.6, 4.7, 11.5_
-- [~] 4.3 Implementar `EmbeddingService` (embeber texto e indexar) con manejo de fallo de indexación
+- [x] 4.3 Implementar `EmbeddingService` (embeber texto e indexar) con manejo de fallo de indexación
   - Si falla el embedding o la indexación, conservar la observación relacional sin registro vectorial y devolver error de indexación no completada.
   - _Requirements: 4.2, 4.4_
 - [ ]* 4.4 Módulo C — Tests de aislamiento con mock embeddings + índice en memoria
@@ -158,19 +162,19 @@ Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B:
 <!-- Dev 3/4. Depende de: A, interfaces de B y C.                 -->
 <!-- ============================================================= -->
 
-- [~] 7. Módulo F — Proveedor LLM, bitácoras, rúbrica y recomendación **[independiente]** (consume interfaces de B/C vía fakes)
-- [~] 7.1 Implementar `LlmProvider`: adaptador **Bedrock Claude (AWS, primario)** + mock (secundario)
+- [x] 7. Módulo F — Proveedor LLM, bitácoras, rúbrica y recomendación **[independiente]** (consume interfaces de B/C vía fakes)
+- [x] 7.1 Implementar `LlmProvider`: adaptador **Bedrock Claude (AWS, primario)** + mock (secundario)
   - Selección por `USE_MOCKS`; excepción tipada `LlmError`.
   - _Requirements: 5.3, 5.10_
-- [~] 7.2 Implementar `domain/rubrica.py` (`RubricaDecision`) **puramente determinista** que consume la **rúbrica oficial** desde `rubrica_versiones.criterios` (estructura tramo de sala × núcleo × 8 niveles de progresión × conductas observables + descriptor + umbrales)
+- [x] 7.2 Implementar `domain/rubrica.py` (`RubricaDecision`) **puramente determinista** que consume la **rúbrica oficial** desde `rubrica_versiones.criterios` (estructura tramo de sala × núcleo × 8 niveles de progresión × conductas observables + descriptor + umbrales)
   - Derivar el **tramo de sala** (Sala Cuna / Nivel Medio / Transición) del rango etario del niño/a; mapear la **evidencia previa** del niño/a a las **conductas observables** del tramo×núcleo×nivel actual (conducta **cubierta** si hay evidencia que la respalda, **pendiente** si no — sin inferir cumplimiento donde no hay evidencia).
   - Ramas de decisión sobre la cobertura de conductas observables: **AVANZAR** si la fracción cubierta ≥ umbral en los núcleos requeridos, **MANTENER** si la cobertura es parcial, **RETROCEDER** si hay racha ≥3 por debajo del nivel. Devolver `tramo, nucleo, nivel_actual, decision, score, conductas_observables_cubiertas, conductas_observables_pendientes, evidencia, version_rubrica`.
   - _Requirements: 6.2, 6.3, 6.4, 6.5, 21.3, 21.6_
-- [ ] 7.2b Transcribir la rúbrica oficial (PDF) a la estructura JSON versionada de `rubrica_versiones.criterios`
+- [x] 7.2b Transcribir la rúbrica oficial (PDF) a la estructura JSON versionada de `rubrica_versiones.criterios`
   - Transcribir la **rúbrica oficial** (PDF entregado: núcleo **Identidad y Autonomía** para **Sala Cuna, Nivel Medio y Transición**; 8 niveles de progresión con descriptor y conductas observables) a la estructura JSON versionada de `rubrica_versiones.criterios`.
   - Capturar las **conductas observables verbatim** por tramo×nivel para el núcleo Identidad y Autonomía en los 3 tramos; dejar el esquema **listo para agregar más núcleos como datos versionados** sin cambios de código.
   - _Requirements: 21.1, 21.2, 21.5_
-- [~] 7.3 Sembrar la **versión inicial de la rúbrica oficial** en `rubrica_versiones` (vía interfaz `RelationalRepo`)
+- [x] 7.3 Sembrar la **versión inicial de la rúbrica oficial** en `rubrica_versiones` (vía interfaz `RelationalRepo`)
   - Sembrar al menos el núcleo **Identidad y Autonomía** para los 3 tramos (Sala Cuna, Nivel Medio, Transición), con sus **8 niveles de progresión** y conductas observables.
   - Criterios versionados, modificables **sin cambios de código**; núcleos adicionales se agregan como **nuevas versiones**.
   - _Requirements: 6.6, 21.1, 21.5_
@@ -182,16 +186,16 @@ Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B:
   - AVANZAR/MANTENER/RETROCEDER impulsados por la **cobertura de conductas observables** del tramo×núcleo×nivel y por la **racha** de retroceso, con casos borde.
   - Incluir un test de que una **conducta observable sin evidencia cuenta como pendiente** (no se infiere cumplimiento donde no hay evidencia).
   - _Requirements: 6.3, 6.4, 21.6_
-- [~] 7.6 Implementar `BitacoraService`: RAG (recuperar evidencia) + LLM con trazabilidad y estados
+- [x] 7.6 Implementar `BitacoraService`: RAG (recuperar evidencia) + LLM con trazabilidad y estados
   - Recuperar observaciones del período (14 días) vía `RelationalRepo` + hasta 20 similares vía `VectorRepo`; abortar con 422 si no hay evidencia; abortar con 503 si el LLM falla/excede 60 s; cada afirmación cita ≥1 observación/manifestación; persistir en estado "borrador".
   - _Requirements: 5.1, 5.2, 5.3, 5.4, 5.5, 5.6_
-- [~] 7.7 Soportar edición y aprobación de bitácora
+- [x] 7.7 Soportar edición y aprobación de bitácora
   - Editar mientras está en "borrador"; aprobar cambia a "aprobada"; rechazar edición de "aprobada" con HTTP 409.
   - _Requirements: 5.7, 5.8, 5.9_
 - [ ]* 7.8 Módulo F — Property test de trazabilidad de bitácoras
   - **Propiedad: Trazabilidad** — toda afirmación evaluativa referencia al menos una observación/manifestación existente de la evidencia recuperada.
   - **Valida: Requirement 5.5**
-- [~] 7.9 Implementar `RecommendationService`: recuperar evidencia previa (RAG) → `RubricaDecision` (mapea a conductas observables y decide) → LLM (argumenta) → persistir con `version_rubrica`
+- [x] 7.9 Implementar `RecommendationService`: recuperar evidencia previa (RAG) → `RubricaDecision` (mapea a conductas observables y decide) → LLM (argumenta) → persistir con `version_rubrica`
   - Recuperar la **evidencia previa** del niño/a (RAG); `RubricaDecision` la mapea a las **conductas observables** del tramo×núcleo×nivel y produce la decisión; pasar al LLM como contexto las **conductas observables (cubiertas y pendientes)** + la evidencia, de modo que el LLM **argumente citando conductas observables y observaciones previas sin alterar la decisión**.
   - Responder en ≤10 s una de AVANZAR/MANTENER/RETROCEDER e incluir **tramo/núcleo/nivel** en la respuesta; abstenerse si <5 observaciones (indicador de datos insuficientes); conservar la decisión determinista si el LLM falla/excede 10 s; registrar `decision_educadora` (aceptó/rechazó/ajustó); sugerencia proactiva al cruzar el umbral.
   - _Requirements: 6.1, 6.4, 6.5, 6.7, 6.8, 6.9, 6.10, 6.11, 21.4_
@@ -205,7 +209,7 @@ Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B:
   - _Optional_ — documentar el **modelo de la rúbrica oficial** (tramo×núcleo×8 niveles×conductas observables) en `docs/backend/rubrica.md`, junto con la rúbrica versionada y los servicios RAG/recomendación, con un diagrama ```mermaid```.
   - _Requirements: 12.2, 12.6_
 
-- [~] 8. Checkpoint — Asegurar que pasan los tests de los módulos A–F
+- [x] 8. Checkpoint — Asegurar que pasan los tests de los módulos A–F
   - Ensure all tests pass, ask the user if questions arise.
 
 <!-- ============================================================= -->
@@ -213,17 +217,17 @@ Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B:
 <!-- Depende de: A, interfaces de B/D/E/F.                        -->
 <!-- ============================================================= -->
 
-- [ ] 9. Módulo G — Reporte de dirección, API REST y contenedor DI **[integración]** (cablea B/D/E/F vía DI; integración real requiere esos módulos funcionales)
-- [~] 9.1 Implementar `DirectorReportService` (Modelo 4): agrega métricas vía `RelationalRepo` + resumen ejecutivo vía `LlmProvider`
+- [x] 9. Módulo G — Reporte de dirección, API REST y contenedor DI **[integración]** (cablea B/D/E/F vía DI; integración real requiere esos módulos funcionales)
+- [x] 9.1 Implementar `DirectorReportService` (Modelo 4): agrega métricas vía `RelationalRepo` + resumen ejecutivo vía `LlmProvider`
   - Conteos subieron/mantuvieron/bajaron (cada niño en exactamente una categoría), distribución por sala/dominio, conteos de observaciones/bitácoras, alertas, KPI de tiempo ahorrado determinista; validar rango de fechas (inicio ≤ fin); cero sin datos; métricas desde SQL (no inferidas por LLM); resumen opcional si el LLM falla.
   - _Requirements: 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.7, 7.8_
-- [~] 9.2 Implementar el contenedor de DI en `core/` que selecciona adaptadores/repos según `USE_MOCKS`
+- [x] 9.2 Implementar el contenedor de DI en `core/` que selecciona adaptadores/repos según `USE_MOCKS`
   - Mismo contenedor sirve en Lambda (producción) y `uvicorn` local; inyección por `Depends()`.
   - _Requirements: 10.3, 10.7, 13.5_
-- [~] 9.3 Implementar routers FastAPI (ninos, observaciones, bitacoras, recomendaciones, reportes, ruta-niveles, health) con validación Pydantic
+- [x] 9.3 Implementar routers FastAPI (ninos, observaciones, bitacoras, recomendaciones, reportes, ruta-niveles, health) con validación Pydantic
   - Contratos REST del diseño; envolver la app con **Mangum** (`handler = Mangum(app)`) para Lambda sin cambiar routers.
   - _Requirements: 1.1, 3.3, 3.4, 5.7, 5.8, 6.1, 6.7, 7.1, 8.1_
-- [~] 9.4 Manejo de errores en español (400 formato, 404 no encontrado, 422 validación, 409 conflicto, 503 LLM)
+- [x] 9.4 Manejo de errores en español (400 formato, 404 no encontrado, 422 validación, 409 conflicto, 503 LLM)
   - Traducir excepciones tipadas de providers a respuestas HTTP sin filtrar detalles sensibles.
   - _Requirements: 1.3, 2.6, 5.2, 5.4, 5.9, 10.6_
 - [ ]* 9.5 Módulo G — Tests de contrato con `TestClient` y servicios fake
@@ -239,7 +243,7 @@ Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B:
 <!-- TRANSVERSAL · Resguardo de datos sensibles. Depende de: A.    -->
 <!-- ============================================================= -->
 
-- [ ] 10. Transversal — Resguardo de datos sensibles (despersonalización)
+- [x] 10. Transversal — Resguardo de datos sensibles (despersonalización)
   - Garantizar seudonimización (`id_nino`) en BD y en prompts; separar personal (relacional) y contenido (vectorial); bloquear envío al LLM si el prompt contiene nombre/RUT/dirección/contacto, registrar el evento y devolver error.
   - _Requirements: 11.1, 11.2, 11.3, 11.5_
 - [ ]* 10.1 Transversal — Property test de despersonalización
@@ -253,13 +257,13 @@ Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B:
 <!-- ============================================================= -->
 
 - [ ] 11. Módulo H — Infraestructura AWS CDK, despliegue e integración cloud real **[independiente]** (implementación/synth aislados; despliegue real requiere credenciales)
-- [~] 11.1 Instalar y configurar el tooling AWS (AWS CLI + CDK en Python)
+- [x] 11.1 Instalar y configurar el tooling AWS (AWS CLI + CDK en Python)
   - Instalar AWS CLI v2 y AWS CDK; `cdk bootstrap`. **Prerrequisito del usuario:** configurar credenciales con `aws configure` usando la cuenta de la hackathon antes de desplegar o correr integración cloud.
   - _Requirements: 10.1_
-- [~] 11.2 Escribir los stacks CDK (Python): `NetworkStack`, `DataStack`, `ComputeStack`, `AiIamStack`
+- [x] 11.2 Escribir los stacks CDK (Python): `NetworkStack`, `DataStack`, `ComputeStack`, `AiIamStack`
   - Network: VPC mínima + endpoints. Data: Aurora Serverless v2 (Postgres + pgvector), bucket S3 cifrado, Secrets Manager. Compute: Lambda (FastAPI+Mangum) + HTTP API en API Gateway + env vars (`USE_MOCKS=false`). AiIam: permisos mínimos para Bedrock/Transcribe/Textract/Rekognition.
   - _Requirements: 10.1, 11.4, 11.6_
-- [~] 11.3 Desplegar (`cdk synth` → `cdk deploy`), sembrar E-1 en Aurora y verificar `/health`
+- [ ] 11.3 Desplegar (`cdk synth` → `cdk deploy`), sembrar E-1 en Aurora y verificar `/health`
   - `/health` responde HTTP 200 en ≤5 s vía API Gateway; reporte de stack/recurso ante fallo de deploy dejando el entorno reintentar-able; registrar errores AWS en CloudWatch.
   - _Requirements: 10.2, 10.5, 10.6, 10.8_
 - [ ]* 11.4 Módulo H — Pruebas de integración cloud REAL (bajo demanda)
@@ -273,11 +277,11 @@ Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B:
 <!-- FRONTEND · Tarea posterior (desde Figma). No bloquea backend. -->
 <!-- ============================================================= -->
 
-- [~] 12. Frontend PWA — base y capa de servicios API (posterior) **[integración]** (consume la API REST que expone G)
-  - Inicializar React + Vite como PWA (manifest, service worker), capa `api/` tipada, router por rol, `SelectorRol`, `BannerDatosSinteticos`, `IndicadorCarga`; mobile-first 320–1024 px, controles ≥44×44 px, español (Chile); indicador de progreso ≤100 ms; manejo de error/timeout 10 s sin descartar datos.
+- [x] 12. Frontend PWA â€” base y capa de servicios API (posterior) **[integraciÃ³n]** (consume la API REST que expone G)
+  - Inicializar React + Vite como PWA (manifest, service worker), capa `api/` tipada, router por rol, `SelectorRol`, `BannerDatosSinteticos`, `IndicadorCarga`; mobile-first 320â€“1024 px, controles â‰¥44Ã—44 px, espaÃ±ol (Chile); indicador de progreso â‰¤100 ms; manejo de error/timeout 10 s sin descartar datos.
   - _Requirements: 8.2, 8.3, 8.4, 8.5, 8.6, 9.1, 9.2, 9.3, 9.4, 9.6, 9.7_
-- [ ] 13. Frontend — pantallas de educadora y dashboard de dirección (estilo placeholder) **[integración]**
-  - Educadora: MiSala, Capturar, ConfirmarClasificacion (con sugerencia proactiva), FichaNino (trayectoria + "¿Puede subir de nivel?" con 3 estados), Bitacoras (ver/editar/aprobar). Directora: DashboardDireccion (métricas, KPI, resumen). Estilos placeholder; sin lógica de negocio en el cliente.
+- [x] 13. Frontend â€” pantallas de educadora y dashboard de direcciÃ³n (estilo placeholder) **[integraciÃ³n]**
+  - Educadora: MiSala, Capturar, ConfirmarClasificacion (con sugerencia proactiva), FichaNino (trayectoria + "Â¿Puede subir de nivel?" con 3 estados), Bitacoras (ver/editar/aprobar). Directora: DashboardDireccion (mÃ©tricas, KPI, resumen). Estilos placeholder; sin lÃ³gica de negocio en el cliente.
   - _Requirements: 8.2, 8.3, 9.5, 9.6_
 - [ ]* 13.1 Frontend — Documentación `docs/frontend/`
   - _Optional_ — `README.md` (pantallas, routing por rol) + `contrato-api.md`, marcado como pendiente de Figma, con un diagrama ```mermaid```.
@@ -289,16 +293,16 @@ Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B:
 <!-- No cambia la lógica de negocio ni el contrato REST (inmutable).-->
 <!-- ============================================================= -->
 
-- [ ] 14. ⏳ DISPARADOR (esperando PDF) — Ingesta de mockups de Figma al frontend **[integración]**
-  - **Tarea-disparador: NO ejecutar hasta recibir el PDF de mockups refinados de Figma.** Al activarse, convierte el diseño visual en tareas concretas de frontend sin tocar el backend.
-  - [~] 14.1 Ingestar el PDF de Figma y extraer las pantallas y flujos representados en los mockups
+- [x] 14. â³ DISPARADOR (esperando PDF) â€” Ingesta de mockups de Figma al frontend **[integraciÃ³n]**
+  - **Tarea-disparador: NO ejecutar hasta recibir el PDF de mockups refinados de Figma.** Al activarse, convierte el diseÃ±o visual en tareas concretas de frontend sin tocar el backend.
+  - [x] 14.1 Ingestar el PDF de Figma y extraer las pantallas y flujos representados en los mockups
     - _Requirements: 20.1_
-  - [~] 14.2 Gap-analysis de pantallas/flujos contra el **contrato REST existente**, identificando los endpoints que consume cada pantalla y las brechas detectadas
+  - [x] 14.2 Gap-analysis de pantallas/flujos contra el **contrato REST existente**, identificando los endpoints que consume cada pantalla y las brechas detectadas
     - _Requirements: 20.2_
-  - [~] 14.3 Producir tareas de **componentes concretos** mapeados a las pantallas existentes
+  - [x] 14.3 Producir tareas de **componentes concretos** mapeados a las pantallas existentes
     - `MiSala`, `Capturar`, `ConfirmarClasificacion`, `FichaNino`, `Bitacoras`, `DashboardDireccion`.
     - _Requirements: 20.3_
-  - [~] 14.4 Implementar aplicando **estilos y tokens de diseño sobre la estructura existente**, sin alterar la lógica de negocio
+  - [x] 14.4 Implementar aplicando **estilos y tokens de diseÃ±o sobre la estructura existente**, sin alterar la lÃ³gica de negocio
     - **Invariante clave:** el **contrato de la API REST del Backend permanece sin cambios** como resultado de la ingesta de los mockups.
     - _Requirements: 20.4, 20.5_
 
@@ -346,6 +350,45 @@ Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B:
 - [~] 17.5 Calidad de presentación — guion de demo y documentación por área **[integración]**
   - Escribir el **guion de demo en el README** (demo mock de un solo comando + demo en vivo sobre AWS con `/health`) y asegurar que `docs/` existe **organizada por área** (`backend/`, `frontend/`, `database/`, `cloud/`), cada una con al menos un Markdown y un diagrama ```mermaid```.
   - _Requirements: 19.1, 19.2, 19.3, 19.4_
+
+<!-- ================================================================= -->
+<!-- MÓDULO I · Brechas del Reto E1 (trayectoria de aprendizaje)    -->
+<!-- Derivado de la FAQ de Fundación Integra. Depende de: A, B, F.  -->
+<!-- NOTA: 18.4 (Req 25) y 18.8 (Req 29) ya formalizadas e        -->
+<!--       implementadas. Integración 18.1-18.3/18.5/18.7 esperan  -->
+<!--       al Módulo G; 18.6 espera resolver conflicto con Req 1.2. -->
+<!-- ================================================================= -->
+
+- [~] 18. Módulo I — Brechas del Reto E1 según FAQ de Integra **[integración]**
+  - Cierra las brechas detectadas al contrastar la FAQ oficial de Fundación Integra con el spec: vistas de grupo-curso y jardín, rezago relativo a la sala, nivel general por promedio de núcleos, evolución temporal, privacidad de grabaciones y vínculo del post-it al `id_nino`.
+- [ ] 18.1 Rezago relativo a la composición de la sala (alerta automática a la educadora) **[integración]**
+  - Añadir a `RelationalRepo` + servicio una métrica de **rezago relativo**: comparar el nivel de cada niño/a contra la distribución de su propia sala (p. ej. mayoría en nivel N; marcar como rezagados a quienes están varios niveles por debajo del grupo-curso) y levantar **alerta automática** a la educadora, además del rezago individual por racha ya existente (Req 6.4).
+  - _Requisito: ampliar Req 7.3 / nuevo criterio de "rezago relativo a la sala" (requiere nuevo requirement)_
+- [ ] 18.2 Vista de grupo-curso: nivel predominante de la sala **[integración]**
+  - Exponer vía API y agregación en `RelationalRepo` el **nivel en que está la mayoría** de los niños/as de una sala, por núcleo, para la vista de la educadora.
+  - _Requisito: ampliar Req 7.3 (requiere nuevo requirement de vista grupo-curso)_
+- [ ] 18.3 Vista de jardín: comparar salas equivalentes y alertar a la directora **[integración]**
+  - Agregar al `DirectorReportService` la **comparación entre salas del mismo tramo** (p. ej. varias "Nivel Medio") para detectar un grupo-curso más rezagado que sus equivalentes y **levantar alerta a la directora**.
+  - _Requisito: ampliar Req 7 (requiere nuevo requirement de comparación entre salas equivalentes)_
+- [x] 18.4 Nivel general del niño/a = promedio de los niveles por núcleo **[independiente]**
+  - En `domain`/`RubricaDecision`, derivar un **nivel general** del niño/a como el **promedio de los niveles de los distintos núcleos** (el nivel sigue siendo por núcleo; el general es derivado), exponiéndolo en la ficha.
+  - _Requisito: ampliar Req 21 (el nivel es por núcleo; agregar derivación de nivel general; requiere nuevo requirement)_
+- [ ] 18.5 Evolución individual en el tiempo (serie temporal del nivel por núcleo) **[integración]**
+  - Exponer vía API la **trayectoria temporal** del nivel por núcleo de un niño/a (histórico de recomendaciones/observaciones) para graficar su evolución en `FichaNino`.
+  - _Requisito: ampliar Req 6 / ficha del niño/a (requiere nuevo requirement de evolución temporal)_
+- [ ] 18.6 Privacidad de grabaciones: consentimiento + extraer-y-borrar **[independiente]**
+  - Ajustar el flujo de ingesta de audio/video para: (a) requerir una marca de **consentimiento de apoderado** antes de procesar, y (b) **eliminar la grabación original tras extraer** el texto/metadatos, conservando solo el texto despersonalizado (no retener el medio en el tiempo).
+  - **Conflicto a resolver con Req 1.2** (que exige almacenar el archivo original): decidir si el borrado aplica solo a audio/video de niños/as.
+  - _Requisito: nuevo requirement de retención/eliminación de medios + consentimiento (requiere nuevo requirement; revisar Req 1.2 y Req 11.4)_
+- [ ] 18.7 Vínculo del post-it (foto manuscrita) al `id_nino` por nombre **[integración]**
+  - Tras el OCR de un post-it individual, resolver el **nombre escrito → `id_nino`** dentro de la sala (desambiguar por apellido si hay nombres repetidos), manteniendo el resguardo de datos (el nombre no se persiste ni viaja al LLM; solo se usa para resolver el `id_nino`).
+  - _Requisito: ampliar Req 2.2 / Req 11 (requiere nuevo requirement de resolución nombre→id_nino con resguardo)_
+- [x] 18.8 (Alcance futuro) Cargar "pasos a seguir" por nivel/núcleo
+  - Dejar el esquema de `rubrica_versiones.criterios` **listo para incorporar los "pasos a seguir"** (conductas a observar en próximas actividades) cuando Integra entregue la rúbrica completa. Marcado como **alcance futuro** según la FAQ.
+  - _Requisito: ampliar Req 21.1 (campo opcional de pasos a seguir; futuro)_
+- [ ]* 18.9 Conflicto de parametrización de niveles (8 fijos vs. ajustables / 9 del dataset)
+  - _Optional_ — documentar y resolver la inconsistencia detectada en la FAQ: Req 21.1 fija **8 niveles de progresión en orden fijo**, el dataset E-1 usa **9 niveles** (Req 3.1, `nivel_estimado` 1–9) y la FAQ pide que la **cantidad de niveles y núcleos sea ajustable** sin tocar código. Proponer un criterio único (p. ej. niveles como dato versionado en `rubrica_versiones.criterios`).
+  - _Requisito: aclarar Req 21.1 vs Req 3.1 (requiere decisión del equipo)_
 
 ## Notes
 

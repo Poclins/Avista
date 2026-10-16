@@ -61,9 +61,17 @@ class EstadoBitacora(str, Enum):
 
 
 class Rol(str, Enum):
-    """Roles soportados por la aplicación (Requirement 8)."""
+    """Roles del personal de aula/dirección (Requirement 8).
 
-    educadora = "educadora"
+    Fuente de verdad: la columna ``rol`` del Dataset E-1 oficial
+    (``educadoras.csv``), que trae exactamente dos valores de aula —
+    ``educadora_parvulos`` (educadora de párvulos) y ``tecnico_parvulos``
+    (técnico en párvulos)— más ``directora`` para el rol de dirección. El
+    código/esquema se adapta al dataset: estos son los valores canónicos.
+    """
+
+    educadora_parvulos = "educadora_parvulos"
+    tecnico_parvulos = "tecnico_parvulos"
     directora = "directora"
 
 
@@ -97,7 +105,7 @@ class Educadora(_Base):
 
     id_educadora: str
     id_jardin: str
-    rol: Rol = Rol.educadora
+    rol: Rol = Rol.educadora_parvulos
     anios_experiencia: int = Field(ge=0)
 
 
@@ -108,6 +116,9 @@ class Nino(_Base):
     """
 
     id_nino: str
+    nombre: str = ""
+    apellido_paterno: str = ""
+    apellido_materno: str = ""
     id_jardin: str
     fecha_nacimiento: date
     sexo_registrado: str

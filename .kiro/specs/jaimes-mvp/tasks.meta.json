@@ -240,6 +240,16 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792077890778
+      },
+      {
+        "executionId": "3ca25dd1-373a-4e9b-9ad0-41cd549a0749",
+        "chatSessionId": "sess_bdf0c668-31ee-40f1-ad27-c99d2b605022",
+        "timestamp": 1792082047866
+      },
+      {
+        "executionId": "3ca25dd1-373a-4e9b-9ad0-41cd549a0749",
+        "chatSessionId": "sess_bdf0c668-31ee-40f1-ad27-c99d2b605022",
+        "timestamp": 1792082546385
       }
     ],
     "7.2 Implementar `domain/rubrica.py` (`RubricaDecision`) **puramente determinista** que consume la **rúbrica oficial** desde `rubrica_versiones.criterios` (estructura tramo de sala × núcleo × 8 niveles de progresión × conductas observables + descriptor + umbrales)": [
@@ -261,6 +271,16 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792077891013
+      },
+      {
+        "executionId": "3ca25dd1-373a-4e9b-9ad0-41cd549a0749",
+        "chatSessionId": "sess_bdf0c668-31ee-40f1-ad27-c99d2b605022",
+        "timestamp": 1792082554326
+      },
+      {
+        "executionId": "3ca25dd1-373a-4e9b-9ad0-41cd549a0749",
+        "chatSessionId": "sess_bdf0c668-31ee-40f1-ad27-c99d2b605022",
+        "timestamp": 1792083040796
       }
     ],
     "7.7 Soportar edición y aprobación de bitácora": [
@@ -289,6 +309,21 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792077891336
+      },
+      {
+        "executionId": "33235cce-1457-43c2-b350-dbe5c7db589c",
+        "chatSessionId": "sess_a7a2b61d-6afe-4009-8682-80d34142aeaa",
+        "timestamp": 1792111650233
+      },
+      {
+        "executionId": "40e0c1bf-09ac-4781-a679-a131425f4a8b",
+        "chatSessionId": "sess_52116702-48ed-4d06-8ec7-1872f6152c7e",
+        "timestamp": 1792115509427
+      },
+      {
+        "executionId": "25911411-53e2-41f5-9e45-ff1586e4b4a6",
+        "chatSessionId": "sess_7774928e-58f1-4d32-9843-c6fd48925ce3",
+        "timestamp": 1792116360935
       }
     ],
     "9.2 Implementar el contenedor de DI en `core/` que selecciona adaptadores/repos según `USE_MOCKS`": [
@@ -296,6 +331,21 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792077891412
+      },
+      {
+        "executionId": "33235cce-1457-43c2-b350-dbe5c7db589c",
+        "chatSessionId": "sess_a7a2b61d-6afe-4009-8682-80d34142aeaa",
+        "timestamp": 1792111650367
+      },
+      {
+        "executionId": "40e0c1bf-09ac-4781-a679-a131425f4a8b",
+        "chatSessionId": "sess_52116702-48ed-4d06-8ec7-1872f6152c7e",
+        "timestamp": 1792115509819
+      },
+      {
+        "executionId": "25911411-53e2-41f5-9e45-ff1586e4b4a6",
+        "chatSessionId": "sess_7774928e-58f1-4d32-9843-c6fd48925ce3",
+        "timestamp": 1792116362553
       }
     ],
     "9.3 Implementar routers FastAPI (ninos, observaciones, bitacoras, recomendaciones, reportes, ruta-niveles, health) con validación Pydantic": [
@@ -303,6 +353,21 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792077891564
+      },
+      {
+        "executionId": "33235cce-1457-43c2-b350-dbe5c7db589c",
+        "chatSessionId": "sess_a7a2b61d-6afe-4009-8682-80d34142aeaa",
+        "timestamp": 1792111650522
+      },
+      {
+        "executionId": "40e0c1bf-09ac-4781-a679-a131425f4a8b",
+        "chatSessionId": "sess_52116702-48ed-4d06-8ec7-1872f6152c7e",
+        "timestamp": 1792115510228
+      },
+      {
+        "executionId": "25911411-53e2-41f5-9e45-ff1586e4b4a6",
+        "chatSessionId": "sess_7774928e-58f1-4d32-9843-c6fd48925ce3",
+        "timestamp": 1792116363020
       }
     ],
     "9.4 Manejo de errores en español (400 formato, 404 no encontrado, 422 validación, 409 conflicto, 503 LLM)": [
@@ -310,6 +375,21 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792077891640
+      },
+      {
+        "executionId": "33235cce-1457-43c2-b350-dbe5c7db589c",
+        "chatSessionId": "sess_a7a2b61d-6afe-4009-8682-80d34142aeaa",
+        "timestamp": 1792111650681
+      },
+      {
+        "executionId": "40e0c1bf-09ac-4781-a679-a131425f4a8b",
+        "chatSessionId": "sess_52116702-48ed-4d06-8ec7-1872f6152c7e",
+        "timestamp": 1792115510516
+      },
+      {
+        "executionId": "25911411-53e2-41f5-9e45-ff1586e4b4a6",
+        "chatSessionId": "sess_7774928e-58f1-4d32-9843-c6fd48925ce3",
+        "timestamp": 1792116363405
       }
     ],
     "11.1 Instalar y configurar el tooling AWS (AWS CLI + CDK en Python)": [
@@ -317,6 +397,21 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792077891715
+      },
+      {
+        "executionId": "33235cce-1457-43c2-b350-dbe5c7db589c",
+        "chatSessionId": "sess_a7a2b61d-6afe-4009-8682-80d34142aeaa",
+        "timestamp": 1792111650832
+      },
+      {
+        "executionId": "40e0c1bf-09ac-4781-a679-a131425f4a8b",
+        "chatSessionId": "sess_52116702-48ed-4d06-8ec7-1872f6152c7e",
+        "timestamp": 1792115510815
+      },
+      {
+        "executionId": "25911411-53e2-41f5-9e45-ff1586e4b4a6",
+        "chatSessionId": "sess_7774928e-58f1-4d32-9843-c6fd48925ce3",
+        "timestamp": 1792116363713
       }
     ],
     "11.2 Escribir los stacks CDK (Python): `NetworkStack`, `DataStack`, `ComputeStack`, `AiIamStack`": [
@@ -324,6 +419,21 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792077891796
+      },
+      {
+        "executionId": "33235cce-1457-43c2-b350-dbe5c7db589c",
+        "chatSessionId": "sess_a7a2b61d-6afe-4009-8682-80d34142aeaa",
+        "timestamp": 1792111650999
+      },
+      {
+        "executionId": "40e0c1bf-09ac-4781-a679-a131425f4a8b",
+        "chatSessionId": "sess_52116702-48ed-4d06-8ec7-1872f6152c7e",
+        "timestamp": 1792115511163
+      },
+      {
+        "executionId": "25911411-53e2-41f5-9e45-ff1586e4b4a6",
+        "chatSessionId": "sess_7774928e-58f1-4d32-9843-c6fd48925ce3",
+        "timestamp": 1792116364073
       }
     ],
     "11.3 Desplegar (`cdk synth` → `cdk deploy`), sembrar E-1 en Aurora y verificar `/health`": [
@@ -331,6 +441,36 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792077891884
+      },
+      {
+        "executionId": "325fd155-03e6-4b6f-93fb-1d1989e3b1ae",
+        "chatSessionId": "sess_2cf3ef38-59dc-4f59-a892-05139729810c",
+        "timestamp": 1792107061116
+      },
+      {
+        "executionId": "d4c9fb39-4122-4ccd-bf70-bbf96bf8429c",
+        "chatSessionId": "sess_bd6ceefd-2bff-436f-b71e-9c005aff0248",
+        "timestamp": 1792110651555
+      },
+      {
+        "executionId": "d4c9fb39-4122-4ccd-bf70-bbf96bf8429c",
+        "chatSessionId": "sess_bd6ceefd-2bff-436f-b71e-9c005aff0248",
+        "timestamp": 1792111036216
+      },
+      {
+        "executionId": "d4c9fb39-4122-4ccd-bf70-bbf96bf8429c",
+        "chatSessionId": "sess_bd6ceefd-2bff-436f-b71e-9c005aff0248",
+        "timestamp": 1792111125253
+      },
+      {
+        "executionId": "3b78e26e-860b-45f2-b1de-7ab338e83025",
+        "chatSessionId": "sess_bd6ceefd-2bff-436f-b71e-9c005aff0248",
+        "timestamp": 1792114381815
+      },
+      {
+        "executionId": "1a4ac6c1-104d-4efe-8cc1-231600931c55",
+        "chatSessionId": "sess_bd6ceefd-2bff-436f-b71e-9c005aff0248",
+        "timestamp": 1792117267445
       }
     ],
     "12. Frontend PWA — base y capa de servicios API (posterior) **[integración]** (consume la API REST que expone G)": [
@@ -338,6 +478,21 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792077891952
+      },
+      {
+        "executionId": "33235cce-1457-43c2-b350-dbe5c7db589c",
+        "chatSessionId": "sess_a7a2b61d-6afe-4009-8682-80d34142aeaa",
+        "timestamp": 1792111651258
+      },
+      {
+        "executionId": "40e0c1bf-09ac-4781-a679-a131425f4a8b",
+        "chatSessionId": "sess_52116702-48ed-4d06-8ec7-1872f6152c7e",
+        "timestamp": 1792115511768
+      },
+      {
+        "executionId": "25911411-53e2-41f5-9e45-ff1586e4b4a6",
+        "chatSessionId": "sess_7774928e-58f1-4d32-9843-c6fd48925ce3",
+        "timestamp": 1792116364685
       }
     ],
     "14.1 Ingestar el PDF de Figma y extraer las pantallas y flujos representados en los mockups": [
@@ -345,6 +500,21 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792077892033
+      },
+      {
+        "executionId": "33235cce-1457-43c2-b350-dbe5c7db589c",
+        "chatSessionId": "sess_a7a2b61d-6afe-4009-8682-80d34142aeaa",
+        "timestamp": 1792111651387
+      },
+      {
+        "executionId": "40e0c1bf-09ac-4781-a679-a131425f4a8b",
+        "chatSessionId": "sess_52116702-48ed-4d06-8ec7-1872f6152c7e",
+        "timestamp": 1792115512095
+      },
+      {
+        "executionId": "25911411-53e2-41f5-9e45-ff1586e4b4a6",
+        "chatSessionId": "sess_7774928e-58f1-4d32-9843-c6fd48925ce3",
+        "timestamp": 1792116365004
       }
     ],
     "14.2 Gap-analysis de pantallas/flujos contra el **contrato REST existente**, identificando los endpoints que consume cada pantalla y las brechas detectadas": [
@@ -352,6 +522,21 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792077892116
+      },
+      {
+        "executionId": "33235cce-1457-43c2-b350-dbe5c7db589c",
+        "chatSessionId": "sess_a7a2b61d-6afe-4009-8682-80d34142aeaa",
+        "timestamp": 1792111651523
+      },
+      {
+        "executionId": "40e0c1bf-09ac-4781-a679-a131425f4a8b",
+        "chatSessionId": "sess_52116702-48ed-4d06-8ec7-1872f6152c7e",
+        "timestamp": 1792115512345
+      },
+      {
+        "executionId": "25911411-53e2-41f5-9e45-ff1586e4b4a6",
+        "chatSessionId": "sess_7774928e-58f1-4d32-9843-c6fd48925ce3",
+        "timestamp": 1792116365267
       }
     ],
     "14.3 Producir tareas de **componentes concretos** mapeados a las pantallas existentes": [
@@ -359,6 +544,21 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792077892228
+      },
+      {
+        "executionId": "33235cce-1457-43c2-b350-dbe5c7db589c",
+        "chatSessionId": "sess_a7a2b61d-6afe-4009-8682-80d34142aeaa",
+        "timestamp": 1792111651650
+      },
+      {
+        "executionId": "40e0c1bf-09ac-4781-a679-a131425f4a8b",
+        "chatSessionId": "sess_52116702-48ed-4d06-8ec7-1872f6152c7e",
+        "timestamp": 1792115512634
+      },
+      {
+        "executionId": "25911411-53e2-41f5-9e45-ff1586e4b4a6",
+        "chatSessionId": "sess_7774928e-58f1-4d32-9843-c6fd48925ce3",
+        "timestamp": 1792116365544
       }
     ],
     "14.4 Implementar aplicando **estilos y tokens de diseño sobre la estructura existente**, sin alterar la lógica de negocio": [
@@ -366,6 +566,21 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792077892311
+      },
+      {
+        "executionId": "33235cce-1457-43c2-b350-dbe5c7db589c",
+        "chatSessionId": "sess_a7a2b61d-6afe-4009-8682-80d34142aeaa",
+        "timestamp": 1792111651798
+      },
+      {
+        "executionId": "40e0c1bf-09ac-4781-a679-a131425f4a8b",
+        "chatSessionId": "sess_52116702-48ed-4d06-8ec7-1872f6152c7e",
+        "timestamp": 1792115512906
+      },
+      {
+        "executionId": "25911411-53e2-41f5-9e45-ff1586e4b4a6",
+        "chatSessionId": "sess_7774928e-58f1-4d32-9843-c6fd48925ce3",
+        "timestamp": 1792116365852
       }
     ],
     "15.1 Cablear implementaciones concretas vía el contenedor DI y validar límites de interfaz": [
@@ -373,6 +588,21 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792077892385
+      },
+      {
+        "executionId": "33235cce-1457-43c2-b350-dbe5c7db589c",
+        "chatSessionId": "sess_a7a2b61d-6afe-4009-8682-80d34142aeaa",
+        "timestamp": 1792111652004
+      },
+      {
+        "executionId": "40e0c1bf-09ac-4781-a679-a131425f4a8b",
+        "chatSessionId": "sess_52116702-48ed-4d06-8ec7-1872f6152c7e",
+        "timestamp": 1792115513181
+      },
+      {
+        "executionId": "25911411-53e2-41f5-9e45-ff1586e4b4a6",
+        "chatSessionId": "sess_7774928e-58f1-4d32-9843-c6fd48925ce3",
+        "timestamp": 1792116366130
       }
     ],
     "15.4 Verificación de la demo en modo mock (un solo comando) y actualización del README": [
@@ -380,6 +610,21 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792077892469
+      },
+      {
+        "executionId": "33235cce-1457-43c2-b350-dbe5c7db589c",
+        "chatSessionId": "sess_a7a2b61d-6afe-4009-8682-80d34142aeaa",
+        "timestamp": 1792111652122
+      },
+      {
+        "executionId": "40e0c1bf-09ac-4781-a679-a131425f4a8b",
+        "chatSessionId": "sess_52116702-48ed-4d06-8ec7-1872f6152c7e",
+        "timestamp": 1792115513488
+      },
+      {
+        "executionId": "25911411-53e2-41f5-9e45-ff1586e4b4a6",
+        "chatSessionId": "sess_7774928e-58f1-4d32-9843-c6fd48925ce3",
+        "timestamp": 1792116366481
       }
     ],
     "16. Checkpoint final — Asegurar que pasan todos los tests": [
@@ -387,6 +632,21 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792077892554
+      },
+      {
+        "executionId": "33235cce-1457-43c2-b350-dbe5c7db589c",
+        "chatSessionId": "sess_a7a2b61d-6afe-4009-8682-80d34142aeaa",
+        "timestamp": 1792111652245
+      },
+      {
+        "executionId": "40e0c1bf-09ac-4781-a679-a131425f4a8b",
+        "chatSessionId": "sess_52116702-48ed-4d06-8ec7-1872f6152c7e",
+        "timestamp": 1792115513832
+      },
+      {
+        "executionId": "25911411-53e2-41f5-9e45-ff1586e4b4a6",
+        "chatSessionId": "sess_7774928e-58f1-4d32-9843-c6fd48925ce3",
+        "timestamp": 1792116366742
       }
     ],
     "17.1 Test de análisis estático de importaciones (arquitectura) **[independiente]**": [
@@ -394,6 +654,21 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792077892642
+      },
+      {
+        "executionId": "33235cce-1457-43c2-b350-dbe5c7db589c",
+        "chatSessionId": "sess_a7a2b61d-6afe-4009-8682-80d34142aeaa",
+        "timestamp": 1792111652369
+      },
+      {
+        "executionId": "40e0c1bf-09ac-4781-a679-a131425f4a8b",
+        "chatSessionId": "sess_52116702-48ed-4d06-8ec7-1872f6152c7e",
+        "timestamp": 1792115514101
+      },
+      {
+        "executionId": "25911411-53e2-41f5-9e45-ff1586e4b4a6",
+        "chatSessionId": "sess_7774928e-58f1-4d32-9843-c6fd48925ce3",
+        "timestamp": 1792116366985
       }
     ],
     "17.2 Verificación del KPI de impacto social y human-in-the-loop **[integración]**": [
@@ -401,6 +676,21 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792077892719
+      },
+      {
+        "executionId": "33235cce-1457-43c2-b350-dbe5c7db589c",
+        "chatSessionId": "sess_a7a2b61d-6afe-4009-8682-80d34142aeaa",
+        "timestamp": 1792111652516
+      },
+      {
+        "executionId": "40e0c1bf-09ac-4781-a679-a131425f4a8b",
+        "chatSessionId": "sess_52116702-48ed-4d06-8ec7-1872f6152c7e",
+        "timestamp": 1792115514380
+      },
+      {
+        "executionId": "25911411-53e2-41f5-9e45-ff1586e4b4a6",
+        "chatSessionId": "sess_7774928e-58f1-4d32-9843-c6fd48925ce3",
+        "timestamp": 1792116367230
       }
     ],
     "17.4 Chequeo de factibilidad y sustentabilidad **[independiente]**": [
@@ -408,6 +698,21 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792077892803
+      },
+      {
+        "executionId": "33235cce-1457-43c2-b350-dbe5c7db589c",
+        "chatSessionId": "sess_a7a2b61d-6afe-4009-8682-80d34142aeaa",
+        "timestamp": 1792111652680
+      },
+      {
+        "executionId": "40e0c1bf-09ac-4781-a679-a131425f4a8b",
+        "chatSessionId": "sess_52116702-48ed-4d06-8ec7-1872f6152c7e",
+        "timestamp": 1792115514668
+      },
+      {
+        "executionId": "25911411-53e2-41f5-9e45-ff1586e4b4a6",
+        "chatSessionId": "sess_7774928e-58f1-4d32-9843-c6fd48925ce3",
+        "timestamp": 1792116367564
       }
     ],
     "17.5 Calidad de presentación — guion de demo y documentación por área **[integración]**": [
@@ -415,6 +720,21 @@
         "executionId": "cd039ddb-6f63-4e30-a70c-9d68914d3a44",
         "chatSessionId": "sess_8ba098f2-3e1a-4d97-9286-32b3e597e481",
         "timestamp": 1792078371581
+      },
+      {
+        "executionId": "33235cce-1457-43c2-b350-dbe5c7db589c",
+        "chatSessionId": "sess_a7a2b61d-6afe-4009-8682-80d34142aeaa",
+        "timestamp": 1792111652810
+      },
+      {
+        "executionId": "40e0c1bf-09ac-4781-a679-a131425f4a8b",
+        "chatSessionId": "sess_52116702-48ed-4d06-8ec7-1872f6152c7e",
+        "timestamp": 1792115515024
+      },
+      {
+        "executionId": "25911411-53e2-41f5-9e45-ff1586e4b4a6",
+        "chatSessionId": "sess_7774928e-58f1-4d32-9843-c6fd48925ce3",
+        "timestamp": 1792116367834
       }
     ],
     "6. Módulo E — Clasificación de observaciones **[independiente]**": [
@@ -429,6 +749,289 @@
         "executionId": "20ab974a-d40c-4e33-a8b5-dee7bb3c190d",
         "chatSessionId": "sess_8d24b706-c639-44e7-b697-15d6cf9c68b4",
         "timestamp": 1792079179950
+      }
+    ],
+    "7.2 Implementar `domain/rubrica.py` (`RubricaDecision`) **puramente determinista** que consume la **rÃºbrica oficial** desde `rubrica_versiones.criterios` (estructura tramo de sala Ã— nÃºcleo Ã— 8 niveles de progresiÃ³n Ã— conductas observables + descriptor + umbrales)": [
+      {
+        "executionId": "3ca25dd1-373a-4e9b-9ad0-41cd549a0749",
+        "chatSessionId": "sess_bdf0c668-31ee-40f1-ad27-c99d2b605022",
+        "timestamp": 1792082049875
+      },
+      {
+        "executionId": "3ca25dd1-373a-4e9b-9ad0-41cd549a0749",
+        "chatSessionId": "sess_bdf0c668-31ee-40f1-ad27-c99d2b605022",
+        "timestamp": 1792082548722
+      }
+    ],
+    "7.9 Implementar `RecommendationService`: recuperar evidencia previa (RAG) â†’ `RubricaDecision` (mapea a conductas observables y decide) â†’ LLM (argumenta) â†’ persistir con `version_rubrica`": [
+      {
+        "executionId": "3ca25dd1-373a-4e9b-9ad0-41cd549a0749",
+        "chatSessionId": "sess_bdf0c668-31ee-40f1-ad27-c99d2b605022",
+        "timestamp": 1792082556001
+      },
+      {
+        "executionId": "3ca25dd1-373a-4e9b-9ad0-41cd549a0749",
+        "chatSessionId": "sess_bdf0c668-31ee-40f1-ad27-c99d2b605022",
+        "timestamp": 1792083042639
+      }
+    ],
+    "7.7 Soportar ediciÃ³n y aprobaciÃ³n de bitÃ¡cora": [
+      {
+        "executionId": "3ca25dd1-373a-4e9b-9ad0-41cd549a0749",
+        "chatSessionId": "sess_bdf0c668-31ee-40f1-ad27-c99d2b605022",
+        "timestamp": 1792083048604
+      },
+      {
+        "executionId": "3ca25dd1-373a-4e9b-9ad0-41cd549a0749",
+        "chatSessionId": "sess_bdf0c668-31ee-40f1-ad27-c99d2b605022",
+        "timestamp": 1792083261625
+      }
+    ],
+    "7.2b Transcribir la rÃºbrica oficial (PDF) a la estructura JSON versionada de `rubrica_versiones.criterios`": [
+      {
+        "executionId": "40bfe9dd-1b9d-4d6e-a825-49be7b7e5ee4",
+        "chatSessionId": "sess_71bb2c77-3b08-43f4-8a41-592c04337b58",
+        "timestamp": 1792083349810
+      },
+      {
+        "executionId": "40bfe9dd-1b9d-4d6e-a825-49be7b7e5ee4",
+        "chatSessionId": "sess_71bb2c77-3b08-43f4-8a41-592c04337b58",
+        "timestamp": 1792083711816
+      }
+    ],
+    "7.3 Sembrar la **versiÃ³n inicial de la rÃºbrica oficial** en `rubrica_versiones` (vÃ­a interfaz `RelationalRepo`)": [
+      {
+        "executionId": "3dee6484-70bc-421e-8dea-e799d5e2f229",
+        "chatSessionId": "sess_edea3b77-f7e6-4568-9f9d-de5d4aa433d3",
+        "timestamp": 1792083834022
+      },
+      {
+        "executionId": "3dee6484-70bc-421e-8dea-e799d5e2f229",
+        "chatSessionId": "sess_edea3b77-f7e6-4568-9f9d-de5d4aa433d3",
+        "timestamp": 1792084468187
+      }
+    ],
+    "8. Checkpoint â€” Asegurar que pasan los tests de los mÃ³dulos Aâ€“F": [
+      {
+        "executionId": "ba572869-251d-4ec6-bffb-2fd5316cdb49",
+        "chatSessionId": "sess_6ed39315-605f-40af-851d-73e4e955f2f6",
+        "timestamp": 1792085410626
+      },
+      {
+        "executionId": "ba572869-251d-4ec6-bffb-2fd5316cdb49",
+        "chatSessionId": "sess_6ed39315-605f-40af-851d-73e4e955f2f6",
+        "timestamp": 1792085659185
+      }
+    ],
+    "12. Frontend PWA â€” base y capa de servicios API (posterior) **[integraciÃ³n]** (consume la API REST que expone G)": [
+      {
+        "executionId": "7498db08-264e-437b-ab9a-23a76f56fb14",
+        "chatSessionId": "sess_854007e3-9054-40f9-9a4a-4918bd0632fc",
+        "timestamp": 1792104011161
+      },
+      {
+        "executionId": "7498db08-264e-437b-ab9a-23a76f56fb14",
+        "chatSessionId": "sess_854007e3-9054-40f9-9a4a-4918bd0632fc",
+        "timestamp": 1792105396258
+      }
+    ],
+    "13. Frontend â€” pantallas de educadora y dashboard de direcciÃ³n (estilo placeholder) **[integraciÃ³n]**": [
+      {
+        "executionId": "c328f2f5-6f4e-4199-8956-031495362b93",
+        "chatSessionId": "sess_bc96af9e-dc6b-4cc0-868b-04835c8f6f1a",
+        "timestamp": 1792105556119
+      },
+      {
+        "executionId": "c328f2f5-6f4e-4199-8956-031495362b93",
+        "chatSessionId": "sess_bc96af9e-dc6b-4cc0-868b-04835c8f6f1a",
+        "timestamp": 1792106082963
+      }
+    ],
+    "14.4 Implementar aplicando **estilos y tokens de diseÃ±o sobre la estructura existente**, sin alterar la lÃ³gica de negocio": [
+      {
+        "executionId": "64bdf92b-7b54-43ec-b10d-82fec046f09a",
+        "chatSessionId": "sess_70bdc6ab-5fbd-4ab4-9012-d3b64c4f6a1e",
+        "timestamp": 1792109193031
+      },
+      {
+        "executionId": "64bdf92b-7b54-43ec-b10d-82fec046f09a",
+        "chatSessionId": "sess_70bdc6ab-5fbd-4ab4-9012-d3b64c4f6a1e",
+        "timestamp": 1792109488014
+      }
+    ],
+    "9. Módulo G — Reporte de dirección, API REST y contenedor DI **[integración]** (cablea B/D/E/F vía DI; integración real requiere esos módulos funcionales)": [
+      {
+        "executionId": "e86f5de2-b093-4af8-87ce-6537890f172a",
+        "chatSessionId": "sess_fe537cd3-1c8c-4b9d-8b21-9f1cad68becf",
+        "timestamp": 1792104627116
+      }
+    ],
+    "10. Transversal — Resguardo de datos sensibles (despersonalización)": [
+      {
+        "executionId": "a736b91c-24e2-4590-8fe9-33272e4d2b24",
+        "chatSessionId": "sess_6c63c7ae-69cc-4208-8225-29e8e086f8bc",
+        "timestamp": 1792105074620
+      },
+      {
+        "executionId": "a736b91c-24e2-4590-8fe9-33272e4d2b24",
+        "chatSessionId": "sess_6c63c7ae-69cc-4208-8225-29e8e086f8bc",
+        "timestamp": 1792105468882
+      }
+    ],
+    "18.1 Rezago relativo a la composición de la sala (alerta automática a la educadora) **[integración]**": [
+      {
+        "executionId": "33235cce-1457-43c2-b350-dbe5c7db589c",
+        "chatSessionId": "sess_a7a2b61d-6afe-4009-8682-80d34142aeaa",
+        "timestamp": 1792111652976
+      },
+      {
+        "executionId": "40e0c1bf-09ac-4781-a679-a131425f4a8b",
+        "chatSessionId": "sess_52116702-48ed-4d06-8ec7-1872f6152c7e",
+        "timestamp": 1792115515455
+      },
+      {
+        "executionId": "25911411-53e2-41f5-9e45-ff1586e4b4a6",
+        "chatSessionId": "sess_7774928e-58f1-4d32-9843-c6fd48925ce3",
+        "timestamp": 1792116368129
+      }
+    ],
+    "18.2 Vista de grupo-curso: nivel predominante de la sala **[integración]**": [
+      {
+        "executionId": "33235cce-1457-43c2-b350-dbe5c7db589c",
+        "chatSessionId": "sess_a7a2b61d-6afe-4009-8682-80d34142aeaa",
+        "timestamp": 1792111653121
+      },
+      {
+        "executionId": "40e0c1bf-09ac-4781-a679-a131425f4a8b",
+        "chatSessionId": "sess_52116702-48ed-4d06-8ec7-1872f6152c7e",
+        "timestamp": 1792115515764
+      },
+      {
+        "executionId": "25911411-53e2-41f5-9e45-ff1586e4b4a6",
+        "chatSessionId": "sess_7774928e-58f1-4d32-9843-c6fd48925ce3",
+        "timestamp": 1792116368382
+      }
+    ],
+    "18.3 Vista de jardín: comparar salas equivalentes y alertar a la directora **[integración]**": [
+      {
+        "executionId": "33235cce-1457-43c2-b350-dbe5c7db589c",
+        "chatSessionId": "sess_a7a2b61d-6afe-4009-8682-80d34142aeaa",
+        "timestamp": 1792111653287
+      },
+      {
+        "executionId": "40e0c1bf-09ac-4781-a679-a131425f4a8b",
+        "chatSessionId": "sess_52116702-48ed-4d06-8ec7-1872f6152c7e",
+        "timestamp": 1792115516047
+      },
+      {
+        "executionId": "25911411-53e2-41f5-9e45-ff1586e4b4a6",
+        "chatSessionId": "sess_7774928e-58f1-4d32-9843-c6fd48925ce3",
+        "timestamp": 1792116368621
+      }
+    ],
+    "18.4 Nivel general del niño/a = promedio de los niveles por núcleo **[independiente]**": [
+      {
+        "executionId": "33235cce-1457-43c2-b350-dbe5c7db589c",
+        "chatSessionId": "sess_a7a2b61d-6afe-4009-8682-80d34142aeaa",
+        "timestamp": 1792111653466
+      },
+      {
+        "executionId": "40e0c1bf-09ac-4781-a679-a131425f4a8b",
+        "chatSessionId": "sess_52116702-48ed-4d06-8ec7-1872f6152c7e",
+        "timestamp": 1792115516303
+      },
+      {
+        "executionId": "25911411-53e2-41f5-9e45-ff1586e4b4a6",
+        "chatSessionId": "sess_7774928e-58f1-4d32-9843-c6fd48925ce3",
+        "timestamp": 1792116368863
+      },
+      {
+        "executionId": "bd7381ca-ef41-4520-ac0a-b70c7723ef37",
+        "chatSessionId": "sess_aaa8084e-1178-4635-bec9-faa4121e76d6",
+        "timestamp": 1792117652575
+      },
+      {
+        "executionId": "bd7381ca-ef41-4520-ac0a-b70c7723ef37",
+        "chatSessionId": "sess_aaa8084e-1178-4635-bec9-faa4121e76d6",
+        "timestamp": 1792118152011
+      }
+    ],
+    "18.5 Evolución individual en el tiempo (serie temporal del nivel por núcleo) **[integración]**": [
+      {
+        "executionId": "33235cce-1457-43c2-b350-dbe5c7db589c",
+        "chatSessionId": "sess_a7a2b61d-6afe-4009-8682-80d34142aeaa",
+        "timestamp": 1792111653618
+      },
+      {
+        "executionId": "40e0c1bf-09ac-4781-a679-a131425f4a8b",
+        "chatSessionId": "sess_52116702-48ed-4d06-8ec7-1872f6152c7e",
+        "timestamp": 1792115516600
+      },
+      {
+        "executionId": "25911411-53e2-41f5-9e45-ff1586e4b4a6",
+        "chatSessionId": "sess_7774928e-58f1-4d32-9843-c6fd48925ce3",
+        "timestamp": 1792116369127
+      }
+    ],
+    "18.6 Privacidad de grabaciones: consentimiento + extraer-y-borrar **[independiente]**": [
+      {
+        "executionId": "33235cce-1457-43c2-b350-dbe5c7db589c",
+        "chatSessionId": "sess_a7a2b61d-6afe-4009-8682-80d34142aeaa",
+        "timestamp": 1792111653793
+      },
+      {
+        "executionId": "40e0c1bf-09ac-4781-a679-a131425f4a8b",
+        "chatSessionId": "sess_52116702-48ed-4d06-8ec7-1872f6152c7e",
+        "timestamp": 1792115516880
+      },
+      {
+        "executionId": "25911411-53e2-41f5-9e45-ff1586e4b4a6",
+        "chatSessionId": "sess_7774928e-58f1-4d32-9843-c6fd48925ce3",
+        "timestamp": 1792116369373
+      }
+    ],
+    "18.7 Vínculo del post-it (foto manuscrita) al `id_nino` por nombre **[integración]**": [
+      {
+        "executionId": "33235cce-1457-43c2-b350-dbe5c7db589c",
+        "chatSessionId": "sess_a7a2b61d-6afe-4009-8682-80d34142aeaa",
+        "timestamp": 1792111653941
+      },
+      {
+        "executionId": "40e0c1bf-09ac-4781-a679-a131425f4a8b",
+        "chatSessionId": "sess_52116702-48ed-4d06-8ec7-1872f6152c7e",
+        "timestamp": 1792115517166
+      },
+      {
+        "executionId": "25911411-53e2-41f5-9e45-ff1586e4b4a6",
+        "chatSessionId": "sess_7774928e-58f1-4d32-9843-c6fd48925ce3",
+        "timestamp": 1792116369628
+      }
+    ],
+    "18.8 (Alcance futuro) Cargar \"pasos a seguir\" por nivel/núcleo": [
+      {
+        "executionId": "33235cce-1457-43c2-b350-dbe5c7db589c",
+        "chatSessionId": "sess_a7a2b61d-6afe-4009-8682-80d34142aeaa",
+        "timestamp": 1792111654056
+      },
+      {
+        "executionId": "40e0c1bf-09ac-4781-a679-a131425f4a8b",
+        "chatSessionId": "sess_52116702-48ed-4d06-8ec7-1872f6152c7e",
+        "timestamp": 1792115517460
+      },
+      {
+        "executionId": "25911411-53e2-41f5-9e45-ff1586e4b4a6",
+        "chatSessionId": "sess_7774928e-58f1-4d32-9843-c6fd48925ce3",
+        "timestamp": 1792116369882
+      },
+      {
+        "executionId": "bd7381ca-ef41-4520-ac0a-b70c7723ef37",
+        "chatSessionId": "sess_aaa8084e-1178-4635-bec9-faa4121e76d6",
+        "timestamp": 1792117653488
+      },
+      {
+        "executionId": "bd7381ca-ef41-4520-ac0a-b70c7723ef37",
+        "chatSessionId": "sess_aaa8084e-1178-4635-bec9-faa4121e76d6",
+        "timestamp": 1792118152840
       }
     ]
   }

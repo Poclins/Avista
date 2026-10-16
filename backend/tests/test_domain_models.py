@@ -9,6 +9,7 @@ from datetime import date
 import pytest
 from pydantic import ValidationError
 
+from app.core.nombres_sinteticos import nombres_para_nino
 from app.domain.models import (
     Bitacora,
     DecisionNivel,
@@ -57,8 +58,12 @@ def test_estado_bitacora_valores() -> None:
 
 
 def test_rol_valores() -> None:
-    """Rol expone educadora y directora."""
-    assert {r.value for r in Rol} == {"educadora", "directora"}
+    """Rol expone los valores reales del Dataset E-1 oficial."""
+    assert {r.value for r in Rol} == {
+        "educadora_parvulos",
+        "tecnico_parvulos",
+        "directora",
+    }
 
 
 def test_enum_es_str() -> None:
@@ -85,20 +90,26 @@ def test_jardin_construccion() -> None:
 
 def test_educadora_rol_por_defecto() -> None:
     educadora = Educadora(id_educadora="E-001", id_jardin="J-001", anios_experiencia=5)
-    assert educadora.rol is Rol.educadora
+    assert educadora.rol is Rol.educadora_parvulos
 
 
-def test_nino_sin_pii() -> None:
-    """El modelo Nino se identifica por seudónimo (no admite nombre real)."""
+def test_nino_acepta_nombre_sintetico_y_rechaza_rut() -> None:
+    """Acepta identidad ficticia de UI, pero sigue rechazando PII no permitida."""
     nino = Nino(
         id_nino="N-001",
+        nombre="Amalia",
+        apellido_paterno="Rojas",
+        apellido_materno="Soto",
         id_jardin="J-001",
         fecha_nacimiento=date(2021, 5, 10),
         sexo_registrado="F",
         sala_grupo="Sala Cuna",
         fecha_ingreso=date(2023, 3, 1),
     )
-    assert nino.id_nino == "N-001"
+    assert f"{nino.nombre} {nino.apellido_paterno} {nino.apellido_materno}" == (
+        "Amalia Rojas Soto"
+    )
+
     with pytest.raises(ValidationError):
         Nino(
             id_nino="N-002",
@@ -107,9 +118,16 @@ def test_nino_sin_pii() -> None:
             sexo_registrado="M",
             sala_grupo="Sala Cuna",
             fecha_ingreso=date(2023, 3, 1),
-            nombre="Pedro",  # type: ignore[call-arg]
+            rut="12.345.678-5",  # type: ignore[call-arg]
         )
 
+def test_500_nombres_sinteticos_son_unicos() -> None:
+    nombres = [
+        nombres_para_nino(f"NINO-{indice:05d}")
+        for indice in range(1, 501)
+    ]
+    assert len(set(nombres)) == 500
+    assert all(paterno != materno for _, paterno, materno in nombres)
 
 def test_nivel_ruta_con_dominios() -> None:
     nivel = NivelRuta(

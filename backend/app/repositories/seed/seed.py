@@ -7,9 +7,11 @@ queda **encapsulado detrás de la frontera del seed**: el llamador solo conoce
 la interfaz ``RelationalRepo``, de modo que cambiar de dataset (oficial ↔
 reducido casero) **no toca el código de los servicios**.
 
-Tras cargar, el seed **valida los conteos** cargados contra
-``distribucion_y_validacion`` (los conteos de referencia que vienen en
-``consolidado.json``) y **rechaza la carga con un error en español**
+Tras cargar, el seed **valida los conteos** cargados contra los conteos
+esperados derivados del propio Dataset E-1 (``conteos_esperados``: una
+comprobación de consistencia interna entre las filas ORM cargadas y las filas
+de los CSV fuente, con chequeo cruzado contra las listas anidadas del
+``consolidado.json`` oficial) y **rechaza la carga con un error en español**
 (:class:`SeedValidationError`) si algún conteo no coincide (Requirement 10.9 /
 14.2). La carga procesa los 500 niños/as sin error, incluidas las
 observaciones con nota/formato/manifestación ausente (celda vacía = ausencia de
@@ -57,6 +59,7 @@ from app.repositories.schema import (
     RubricaVersion,
     RutaNivel,
 )
+from app.core.nombres_sinteticos import nombres_para_nino
 from app.repositories.seed.dataset_loader import (
     TABLAS,
     DatasetE1,
@@ -66,7 +69,18 @@ from app.repositories.seed.dataset_loader import (
 
 DATA_DIR = Path(__file__).parent / "data"
 
-# Orden de carga: respeta las dependencias de claves foráneas.
+# Nombre del archivo JSON que transcribe la rúbrica oficial versionada
+# (tarea 7.2b). Es la fuente de verdad de ``rubrica_versiones.criterios``:
+# estructura tramo de sala × núcleo × 8 niveles de progresión × conductas
+# observables + descriptor + umbrales. Agregar núcleos o tramos es cuestión de
+# datos (nuevas versiones), nunca de cambios de código (Requirements 21.1, 21.5).
+RUBRICA_FILE = "rubrica_versiones.json"
+
+# Orden de carga de las tablas del dataset reducido: respeta las dependencias de
+# claves foráneas. ``rubrica_versiones`` NO va aquí: la versión inicial de la
+# rúbrica oficial se siembra aparte vía :func:`seed_rubrica_oficial`, porque su
+# fuente es el PDF oficial transcrito (``rubrica_versiones.json``), no un CSV/JSON
+# del dataset E-1, y debe sembrarse en ambos caminos de seed (reducido y oficial).
 SEED_ORDER: list[tuple[str, type[Base]]] = [
     ("jardines", Jardin),
     ("educadoras", Educadora),
@@ -75,7 +89,6 @@ SEED_ORDER: list[tuple[str, type[Base]]] = [
     ("manifestaciones", Manifestacion),
     ("observaciones", Observacion),
     ("observacion_manifestaciones", ObservacionManifestacion),
-    ("rubrica_versiones", RubricaVersion),
 ]
 
 # Campos que deben convertirse de ISO string a ``date`` al construir las ORM.
@@ -99,32 +112,136 @@ class SeedValidationError(SeedError):
 
 
 # ===========================================================================
+# Rúbrica oficial: siembra de la versión inicial en ``rubrica_versiones``
+# ===========================================================================
+def _cargar_rubrica_versiones() -> list[dict]:
+    """Lee las versiones de la rúbrica oficial desde ``rubrica_versiones.json``.
+
+    El archivo es el artefacto de la tarea 7.2b: la transcripción de la rúbrica
+    oficial (PDF) a la estructura JSON versionada de ``rubrica_versiones.criterios``
+    (tramo × núcleo × 8 niveles de progresión × conductas observables + descriptor
+    + umbrales). Es la **fuente de verdad** de la rúbrica como datos versionados.
+    """
+    return _load_json("rubrica_versiones")
+
+
+def seed_rubrica_oficial(repo: RelationalRepo) -> int:
+    """Siembra la **versión inicial de la rúbrica oficial** en ``rubrica_versiones``.
+
+    Carga la rúbrica oficial transcrita (``rubrica_versiones.json``, tarea 7.2b)
+    —al menos el núcleo ``identidad_y_autonomia`` para los 3 tramos (Sala Cuna,
+    Nivel Medio, Transición) con sus 8 niveles de progresión y conductas
+    observables— y la persiste **vía la interfaz** ``RelationalRepo`` (nunca
+    tocando el SDK de la base directamente), cumpliendo los Requirements 6.6,
+    21.1 y 21.5.
+
+    Los criterios quedan versionados y modificables **sin cambios de código**:
+    agregar núcleos o tramos adicionales es cuestión de añadir **nuevas versiones**
+    (nuevas filas) a ``rubrica_versiones``, no de editar código.
+
+    Idempotencia: usa ``add_all`` (``merge`` por clave primaria
+    ``version_rubrica``), de modo que re-ejecutar el seed **no crea versiones
+    duplicadas**.
+
+    Args:
+        repo: repositorio relacional ya construido (SQLite demo o Postgres AWS).
+
+    Returns:
+        Número de versiones de rúbrica sembradas.
+    """
+    filas = _cargar_rubrica_versiones()
+    entidades: list[Base] = [
+        _to_entity(RubricaVersion, fila) for fila in filas
+    ]
+    if entidades:
+        repo.add_all(entidades)
+    return len(entidades)
+
+
+# ===========================================================================
 # Camino OFICIAL: carga del zip público vía DatasetLoader + validación
 # ===========================================================================
 def conteos_esperados(dataset: DatasetE1) -> dict[str, int]:
-    """Extrae los conteos de referencia de ``distribucion_y_validacion``.
+    """Deriva los conteos de referencia esperados por tabla del Dataset E-1.
 
-    Los conteos esperados por tabla vienen en ``consolidado.json`` bajo la
-    clave ``conteos`` (la sección de ``distribucion_y_validacion`` del dataset
-    oficial). Se devuelve ``{tabla: n_esperado}`` para las 7 tablas relacionales
-    presentes en el dataset.
+    El ``consolidado.json`` del Dataset E-1 **oficial** NO trae una sección
+    plana ``conteos``; sus claves de nivel superior son ``fecha_referencia``,
+    ``jardines`` (lista de 20), ``naturaleza``, ``ruta_niveles`` (lista de 9) y
+    ``schema_version``. Por eso esta función deriva los conteos esperados **del
+    propio dataset** (``dataset.csvs``), de modo que la validación posterior sea
+    una **comprobación de consistencia interna** (filas ORM cargadas vs filas
+    del CSV fuente) en vez de depender de un bloque ``conteos`` ausente. Esto
+    sigue atrapando errores de mapeo o de descarte de filas, sin fabricar
+    números.
+
+    Compatibilidad hacia atrás: si ``consolidado.json`` **sí** trae un ``dict``
+    bajo la clave ``conteos`` (p. ej. el dataset reducido de pruebas), se usa
+    esa sección como fuente de los conteos esperados.
+
+    Chequeo cruzado barato: cuando el ``consolidado`` oficial trae listas
+    anidadas ``jardines`` y ``ruta_niveles``, se verifica que su largo coincida
+    con el número de filas del CSV correspondiente; una discrepancia lanza
+    :class:`SeedValidationError` en español (consolidado vs CSV incoherentes).
+
+    Args:
+        dataset: el :class:`DatasetE1` ya leído (CSV + consolidado).
+
+    Returns:
+        ``{tabla: n_esperado}`` para las 7 tablas relacionales del dataset.
 
     Raises:
-        SeedValidationError: si ``consolidado.json`` no trae la sección de
-            conteos de referencia (no se puede validar la carga).
+        SeedValidationError: si el ``consolidado`` oficial trae listas anidadas
+            (``jardines``/``ruta_niveles``) cuyo largo no cuadra con sus CSV.
     """
-    conteos = dataset.consolidado.get("conteos")
-    if not isinstance(conteos, dict):
-        raise SeedValidationError(
-            "El 'consolidado.json' del Dataset E-1 no contiene la sección de "
-            "conteos de referencia ('conteos' en 'distribucion_y_validacion'); "
-            "no es posible validar la carga."
-        )
-    esperados: dict[str, int] = {}
-    for tabla in TABLAS:
-        if tabla in conteos:
-            esperados[tabla] = int(conteos[tabla])
+    consolidado = dataset.consolidado or {}
+
+    # Compatibilidad hacia atrás: dataset reducido/de pruebas con 'conteos' plano.
+    conteos = consolidado.get("conteos")
+    if isinstance(conteos, dict):
+        esperados: dict[str, int] = {}
+        for tabla in TABLAS:
+            if tabla in conteos:
+                esperados[tabla] = int(conteos[tabla])
+        return esperados
+
+    # Dataset E-1 oficial: derivar los conteos esperados del propio CSV. La
+    # validación se vuelve una comprobación de consistencia interna (filas
+    # cargadas vs filas fuente), que atrapa descartes/duplicados de filas.
+    esperados = {tabla: len(dataset.csvs.get(tabla, [])) for tabla in TABLAS}
+
+    # Chequeo cruzado barato contra las listas anidadas del consolidado oficial:
+    # el consolidado y los CSV deben ser coherentes entre sí.
+    _verificar_consolidado_anidado(consolidado, esperados)
+
     return esperados
+
+
+def _verificar_consolidado_anidado(
+    consolidado: dict[str, Any], esperados: dict[str, int]
+) -> None:
+    """Cruza las listas anidadas del ``consolidado`` oficial con los CSV.
+
+    El ``consolidado.json`` oficial trae ``jardines`` y ``ruta_niveles`` como
+    listas; su largo debe coincidir con el número de filas del CSV homónimo. Si
+    no coincide, el dataset es internamente incoherente y se rechaza con un
+    error en español (Requirement 10.9 / 14.2).
+    """
+    discrepancias: list[str] = []
+    for tabla in ("jardines", "ruta_niveles"):
+        nested = consolidado.get(tabla)
+        if isinstance(nested, list) and tabla in esperados:
+            if len(nested) != esperados[tabla]:
+                discrepancias.append(
+                    f"- tabla '{tabla}': el 'consolidado.json' lista "
+                    f"{len(nested)} filas, pero el CSV trae {esperados[tabla]}."
+                )
+    if discrepancias:
+        detalle = "\n".join(discrepancias)
+        raise SeedValidationError(
+            "El Dataset E-1 es internamente incoherente: el 'consolidado.json' "
+            "no cuadra con los CSV.\n"
+            f"{detalle}"
+        )
 
 
 def validar_conteos(
@@ -175,9 +292,9 @@ def seed_oficial(
     Lee ``dataset_e1_publico.zip`` vía :meth:`DatasetLoader.load`, mapea cada
     fila a entidades ORM del dominio (Módulo A) con ``to_entities`` y las
     inserta en la base relacional vía ``repo`` respetando el orden de claves
-    foráneas. Al terminar, **valida los conteos cargados** contra
-    ``distribucion_y_validacion`` y **rechaza con error en español** si alguno
-    no coincide (Requirement 10.9 / 14.2).
+    foráneas. Al terminar, **valida los conteos cargados** contra los conteos
+    esperados derivados del dataset (``conteos_esperados``) y **rechaza con
+    error en español** si alguno no coincide (Requirement 10.9 / 14.2).
 
     `DatasetLoader` queda encapsulado tras esta frontera del seed: el resto del
     sistema solo conoce ``RelationalRepo``.
@@ -205,8 +322,15 @@ def seed_oficial(
             repo.add_all(entidades)
         cargados[tabla] = len(entidades)
 
-    # Validación de conteos contra distribucion_y_validacion (consolidado.json).
+    # Validación de conteos: consistencia interna (filas cargadas vs CSV fuente)
+    # con chequeo cruzado contra el consolidado.json oficial.
+    # Se valida solo sobre las 7 tablas del dataset oficial; la rúbrica no viene
+    # en el zip (su fuente es el PDF oficial) y se siembra aparte a continuación.
     validar_conteos(cargados, conteos_esperados(dataset))
+
+    # Sembrar la versión inicial de la rúbrica oficial (fuente: PDF transcrito,
+    # no el zip): se siembra en ambos caminos de seed vía la interfaz del repo.
+    cargados["rubrica_versiones"] = seed_rubrica_oficial(repo)
     return cargados
 
 
@@ -222,6 +346,11 @@ def _load_json(tabla: str) -> list[dict]:
 def _to_entity(model: type[Base], fila: dict) -> Base:
     """Construye una entidad ORM desde una fila del JSON (parsea fechas)."""
     datos = dict(fila)
+    if model is Nino and datos.get("id_nino"):
+        nombre, paterno, materno = nombres_para_nino(datos["id_nino"])
+        datos.setdefault("nombre", nombre)
+        datos.setdefault("apellido_paterno", paterno)
+        datos.setdefault("apellido_materno", materno)
     for campo in _DATE_FIELDS.get(model, ()):  # type: ignore[arg-type]
         valor = datos.get(campo)
         if isinstance(valor, str):
@@ -275,6 +404,11 @@ def seed(repo: RelationalRepo) -> dict[str, int]:
         if entidades:
             repo.add_all(entidades)
         resumen[tabla] = len(entidades)
+
+    # Sembrar la versión inicial de la rúbrica oficial (misma fuente de verdad
+    # en ambos caminos de seed): núcleo Identidad y Autonomía × 3 tramos × 8
+    # niveles, versionada y extensible sin cambios de código (Req 6.6, 21.1, 21.5).
+    resumen["rubrica_versiones"] = seed_rubrica_oficial(repo)
     return resumen
 
 
@@ -330,6 +464,7 @@ if __name__ == "__main__":  # pragma: no cover
 __all__ = [
     "seed",
     "seed_oficial",
+    "seed_rubrica_oficial",
     "conteos_esperados",
     "validar_conteos",
     "cargar_dataset",
@@ -339,5 +474,6 @@ __all__ = [
     "SeedValidationError",
     "DatasetLoaderError",
     "DATA_DIR",
+    "RUBRICA_FILE",
     "SEED_ORDER",
 ]
