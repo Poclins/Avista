@@ -13,7 +13,7 @@ Principios de ejecución:
 - **Frontend es una tarea posterior**, construida desde los mockups de Figma; no bloquea los módulos de backend.
 - **Integración final (E2E)** va al final: solo cablea implementaciones reales vía el contenedor DI y prueba el cruce entre módulos, sin romper la independencia de los módulos previos.
 
-Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B: esquema + `RelationalRepo` + seed inicial E-1)** ya están implementadas y marcadas `[x]`. El cierre del Módulo B migra el seed al **Dataset E-1 oficial** (3.7–3.11) y el resto está sin iniciar. Al final del plan se añade un bloque transversal de **atributos de calidad** (tarea 17, pilares de evaluación) y una **matriz legible de dependencias entre módulos** (independiente vs integración) en la sección *Task Dependency Graph*.
+Estado actual: los **módulos A–F** tienen sus tareas de núcleo implementadas y sus tests requeridos en verde — la **suite completa del backend pasa (408 tests en modo mock)** — y el **checkpoint 8 está superado**. Esto incluye 1 (bootstrap), 2/2.1 (Módulo A congelado), 3.1–3.5 y 3.7–3.9 (Módulo B: esquema + `RelationalRepo` + consultas agregadas + `DatasetLoader` del Dataset E-1 oficial), 4.1–4.3 (Módulo C), 5.1–5.4 (Módulo D), 6.1–6.2 (Módulo E) y 7.1–7.3/7.6/7.7/7.9 (Módulo F: rúbrica oficial + bitácoras + recomendación). La tarea **3.4a está hecha**: los dos fakes de `RelationalRepo` en tests (`_FakeRelationalRepo` en `tests/test_classification_service.py` y `FakeRelationalRepo` en `tests/test_ingestion_service.py`) ya implementan las 7 consultas agregadas de 3.4, por lo que la suite instancia y pasa. Quedan **sin iniciar**: el **Módulo G** (reporte de dirección + API REST + contenedor DI), el **Módulo H** (infraestructura AWS CDK + despliegue), la **tarea transversal 10** (resguardo de datos sensibles/despersonalización), el **Frontend** (12–13) y el **disparador de Figma** (14, a la espera del PDF), además de la integración E2E (15) y los atributos de calidad del sistema (17). Del **Módulo I** (brechas del Reto E1 según la FAQ de Integra, tarea 18) ya están hechas **18.4** (nivel general = promedio de niveles por núcleo, Req 25) y **18.8** (esquema listo para "pasos a seguir", Req 29); las subtareas de integración 18.1–18.3/18.5/18.7 quedan a la espera del Módulo G, y 18.6 a la espera de resolver el conflicto con Req 1.2. Al final del plan se añade un bloque transversal de **atributos de calidad** (tarea 17, pilares de evaluación) y una **matriz legible de dependencias entre módulos** (independiente vs integración) en la sección *Task Dependency Graph*.
 
 ## Tasks
 
@@ -240,7 +240,7 @@ Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B:
   - _Requirements: 12.2, 12.6_
 
 <!-- ============================================================= -->
-<!-- TRANSVERSAL Â· Resguardo de datos sensibles. Depende de: A.    -->
+<!-- TRANSVERSAL · Resguardo de datos sensibles. Depende de: A.    -->
 <!-- ============================================================= -->
 
 - [x] 10. Transversal — Resguardo de datos sensibles (despersonalización)
@@ -274,7 +274,7 @@ Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B:
   - _Requirements: 12.5, 12.6_
 
 <!-- ============================================================= -->
-<!-- FRONTEND Â· Tarea posterior (desde Figma). No bloquea backend. -->
+<!-- FRONTEND · Tarea posterior (desde Figma). No bloquea backend. -->
 <!-- ============================================================= -->
 
 - [x] 12. Frontend PWA â€” base y capa de servicios API (posterior) **[integraciÃ³n]** (consume la API REST que expone G)
@@ -288,7 +288,7 @@ Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B:
   - _Requirements: 12.3, 12.6_
 
 <!-- ============================================================= -->
-<!-- DISPARADOR FIGMA Â· LISTO PARA ACTIVAR cuando llegue el PDF.    -->
+<!-- DISPARADOR FIGMA · LISTO PARA ACTIVAR cuando llegue el PDF.    -->
 <!-- No ejecutar hasta recibir los mockups refinados de Figma.     -->
 <!-- No cambia la lógica de negocio ni el contrato REST (inmutable).-->
 <!-- ============================================================= -->
@@ -312,7 +312,7 @@ Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B:
 <!-- ============================================================= -->
 
 - [ ] 15. Integración final E2E — ensamblar y verificar el cruce entre módulos **[integración]** (requiere TODOS los módulos completos y funcionales)
-- [ ] 15.1 Cablear implementaciones concretas vía el contenedor DI y validar límites de interfaz
+- [~] 15.1 Cablear implementaciones concretas vía el contenedor DI y validar límites de interfaz
   - El ensamblaje falla e indica el módulo/importación prohibida si un módulo importa directamente la implementación concreta de otro (solo se permiten `base.py` de interfaz y el dominio A).
   - _Requirements: 13.5, 13.6_
 - [ ]* 15.2 Property test de intercambiabilidad de adaptadores (LSP)
@@ -321,11 +321,11 @@ Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B:
 - [ ]* 15.3 Test E2E de ingesta en modo mock (texto/audio/foto/video)
   - Flujo completo storage → transcripción → clasificación → persistencia → embedding, idempotente.
   - _Requirements: 1.1, 2.1, 3.4, 4.3_
-- [ ] 15.4 Verificación de la demo en modo mock (un solo comando) y actualización del README
+- [~] 15.4 Verificación de la demo en modo mock (un solo comando) y actualización del README
   - Recorrer flujo educadora (capturar → clasificar → recomendación → bitácora → aprobar) y flujo directora (reporte) con tests automatizados; README con guion de demo y pasos AWS opcionales.
   - _Requirements: 10.7, 10.9_
 
-- [ ] 16. Checkpoint final — Asegurar que pasan todos los tests
+- [~] 16. Checkpoint final — Asegurar que pasan todos los tests
   - Ensure all tests pass, ask the user if questions arise.
 
 <!-- ============================================================= -->
@@ -335,30 +335,31 @@ Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B:
 <!-- ============================================================= -->
 
 - [ ] 17. Atributos de calidad y escalabilidad (pilares de evaluación)
-- [ ] 17.1 Test de análisis estático de importaciones (arquitectura) **[independiente]**
+- [~] 17.1 Test de análisis estático de importaciones (arquitectura) **[independiente]**
   - Probar que las clases de servicio importan **solo interfaces** (abstracciones) y **cero** implementaciones concretas de proveedores/repos hermanos; evidenciar OCP/ISP/DIP: agregar un proveedor/modelo nuevo se hace implementando una interfaz **sin editar servicios**.
   - _Requirements: 15.2, 15.5_
-- [ ] 17.2 Verificación del KPI de impacto social y human-in-the-loop **[integración]**
+- [~] 17.2 Verificación del KPI de impacto social y human-in-the-loop **[integración]**
   - Comprobar que el KPI de tiempo de documentación ahorrado (**~4 h/semana → ~0 h**) se **calcula de forma determinista** y se **expone en el reporte de dirección**, y que **ninguna** clasificación, bitácora o recomendación se aplica automáticamente sin **validación humana** (`decision_educadora` registrada antes de considerarla final).
   - _Requirements: 16.1, 16.2, 16.3, 16.5_
 - [ ]* 17.3 Sonda de escalabilidad **[integración]**
   - _Optional_ — apuntar el sistema al **dataset completo de 500 niños** (y opcionalmente a un conjunto multiplicado mayor) y confirmar que **no requiere cambios de código ni de contratos de interfaz**; dejar nota de que `VectorRepo` es **sustituible por OpenSearch Serverless** sin tocar los servicios.
   - _Requirements: 18.1, 18.4, 18.5_
-- [ ] 17.4 Chequeo de factibilidad y sustentabilidad **[independiente]**
+- [~] 17.4 Chequeo de factibilidad y sustentabilidad **[independiente]**
   - Verificar **dependencias fijadas (pinned)** de modo que una instalación posterior reproduzca el mismo conjunto de versiones; **modo mock local a costo cloud cero** (sin llamadas de red a AWS con `USE_MOCKS=true`); **un único flujo de IaC** (AWS CDK Python).
   - _Requirements: 17.1, 17.2, 17.3_
-- [ ] 17.5 Calidad de presentación — guion de demo y documentación por área **[integración]**
+- [~] 17.5 Calidad de presentación — guion de demo y documentación por área **[integración]**
   - Escribir el **guion de demo en el README** (demo mock de un solo comando + demo en vivo sobre AWS con `/health`) y asegurar que `docs/` existe **organizada por área** (`backend/`, `frontend/`, `database/`, `cloud/`), cada una con al menos un Markdown y un diagrama ```mermaid```.
   - _Requirements: 19.1, 19.2, 19.3, 19.4_
 
 <!-- ================================================================= -->
 <!-- MÓDULO I · Brechas del Reto E1 (trayectoria de aprendizaje)    -->
 <!-- Derivado de la FAQ de Fundación Integra. Depende de: A, B, F.  -->
-<!-- NOTA: varias subtareas requieren formalizar nuevos requisitos  -->
-<!--       en requirements.md antes de implementarse.               -->
+<!-- NOTA: 18.4 (Req 25) y 18.8 (Req 29) ya formalizadas e        -->
+<!--       implementadas. Integración 18.1-18.3/18.5/18.7 esperan  -->
+<!--       al Módulo G; 18.6 espera resolver conflicto con Req 1.2. -->
 <!-- ================================================================= -->
 
-- [ ] 18. Módulo I — Brechas del Reto E1 según FAQ de Integra **[integración]**
+- [~] 18. Módulo I — Brechas del Reto E1 según FAQ de Integra **[integración]**
   - Cierra las brechas detectadas al contrastar la FAQ oficial de Fundación Integra con el spec: vistas de grupo-curso y jardín, rezago relativo a la sala, nivel general por promedio de núcleos, evolución temporal, privacidad de grabaciones y vínculo del post-it al `id_nino`.
 - [ ] 18.1 Rezago relativo a la composición de la sala (alerta automática a la educadora) **[integración]**
   - Añadir a `RelationalRepo` + servicio una métrica de **rezago relativo**: comparar el nivel de cada niño/a contra la distribución de su propia sala (p. ej. mayoría en nivel N; marcar como rezagados a quienes están varios niveles por debajo del grupo-curso) y levantar **alerta automática** a la educadora, además del rezago individual por racha ya existente (Req 6.4).
@@ -369,7 +370,7 @@ Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B:
 - [ ] 18.3 Vista de jardín: comparar salas equivalentes y alertar a la directora **[integración]**
   - Agregar al `DirectorReportService` la **comparación entre salas del mismo tramo** (p. ej. varias "Nivel Medio") para detectar un grupo-curso más rezagado que sus equivalentes y **levantar alerta a la directora**.
   - _Requisito: ampliar Req 7 (requiere nuevo requirement de comparación entre salas equivalentes)_
-- [ ] 18.4 Nivel general del niño/a = promedio de los niveles por núcleo **[independiente]**
+- [x] 18.4 Nivel general del niño/a = promedio de los niveles por núcleo **[independiente]**
   - En `domain`/`RubricaDecision`, derivar un **nivel general** del niño/a como el **promedio de los niveles de los distintos núcleos** (el nivel sigue siendo por núcleo; el general es derivado), exponiéndolo en la ficha.
   - _Requisito: ampliar Req 21 (el nivel es por núcleo; agregar derivación de nivel general; requiere nuevo requirement)_
 - [ ] 18.5 Evolución individual en el tiempo (serie temporal del nivel por núcleo) **[integración]**
@@ -382,7 +383,7 @@ Estado actual: las tareas **1 (bootstrap), 2 (Módulo A) y 3.1–3.3 (Módulo B:
 - [ ] 18.7 Vínculo del post-it (foto manuscrita) al `id_nino` por nombre **[integración]**
   - Tras el OCR de un post-it individual, resolver el **nombre escrito → `id_nino`** dentro de la sala (desambiguar por apellido si hay nombres repetidos), manteniendo el resguardo de datos (el nombre no se persiste ni viaja al LLM; solo se usa para resolver el `id_nino`).
   - _Requisito: ampliar Req 2.2 / Req 11 (requiere nuevo requirement de resolución nombre→id_nino con resguardo)_
-- [ ] 18.8 (Alcance futuro) Cargar "pasos a seguir" por nivel/núcleo
+- [x] 18.8 (Alcance futuro) Cargar "pasos a seguir" por nivel/núcleo
   - Dejar el esquema de `rubrica_versiones.criterios` **listo para incorporar los "pasos a seguir"** (conductas a observar en próximas actividades) cuando Integra entregue la rúbrica completa. Marcado como **alcance futuro** según la FAQ.
   - _Requisito: ampliar Req 21.1 (campo opcional de pasos a seguir; futuro)_
 - [ ]* 18.9 Conflicto de parametrización de niveles (8 fijos vs. ajustables / 9 del dataset)

@@ -59,6 +59,32 @@ class ClasificacionPropuesta(_Base):
     pendiente_clasificacion_manual: bool = False
 
 
+class NivelGeneral(_Base):
+    """Nivel general del niño/a **derivado** del promedio de niveles por núcleo.
+
+    Valor derivado y de solo lectura para la ficha del niño/a (Requirement 25):
+    el nivel de progresión sigue siendo **por núcleo** (fuente de verdad,
+    Requirement 21); el nivel general **no reemplaza** a los niveles por núcleo,
+    solo ofrece una lectura rápida del desarrollo global.
+
+    Regla de derivación (Requirement 25.2): promedio aritmético de los niveles de
+    progresión de los **distintos núcleos con nivel asignado**. El promedio se
+    expone como ``float`` redondeado a 2 decimales (``nivel_general``); se
+    conserva el conteo de núcleos considerados (``nucleos_considerados``) y el
+    desglose ``niveles_por_nucleo`` para trazabilidad.
+
+    Si ningún núcleo tiene nivel asignado (Requirement 25.4), ``disponible`` es
+    ``False`` y ``nivel_general`` es ``None`` (el sistema indica "no disponible"
+    sin producir error). La derivación es **determinista**: el mismo mapa de
+    niveles por núcleo produce siempre el mismo resultado.
+    """
+
+    nivel_general: float | None = None
+    disponible: bool = False
+    nucleos_considerados: int = Field(default=0, ge=0)
+    niveles_por_nucleo: dict[str, int] = Field(default_factory=dict)
+
+
 class ResultadoRubrica(_Base):
     """Resultado determinista de ``RubricaDecision.evaluar`` (Módulo F).
 
@@ -95,5 +121,6 @@ class ResultadoRubrica(_Base):
 
 __all__ = [
     "ClasificacionPropuesta",
+    "NivelGeneral",
     "ResultadoRubrica",
 ]
