@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@theme {
+  --color-parchment: #fdf9f4;
+  --color-dust: #f9efe4;
+  --color-silver: #ecedef;
+  --color-mist: #d9dde6;
+  --color-ink: #2d2f34;
+  --color-charcoal: #3f434a;
+  --color-slate-custom: #5e646e;
+  --color-fog: #9da3af;
+  --color-dusk: #6a707c;
+  --color-ember: #f67748;
+  --color-neptune: #74a6f1;
+  --color-verified: #479a53;
+  --color-mint: #bbf7d0;
+  --color-tag-violet: #4b51c3;
+
+  --font-serif: 'Lora', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --radius-card: 32px;
+  --radius-product: 18px;
+  --radius-pill: 9999px;
+}
+
+@layer base {
+  body {
+    background-color: #fdf9f4;
+    color: #2d2f34;
+    font-family: var(--font-sans);
+  }
+
+  h1, h2, h3, .font-editorial {
+    font-family: var(--font-serif);
+    letter-spacing: -0.02em;
+  }
+}
+
+/* 3-layer subtle shadow as specified by Slite */
+.shadow-product {
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 3px 0px, rgba(0, 0, 0, 0.04) 0px 2px 6px 0px, rgba(0, 0, 0, 0.01) 0px 4px 12px 0px;
+}
+
+.shadow-subtle {
+  box-shadow: rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+}
+
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 16px);
+}
+.pt-safe {
+  padding-top: env(safe-area-inset-top, 16px);
+}
+
