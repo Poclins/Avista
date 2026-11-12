@@ -1,15 +1,5 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import { App } from "./App";
-import "./styles/global.css";
+import {createRoot} from 'react-dom/client';
+import App from './App.tsx';
+import './index.css';
 
-const contenedor = document.getElementById("root");
-if (!contenedor) {
-  throw new Error('No se encontró el elemento con id "root".');
-}
-
-createRoot(contenedor).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-);
+createRoot(document.getElementById('root')!).render(<App />);

@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="jAImes">
-  <rect width="64" height="64" rx="14" fill="#1b4965" />
-  <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle"
-        font-family="system-ui, sans-serif" font-size="30" font-weight="700" fill="#ffffff">jA</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Avista">
+  <rect width="512" height="512" rx="112" fill="#fdf9f4"/>
+  <path d="M136 384 L256 120 L376 384" fill="none" stroke="#2d2f34" stroke-width="44" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M176 296 C 220 268, 292 268, 336 296" fill="none" stroke="#f67748" stroke-width="36" stroke-linecap="round"/>
 </svg>
