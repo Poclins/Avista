@@ -101,6 +101,17 @@ flowchart LR
 
 The frontend (`frontend/`) is an installable PWA in the **"warm parchment notebook"** visual language: cream paper (`#fdf9f4`), serif headlines (Lora), a single ember-orange accent (`#f67748`) used on less than 5 % of the page. It has two roles, **Tía de sala** (educator) and **Directora**.
 
+<table>
+  <tr>
+    <td><img src="docs/screenshots/01-room.png" alt="Room overview: 19 children with observation counts and coverage"><br><sub><b>Room</b> · children, coverage and time saved</sub></td>
+    <td><img src="docs/screenshots/02-blind-spot-radar.png" alt="Blind-spot radar with equity index and today's observation missions"><br><sub><b>Blind-spot radar</b> · equity index and today's missions</sub></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/04-recommendations.png" alt="Level recommendation with cited classroom evidence"><br><sub><b>Rubric & evidence</b> · recommendation with cited observations</sub></td>
+    <td><img src="docs/screenshots/05-director.png" alt="Director dashboard with coverage, time returned and curricular distribution"><br><sub><b>Director</b> · kindergarten-wide metrics</sub></td>
+  </tr>
+</table>
+
 | Tab | What it does | Engine today |
 |---|---|---|
 | **Párvulos** | The room at a glance: 19 children, observations per child, coverage state, search and filters. | Local dataset |

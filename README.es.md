@@ -101,6 +101,17 @@ flowchart LR
 
 El frontend (`frontend/`) es una PWA instalable con el lenguaje visual de **"cuaderno de papel pergamino"**: papel crema (`#fdf9f4`), titulares serif (Lora) y un único acento naranja brasa (`#f67748`) en menos del 5 % de la pantalla. Tiene dos roles, **Tía de sala** y **Directora**.
 
+<table>
+  <tr>
+    <td><img src="docs/screenshots/01-room.png" alt="Vista de sala: 19 párvulos con observaciones y cobertura"><br><sub><b>Sala</b> · párvulos, cobertura y tiempo ahorrado</sub></td>
+    <td><img src="docs/screenshots/02-blind-spot-radar.png" alt="Radar de zonas ciegas con índice de equidad y misiones del día"><br><sub><b>Radar de zonas ciegas</b> · índice de equidad y misiones de hoy</sub></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/04-recommendations.png" alt="Recomendación de nivel con evidencia de aula citada"><br><sub><b>Rúbrica & evidencia</b> · recomendación con observaciones citadas</sub></td>
+    <td><img src="docs/screenshots/05-director.png" alt="Panel de dirección con cobertura, tiempo devuelto y distribución curricular"><br><sub><b>Dirección</b> · métricas de todo el jardín</sub></td>
+  </tr>
+</table>
+
 | Pestaña | Qué hace | Motor hoy |
 |---|---|---|
 | **Párvulos** | La sala de un vistazo: 19 niños/as, observaciones por niño/a, estado de cobertura, búsqueda y filtros. | Dataset local |
